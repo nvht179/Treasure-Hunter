@@ -5,19 +5,24 @@ using UnityEngine;
 public class PlayerVisual : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
-    
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public void HandleFlipX(Vector3 moveDir)
+    public void HandleFlipX(Player player)
     {
-        spriteRenderer.flipX = moveDir.x switch
+        switch (player.GetMoveDirection().x)
         {
-            > 0f => false,
-            < 0f => true,
-            _ => spriteRenderer.flipX
-        };
+            case > 0f:
+                spriteRenderer.flipX = false;
+                player.IsFacingRight = true;
+                break;
+            case < 0f:
+                spriteRenderer.flipX = true;
+                player.IsFacingRight = false;
+                break;
+        }
     }
 }

@@ -5,25 +5,29 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private Transform playerPivot;
 
-    [Header("Movement")] 
+    [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpHeight = 2f;
+
     [Header("References")]
     [SerializeField] private GameInput gameInput;
+
     [SerializeField] private PlayerVisual playerVisual;
     [SerializeField] private LayerMask groundLayer;
-    
+
     private const float GroundCheckRadius = 0.01f;
 
     private bool isGrounded;
     private bool isRunning;
     private Vector3 moveDir;
+    public bool IsFacingRight { get; set; }
     private Rigidbody2D rb;
-    
+
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        IsFacingRight = true;
     }
 
     private void Start()
@@ -31,7 +35,6 @@ public class Player : MonoBehaviour
         gameInput.OnAttackAction += HandleAttack;
         gameInput.OnJumpAction += HandleJump;
     }
-
 
     private void Update()
     {
@@ -41,7 +44,7 @@ public class Player : MonoBehaviour
 
         // handle actions
         HandleRunning();
-        playerVisual.HandleFlipX(moveDir);
+        playerVisual.HandleFlipX(this);
 
         // update states
         isRunning = moveDir.x != 0f;
@@ -65,11 +68,21 @@ public class Player : MonoBehaviour
         transform.position += moveDistance * moveDirX;
     }
 
+    public Vector3 GetMoveDirection()
+    {
+        return moveDir;
+    }
+
+    public Vector3 GetPosition()
+    {
+        return new Vector3(transform.position.x, transform.position.y, transform.position.z);
+    }
+
     public bool IsRunning()
     {
         return isRunning;
     }
-    
+
     public bool IsGrounded()
     {
         return isGrounded;
@@ -84,7 +97,7 @@ public class Player : MonoBehaviour
     {
         return !isGrounded && moveDir.y < 0f;
     }
-    
+
     // public bool IsGroundedByRaycast() {
     //     // origin at the bottom of the collider
     //     Vector2 origin = new Vector2(transform.position.x, GetComponent<BoxCollider2D>().bounds.min.y);
