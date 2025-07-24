@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerVisual : MonoBehaviour
 {
+    [SerializeField] private Player player;
     private SpriteRenderer spriteRenderer;
 
     private void Awake()
@@ -11,7 +12,7 @@ public class PlayerVisual : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public void HandleFlipX(Player player)
+    public void HandleFlipX()
     {
         switch (player.GetMoveDirection().x)
         {

@@ -3,46 +3,31 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class PlayerAnimator : MonoBehaviour {
-    private const string RUN = "Run";
-    private const string IDLE = "Idle";
-    private const string JUMP = "Jump";
-    private const string FALL = "Fall";
-    private const string HIT = "Hit";
-    private const string DEADHIT = "DeadHit";
-    private const string ATTACK = "Attack";
+public class PlayerAnimator : MonoBehaviour
+{
+    private static readonly int IsJumping = Animator.StringToHash("IsJumping");
+    private static readonly int IsAttacking = Animator.StringToHash("IsAttacking");
+    private static readonly int IsConstantlyAttacking = Animator.StringToHash("IsConstantlyAttacking");
+    private static readonly int XVelocity = Animator.StringToHash("XVelocity");
+    private static readonly int YVelocity = Animator.StringToHash("YVelocity");
 
     [SerializeField] private Player player;
     private Animator animator;
 
-    // Keep track of the grounded state from the previous frame:
-    private bool wasGrounded;
-
     private void Awake() {
         animator = GetComponent<Animator>();
-        wasGrounded = false;
     }
 
     private void Update() {
-        // 1) Read current states from your Player
-        bool isRunning = player.IsRunning();
-        bool isJumping = player.IsJumping();
-        bool isFalling = player.IsFalling();
-        bool isHit = player.IsHit();
-        bool isDeadHit = player.IsDeadHit();
-        //int attackIndex = player.GetLastAttackIndex();
-
-        // 2) Update simple booleans/triggers
-        animator.SetBool(RUN, isRunning);
-        animator.SetBool(JUMP, isJumping);
-        animator.SetBool(FALL, isFalling);
-
-        if (isHit)
-            animator.SetTrigger(HIT);
-
-        if (isDeadHit)
-            animator.SetTrigger(DEADHIT);
-
-        //animator.SetInteger(ATTACK, attackIndex);
+        var isJumping = !player.IsGrounded();
+        var isAttacking = player.IsAttacking();
+        var isConstantlyAttacking = player.IsConstantlyAttacking();
+        var velocity = player.GetVelocity();
+        
+        animator.SetBool(IsJumping, isJumping);
+        animator.SetBool(IsAttacking, isAttacking);
+        animator.SetBool(IsConstantlyAttacking, isConstantlyAttacking);
+        animator.SetFloat(XVelocity, velocity.x);
+        animator.SetFloat(YVelocity, velocity.y);
     }
 }

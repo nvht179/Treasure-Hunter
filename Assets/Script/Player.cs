@@ -3,37 +3,64 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private Transform playerPivot;
+    [Header("Jump System")]
+    [SerializeField] private float jumpPower;
+    [SerializeField] private float fallMultiplier;
+    [SerializeField] private float jumpDegrader;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float jumpHeight = 2f;
 
     [Header("References")]
     [SerializeField] private GameInput gameInput;
-
+    [SerializeField] private Transform attackOrigin;
+    [SerializeField] private float attackRadius;
+    [SerializeField] private Transform playerPivot;
     [SerializeField] private PlayerVisual playerVisual;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask enemyLayer;
 
-    private const float GroundCheckRadius = 0.01f;
+    [Header("Attack")]
+    [SerializeField] private int damage;
+    [SerializeField] private float cooldownTime;
+
+    private const float GroundCheckRadius = 0.05f;
 
     private bool isGrounded;
     private bool isRunning;
+    private bool isConstantlyAttacking;
+    private bool isAttacking;
+    private float cooldownTimer;
     private Vector3 moveDir;
+    private Vector2 gravityVector;
     public bool IsFacingRight { get; set; }
     private Rigidbody2D rb;
-
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         IsFacingRight = true;
+        isConstantlyAttacking = false;
     }
 
     private void Start()
     {
-        gameInput.OnAttackAction += HandleAttack;
-        gameInput.OnJumpAction += HandleJump;
+        gameInput.OnJumpAction += PlayerOnJump;
+        gameInput.OnAttackAction += PlayerOnAttack;
+        gravityVector = new Vector2(0, -Physics2D.gravity.y);
+    }
+
+    private void PlayerOnJump(object sender, EventArgs e)
+    {
+        if (isGrounded)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpPower);
+        }
+    }
+
+    private void PlayerOnAttack(object sender, EventArgs e)
+    {
+        isConstantlyAttacking = !isConstantlyAttacking;
     }
 
     private void Update()
@@ -44,20 +71,49 @@ public class Player : MonoBehaviour
 
         // handle actions
         HandleRunning();
-        playerVisual.HandleFlipX(this);
+        HandleJumping();
+        HandleAttacking();
+        playerVisual.HandleFlipX();
 
         // update states
         isRunning = moveDir.x != 0f;
         isGrounded = Physics2D.OverlapCircle(playerPivot.position, GroundCheckRadius, groundLayer);
     }
 
-    private void HandleJump(object sender, EventArgs e)
+    private void HandleAttacking()
     {
-        if (isGrounded)
+        if (cooldownTimer <= 0)
         {
-            var gravity = Mathf.Abs(Physics2D.gravity.y * rb.gravityScale);
-            var jumpVelocity = Mathf.Sqrt(2 * gravity * jumpHeight);
-            rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
+            if (isConstantlyAttacking)
+            {
+                isAttacking = true;
+                var enemiesInRange = new Collider2D[10];
+                _ = Physics2D.OverlapCircleNonAlloc(attackOrigin.position, attackRadius, enemiesInRange, enemyLayer);
+                foreach (var enemy in enemiesInRange)
+                {
+                    // make enemy take damage
+                }
+                
+                cooldownTimer = cooldownTime;
+            }
+        }
+        else
+        {
+            isAttacking = false;
+            cooldownTimer -= Time.deltaTime;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(attackOrigin.position, attackRadius);
+    }
+
+    private void HandleJumping()
+    {
+        if (rb.velocity.y != 0)
+        {
+            rb.velocity -= gravityVector * (jumpDegrader * Time.deltaTime);
         }
     }
 
@@ -71,6 +127,11 @@ public class Player : MonoBehaviour
     public Vector3 GetMoveDirection()
     {
         return moveDir;
+    }
+
+    public Vector3 GetVelocity()
+    {
+        return new Vector3(isRunning ? moveSpeed : 0, rb.velocity.y, 0);
     }
 
     public Vector3 GetPosition()
@@ -88,14 +149,14 @@ public class Player : MonoBehaviour
         return isGrounded;
     }
 
-    public bool IsJumping()
+    public bool IsAttacking()
     {
-        return !isGrounded && moveDir.y > 0f;
+        return isAttacking;
     }
 
-    public bool IsFalling()
+    public bool IsConstantlyAttacking()
     {
-        return !isGrounded && moveDir.y < 0f;
+        return isConstantlyAttacking;
     }
 
     // public bool IsGroundedByRaycast() {
@@ -104,13 +165,6 @@ public class Player : MonoBehaviour
     //     RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, rayLength, groundLayer);
     //     return hit.collider != null;
     // }
-
-    private void HandleAttack(object sender, EventArgs e)
-    {
-        // Pick one of three attack animations (0, 1 or 2) for placeholder
-        _ = UnityEngine.Random.Range(0, 3);
-        // TODO: Trigger attack animation based on attackIndex
-    }
 
     public bool IsHit()
     {
