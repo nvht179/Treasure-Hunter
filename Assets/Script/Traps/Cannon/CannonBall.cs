@@ -12,7 +12,7 @@ public class CannonBall : MonoBehaviour {
     private Vector2 direction;
     private bool willDestroy = false;
     private float destroyTimer;
-    private readonly float destroyDelay = 0.5f;
+    private readonly float destroyDelay = 0.3f;
 
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
