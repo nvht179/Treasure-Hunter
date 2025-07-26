@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00ef2eb3b456ff349bc50f5f9174244b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cannonBallSO: {fileID: 11400000, guid: c801a2e267827994eb749e3fd06f349e, type: 2}
+  flyingObjectSO: {fileID: 11400000, guid: c801a2e267827994eb749e3fd06f349e, type: 2}
   collisionLayer:
     serializedVersion: 2
     m_Bits: 200
@@ -217,9 +217,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0132341385, y: -0.010587275}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.20264688
 --- !u!1 &8246041657539600788
 GameObject:
   m_ObjectHideFlags: 0

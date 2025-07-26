@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 2609660177966585519}
-  cannonBallSO: {fileID: 11400000, guid: c801a2e267827994eb749e3fd06f349e, type: 2}
+  flyingObjectSO: {fileID: 11400000, guid: c801a2e267827994eb749e3fd06f349e, type: 2}
   fireRate: 1
   fireDirection: 0
 --- !u!1 &8130380058668230812

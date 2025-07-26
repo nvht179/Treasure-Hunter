@@ -2,6 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Totem1 : Enemy {
-
+public interface IDamageable {
+    void TakeDamage(float damage);
 }
