@@ -80,7 +80,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7, y: 0.7}
+  m_Size: {x: 0.6, y: 0.7}
   m_EdgeRadius: 0
 --- !u!50 &1706001241349413456
 Rigidbody2D:
@@ -137,6 +137,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   damage: 5
+  cooldownTime: 0
 --- !u!1 &3937380537759552638
 GameObject:
   m_ObjectHideFlags: 0

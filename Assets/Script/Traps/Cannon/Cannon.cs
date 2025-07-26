@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Cannon : MonoBehaviour {
-    enum FireDirection {
+    public enum FireDirection {
         Left,
         Right
     }
@@ -41,5 +41,10 @@ public class Cannon : MonoBehaviour {
             Vector2 direction = fireDirection == FireDirection.Left ? Vector2.left : Vector2.right;
             cannonBall.SetDirection(direction);
         }
+    }
+
+    public FireDirection GetDirection()
+    {
+        return fireDirection;
     }
 }

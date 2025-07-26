@@ -155,6 +155,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cannonBallSO: {fileID: 11400000, guid: c801a2e267827994eb749e3fd06f349e, type: 2}
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 200
 --- !u!50 &8998648538660707344
 Rigidbody2D:
   serializedVersion: 4
@@ -214,9 +217,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.011394873, y: -0.025638908}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.21227469
+  m_Radius: 0.2
 --- !u!1 &8246041657539600788
 GameObject:
   m_ObjectHideFlags: 0

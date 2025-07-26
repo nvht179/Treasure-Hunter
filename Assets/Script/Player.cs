@@ -21,11 +21,14 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask enemyLayer;
 
     [Header("Attack")]
-    [SerializeField] private int damage;
+    [SerializeField] private int playerDamage;
     [SerializeField] private float cooldownTime;
 
+    [SerializeField] private int maxHealthPoint;
+    
     private const float GroundCheckRadius = 0.05f;
 
+    private float currentHealthPoint;
     private bool isGrounded;
     private bool isRunning;
     private bool isConstantlyAttacking;
@@ -122,6 +125,12 @@ public class Player : MonoBehaviour
         var moveDistance = moveSpeed * Time.deltaTime;
         var moveDirX = new Vector3(moveDir.x, 0, 0);
         transform.position += moveDistance * moveDirX;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealthPoint = Mathf.Clamp(currentHealthPoint - damage, 0, maxHealthPoint);
+        Debug.Log($"damage: {damage}");
     }
 
     public Vector3 GetMoveDirection()

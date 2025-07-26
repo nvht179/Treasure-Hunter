@@ -26,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2664720678113702610}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -0.65, y: 0.01, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.65, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8681945550905514184}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7625684017537137852
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -116,7 +116,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2609660177966585519}
   m_Layer: 0
-  m_Name: FirePoint
+  m_Name: FireOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,7 +131,7 @@ Transform:
   m_GameObject: {fileID: 4237596580027884826}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.41, y: -0.02, z: 0}
+  m_LocalPosition: {x: -0.45, y: -0.02, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -162,8 +162,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8113704561974272818}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -10.11, y: 0.44, z: -1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -171,7 +171,7 @@ Transform:
   - {fileID: 2751136259608969595}
   - {fileID: 2609660177966585519}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8430616958806299690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,7 +187,7 @@ MonoBehaviour:
   firePoint: {fileID: 2609660177966585519}
   cannonBallSO: {fileID: 11400000, guid: c801a2e267827994eb749e3fd06f349e, type: 2}
   fireRate: 1
-  fireDirection: 1
+  fireDirection: 0
 --- !u!1 &8130380058668230812
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,6 +288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cannon: {fileID: 8430616958806299690}
   fireEffect: {fileID: 2664720678113702610}
+  fireOrigin: {fileID: 2609660177966585519}
 --- !u!95 &473041478293922751
 Animator:
   serializedVersion: 5
