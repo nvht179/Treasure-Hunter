@@ -3744,36 +3744,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 297711100}
     - target: {fileID: 7426713197866518868, guid: e3874df57690bff4ba8d78644a801280, type: 3}
-      propertyPath: jumpPower
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7426713197866518868, guid: e3874df57690bff4ba8d78644a801280, type: 3}
       propertyPath: jumpHeight
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7426713197866518868, guid: e3874df57690bff4ba8d78644a801280, type: 3}
-      propertyPath: attackRadius
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7426713197866518868, guid: e3874df57690bff4ba8d78644a801280, type: 3}
-      propertyPath: cooldownTime
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7426713197866518868, guid: e3874df57690bff4ba8d78644a801280, type: 3}
-      propertyPath: jumpDegrader
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7426713197866518868, guid: e3874df57690bff4ba8d78644a801280, type: 3}
-      propertyPath: fallMultiplier
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7426713197866518868, guid: e3874df57690bff4ba8d78644a801280, type: 3}
       propertyPath: jumpMultiplier
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7426713197866518868, guid: e3874df57690bff4ba8d78644a801280, type: 3}
-      propertyPath: groundLayer.m_Bits
-      value: 192
       objectReference: {fileID: 0}
     - target: {fileID: 8865661576407353970, guid: e3874df57690bff4ba8d78644a801280, type: 3}
       propertyPath: player
