@@ -23,10 +23,17 @@ public class Player : MonoBehaviour
     [Header("Attack")]
     [SerializeField] private int playerDamage;
     [SerializeField] private float cooldownTime;
-
-    [SerializeField] private int maxHealthPoint;
+    [SerializeField] private float maxHealthPoint;
     
     private const float GroundCheckRadius = 0.05f;
+
+    public event EventHandler<OnDamageTakenEventArgs> OnDamageTaken;
+
+    public class OnDamageTakenEventArgs
+    {
+        public float MaxHealth;
+        public float CurrentHealth;
+    }
 
     private float currentHealthPoint;
     private bool isGrounded;
@@ -44,6 +51,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         IsFacingRight = true;
         isConstantlyAttacking = false;
+        currentHealthPoint = maxHealthPoint;
     }
 
     private void Start()
@@ -130,7 +138,11 @@ public class Player : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealthPoint = Mathf.Clamp(currentHealthPoint - damage, 0, maxHealthPoint);
-        Debug.Log($"damage: {damage}");
+        OnDamageTaken?.Invoke(this, new OnDamageTakenEventArgs
+        {
+            CurrentHealth = currentHealthPoint,
+            MaxHealth = maxHealthPoint
+        });
     }
 
     public Vector3 GetMoveDirection()
