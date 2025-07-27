@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerVisual : MonoBehaviour
@@ -11,6 +12,7 @@ public class PlayerVisual : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private Vector3 direction;
+    private Vector3 initialAttackOriginPosition;
 
     private static readonly int IsJumping = Animator.StringToHash("IsJumping");
     private static readonly int IsAttacking = Animator.StringToHash("IsAttacking");
@@ -23,6 +25,7 @@ public class PlayerVisual : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        initialAttackOriginPosition = attackOrigin.localPosition;
     }
 
     private void Update()
@@ -50,14 +53,13 @@ public class PlayerVisual : MonoBehaviour
         {
             case > 0f:
                 spriteRenderer.flipX = false;
-                attackOrigin.localPosition = new Vector3(math.abs(attackOrigin.localPosition.x), attackOrigin.localPosition.y,
-                    attackOrigin.localPosition.z);
+                attackOrigin.localPosition = initialAttackOriginPosition;
                 player.IsFacingRight = true;
                 break;
             case < 0f:
-                attackOrigin.localPosition = new Vector3(-attackOrigin.localPosition.x, attackOrigin.localPosition.y,
-                    attackOrigin.localPosition.z);
                 spriteRenderer.flipX = true;
+                attackOrigin.localPosition = new Vector3(-initialAttackOriginPosition.x, initialAttackOriginPosition.y,
+                    initialAttackOriginPosition.z);
                 player.IsFacingRight = false;
                 break;
         }

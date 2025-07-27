@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
@@ -23,10 +24,11 @@ public class Player : MonoBehaviour, IDamageable
 
     [Header("Attack")]
     [SerializeField] private int playerDamage;
-    [SerializeField] private float cooldownTime;
+    [SerializeField] private float attackCooldownTime;
     [SerializeField] private float maxHealthPoint;
-    
+
     private const float GroundCheckRadius = 0.05f;
+    private const float AirAttackTime = 0.5f;
 
     public event EventHandler OnDestroyed;
     public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
@@ -34,13 +36,14 @@ public class Player : MonoBehaviour, IDamageable
     private float gravityScale;
     private float currentHealthPoint;
     private bool isGrounded;
-    private bool isRunning;
     private bool isConstantlyAttacking;
     private bool isAttacking;
     private bool isDamaged;
     private bool hasAirAttacked;
-    private float cooldownTimer;
-    private Vector3 moveDir;
+    private float attackCooldownTimer;
+    private float airAttackTimer;
+    private Vector3 moveVector;
+    private int moveDirection;
     private Vector2 gravityVector;
     public bool IsFacingRight { get; set; }
     private Rigidbody2D rb;
@@ -79,15 +82,17 @@ public class Player : MonoBehaviour, IDamageable
     {
         // handle input
         var inputVector = gameInput.GetMovementVectorNormalized();
-        moveDir = new Vector3(inputVector.x, inputVector.y, 0);
+        moveVector = new Vector3(inputVector.x, inputVector.y, 0);
 
-        // handle actions
-        HandleRunning();
-        HandleJumping();
         HandleAttacking();
 
         // update states
-        isRunning = moveDir.x != 0f;
+        moveDirection = moveVector.x > 0 ? 1 : -1;
+        airAttackTimer -= Time.deltaTime;
+        if (isAttacking && !isGrounded)
+        {
+            airAttackTimer = AirAttackTime;
+        }
         isGrounded = Physics2D.OverlapCircle(playerPivot.position, GroundCheckRadius, groundLayer);
         if (isGrounded)
         {
@@ -95,9 +100,32 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
 
+    private void FixedUpdate()
+    {
+        var currentVelocity = rb.velocity;
+
+        // horizontal movement
+        var velocityX = moveVector.x == 0 ? 0 : moveSpeed * moveDirection;
+
+        if (airAttackTimer > 0)
+        {
+            velocityX = 0;
+        }
+        
+        // vertical movement
+        var velocityY = currentVelocity.y;
+
+        if (velocityY != 0)
+        {
+            velocityY -= gravityVector.y * jumpDegrader * Time.fixedDeltaTime;
+        }
+        rb.velocity = new Vector2(velocityX, velocityY);
+    }
+
+
     private void HandleAttacking()
     {
-        if (cooldownTimer <= 0)
+        if (attackCooldownTimer <= 0)
         {
             if (isConstantlyAttacking && !hasAirAttacked)
             {
@@ -120,14 +148,14 @@ public class Player : MonoBehaviour, IDamageable
                         damageable?.TakeDamage(playerDamage);
                     }
                 }
-                
-                cooldownTimer = cooldownTime;
+
+                attackCooldownTimer = attackCooldownTime;
             }
         }
         else
         {
             isAttacking = false;
-            cooldownTimer -= Time.deltaTime;
+            attackCooldownTimer -= Time.deltaTime;
         }
     }
 
@@ -137,25 +165,17 @@ public class Player : MonoBehaviour, IDamageable
         rb.gravityScale = gravityScale;
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(attackOrigin.position, attackRadius);
     }
 
-    private void HandleJumping()
-    {
-        if (rb.velocity.y != 0)
-        {
-            rb.velocity -= gravityVector * (jumpDegrader * Time.deltaTime);
-        }
-    }
-
-    private void HandleRunning()
-    {
-        var moveDistance = moveSpeed * Time.deltaTime;
-        var moveDirX = new Vector3(moveDir.x, 0, 0);
-        transform.position += moveDistance * moveDirX;
-    }
+    // private void HandleRunning()
+    // {
+    //     var moveDistance = moveSpeed * Time.deltaTime;
+    //     var moveDirX = new Vector3(moveVector.x, 0, 0);
+    //     transform.position += moveDistance * moveDirX;
+    // }
 
     public void TakeDamage(float damage)
     {
@@ -169,22 +189,17 @@ public class Player : MonoBehaviour, IDamageable
 
     public Vector3 GetMoveDirection()
     {
-        return moveDir;
+        return moveVector;
     }
 
     public Vector3 GetVelocity()
     {
-        return new Vector3(isRunning ? moveSpeed : 0, rb.velocity.y, 0);
+        return rb.velocity;
     }
 
     public Vector3 GetPosition()
     {
         return new Vector3(transform.position.x, transform.position.y, transform.position.z);
-    }
-
-    public bool IsRunning()
-    {
-        return isRunning;
     }
 
     public bool IsGrounded()
@@ -200,22 +215,5 @@ public class Player : MonoBehaviour, IDamageable
     public bool IsConstantlyAttacking()
     {
         return isConstantlyAttacking;
-    }
-
-    // public bool IsGroundedByRaycast() {
-    //     // origin at the bottom of the collider
-    //     Vector2 origin = new Vector2(transform.position.x, GetComponent<BoxCollider2D>().bounds.min.y);
-    //     RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, rayLength, groundLayer);
-    //     return hit.collider != null;
-    // }
-
-    public bool IsHit()
-    {
-        return false; // Placeholder for hit detection logic
-    }
-
-    public bool IsDeadHit()
-    {
-        return false; // Placeholder for dead hit detection logic
     }
 }

@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
-public class PlayerEffectOrigin : MonoBehaviour
+public class PlayerEffect : MonoBehaviour
 {
     [SerializeField] private Player player;
     [SerializeField] private GameInput gameInput;
@@ -15,7 +16,7 @@ public class PlayerEffectOrigin : MonoBehaviour
     private float resetJumpEffectTimer;
 
     private const float ResetJumpEffectTime = 0.5f;
-    private const float FallVelocityThreshold = -10f;
+    private const float FallVelocityThreshold = -12f;
 
     private static readonly int Landed = Animator.StringToHash("Landed");
     private static readonly int Jumped = Animator.StringToHash("Jumped");
@@ -75,4 +76,6 @@ public class PlayerEffectOrigin : MonoBehaviour
             animator.SetTrigger(Landed);
         }
     }
+
+
 }

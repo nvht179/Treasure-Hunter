@@ -17,21 +17,21 @@ public class CrabbyVisual : MonoBehaviour
 
     private void Update()
     {
-        HandleFlipX();
+        // HandleFlipX();
     }
 
-    private void HandleFlipX()
-    {
-        switch (crabby.GetMoveDirection().x)
-        {
-            case > 0f:
-                spriteRenderer.flipX = false;
-                isFacingRight = true;
-                break;
-            case < 0f:
-                spriteRenderer.flipX = true;
-                isFacingRight = false;
-                break;
-        }
-    }
+    // private void HandleFlipX()
+    // {
+    //     switch (crabby.GetMoveDirection().x)
+    //     {
+    //         case > 0f:
+    //             spriteRenderer.flipX = false;
+    //             isFacingRight = true;
+    //             break;
+    //         case < 0f:
+    //             spriteRenderer.flipX = true;
+    //             isFacingRight = false;
+    //             break;
+    //     }
+    // }
 }
