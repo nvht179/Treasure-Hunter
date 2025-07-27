@@ -19,8 +19,10 @@ public class ShooterTrap : MonoBehaviour {
 
     private float nextFireTime = 0f;
     protected float fireDelay;
+    protected bool stopShooting = false;
 
     private void Update() {
+        if (stopShooting) return;
         if (Time.time >= nextFireTime) {
             Shoot();
             nextFireTime = Time.time + fireRate;
@@ -45,6 +47,9 @@ public class ShooterTrap : MonoBehaviour {
 
     public FireDirection GetDirection() {
         return fireDirection;
+    }
+    public void StopShooting() {
+        stopShooting = true;
     }
 
 }

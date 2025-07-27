@@ -19,7 +19,7 @@ public class HealthBarVisual : MonoBehaviour
         player.OnDamageTaken += PlayerOnDamageTaken;
     }
 
-    private void PlayerOnDamageTaken(object sender, Player.OnDamageTakenEventArgs e)
+    private void PlayerOnDamageTaken(object sender, IDamageable.OnDamageTakenEventArgs e)
     {
         var width = MaxWidth * (e.CurrentHealth / e.MaxHealth);
         rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);

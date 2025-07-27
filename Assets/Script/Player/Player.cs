@@ -27,13 +27,8 @@ public class Player : MonoBehaviour, IDamageable
     
     private const float GroundCheckRadius = 0.05f;
 
-    public event EventHandler<OnDamageTakenEventArgs> OnDamageTaken;
-
-    public class OnDamageTakenEventArgs
-    {
-        public float MaxHealth;
-        public float CurrentHealth;
-    }
+    public event EventHandler OnDestroyed;
+    public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
     private float currentHealthPoint;
     private bool isGrounded;
@@ -103,6 +98,11 @@ public class Player : MonoBehaviour, IDamageable
                 foreach (var enemy in enemiesInRange)
                 {
                     // make enemy take damage
+                    if (enemy != null)
+                    {
+                        var damageable = enemy.GetComponent<IDamageable>();
+                        damageable?.TakeDamage(playerDamage);
+                    }
                 }
                 
                 cooldownTimer = cooldownTime;
@@ -138,7 +138,7 @@ public class Player : MonoBehaviour, IDamageable
     public void TakeDamage(float damage)
     {
         currentHealthPoint = Mathf.Clamp(currentHealthPoint - damage, 0, maxHealthPoint);
-        OnDamageTaken?.Invoke(this, new OnDamageTakenEventArgs
+        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
         {
             CurrentHealth = currentHealthPoint,
             MaxHealth = maxHealthPoint
