@@ -107,11 +107,6 @@ MonoBehaviour:
   fireRate: 2
   fireDirection: 0
   maxHealthPoint: 10
-  destroyedFragments:
-  - {fileID: 1812759029283910103}
-  - {fileID: 7833647811742307071}
-  - {fileID: 7613144512660493962}
-  - {fileID: 1903235677009023444}
 --- !u!61 &144960388748944299
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -909,7 +904,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!1 &9200958407484931317
 GameObject:
   m_ObjectHideFlags: 0

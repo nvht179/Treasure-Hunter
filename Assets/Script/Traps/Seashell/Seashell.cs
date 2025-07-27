@@ -8,7 +8,7 @@ public class Seashell : ShooterTrap, IDamageable {
     public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
     public event EventHandler OnDestroyed;
 
-    [SerializeField] private float maxHealthPoint = 10f;
+    [SerializeField] private float maxHealthPoint = 50f;
     private float currentHealthPoint;
 
     private new void Awake() {

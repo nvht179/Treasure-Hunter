@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4933550970111179590}
   - component: {fileID: 5495637768443039356}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Totem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,6 +100,10 @@ PrefabInstance:
     - target: {fileID: 2582273492514341846, guid: d0711fba5edd79949bf04e10cfd1cd05, type: 3}
       propertyPath: m_Name
       value: Template
+      objectReference: {fileID: 0}
+    - target: {fileID: 2582273492514341846, guid: d0711fba5edd79949bf04e10cfd1cd05, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2582273492514341846, guid: d0711fba5edd79949bf04e10cfd1cd05, type: 3}
       propertyPath: m_IsActive
