@@ -286,9 +286,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf3ea778637a8fd438278d9308e7a3eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cannon: {fileID: 8430616958806299690}
-  fireEffect: {fileID: 2664720678113702610}
+  shooterTrap: {fileID: 8430616958806299690}
   fireOrigin: {fileID: 2609660177966585519}
+  fireEffect: {fileID: 2664720678113702610}
 --- !u!95 &473041478293922751
 Animator:
   serializedVersion: 5
