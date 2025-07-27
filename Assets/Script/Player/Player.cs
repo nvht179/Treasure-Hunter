@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
@@ -30,11 +31,14 @@ public class Player : MonoBehaviour, IDamageable
     public event EventHandler OnDestroyed;
     public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
+    private float gravityScale;
     private float currentHealthPoint;
     private bool isGrounded;
     private bool isRunning;
     private bool isConstantlyAttacking;
     private bool isAttacking;
+    private bool isDamaged;
+    private bool hasAirAttacked;
     private float cooldownTimer;
     private Vector3 moveDir;
     private Vector2 gravityVector;
@@ -46,7 +50,9 @@ public class Player : MonoBehaviour, IDamageable
         rb = GetComponent<Rigidbody2D>();
         IsFacingRight = true;
         isConstantlyAttacking = false;
+        hasAirAttacked = false;
         currentHealthPoint = maxHealthPoint;
+        gravityScale = rb.gravityScale;
     }
 
     private void Start()
@@ -79,20 +85,30 @@ public class Player : MonoBehaviour, IDamageable
         HandleRunning();
         HandleJumping();
         HandleAttacking();
-        playerVisual.HandleFlipX();
 
         // update states
         isRunning = moveDir.x != 0f;
         isGrounded = Physics2D.OverlapCircle(playerPivot.position, GroundCheckRadius, groundLayer);
+        if (isGrounded)
+        {
+            hasAirAttacked = false;
+        }
     }
 
     private void HandleAttacking()
     {
         if (cooldownTimer <= 0)
         {
-            if (isConstantlyAttacking)
+            if (isConstantlyAttacking && !hasAirAttacked)
             {
                 isAttacking = true;
+                if (!isGrounded)
+                {
+                    rb.velocity = new Vector2(0, 0);
+                    rb.gravityScale = 0;
+                    StartCoroutine(DelayedResetGravityScale());
+                    hasAirAttacked = true;
+                }
                 var enemiesInRange = new Collider2D[10];
                 _ = Physics2D.OverlapCircleNonAlloc(attackOrigin.position, attackRadius, enemiesInRange, enemyLayer);
                 foreach (var enemy in enemiesInRange)
@@ -113,6 +129,12 @@ public class Player : MonoBehaviour, IDamageable
             isAttacking = false;
             cooldownTimer -= Time.deltaTime;
         }
+    }
+
+    private IEnumerator DelayedResetGravityScale()
+    {
+        yield return new WaitForSeconds(0.5f);
+        rb.gravityScale = gravityScale;
     }
 
     private void OnDrawGizmos()
