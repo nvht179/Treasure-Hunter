@@ -12,11 +12,11 @@ public class TotemHeadVisual : ShooterTrapVisual {
 
     private void Start() {
         if (shooterTrap is TotemHead totemHead) {
-            totemHead.OnObjectFired += head1A_OnObjectFired;
+            totemHead.OnObjectFired += totemHead_OnObjectFired;
         }
     }
 
-    private void head1A_OnObjectFired(object sender, EventArgs e) {
+    private void totemHead_OnObjectFired(object sender, EventArgs e) {
         animator.SetTrigger(Attack);
     }
 }
