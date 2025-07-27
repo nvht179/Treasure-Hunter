@@ -11,7 +11,8 @@ public class SeashellVisual : ShooterTrapVisual {
         base.Awake();
     }
 
-    private void Start() {
+    private new void Start() {
+        base.Start();
         if (shooterTrap is Seashell seashell) {
             seashell.OnObjectFired += Seashell_OnObjectFired;
             seashell.OnDamageTaken += Seashell_OnDamageTaken;

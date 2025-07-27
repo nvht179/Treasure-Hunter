@@ -11,6 +11,9 @@ public class ShooterTrapVisual : MonoBehaviour {
 
     protected void Awake() {
         animator = GetComponent<Animator>();
+    }
+
+    protected void Start() {
         if (shooterTrap.GetDirection() == ShooterTrap.FireDirection.Right)
         {
             transform.rotation = Quaternion.Euler(0, 180, 0);

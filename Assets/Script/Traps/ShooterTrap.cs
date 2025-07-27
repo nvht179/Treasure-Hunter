@@ -15,11 +15,15 @@ public class ShooterTrap : MonoBehaviour {
     [SerializeField] private Transform firePoint;
     [SerializeField] protected FlyingObjectSO flyingObjectSO;
     [SerializeField] private float fireRate;
-    [SerializeField] private FireDirection fireDirection;
+    [SerializeField] public FireDirection fireDirection;
 
     private float nextFireTime = 0f;
     protected float fireDelay;
     protected bool stopShooting = false;
+
+    protected virtual void Awake() {
+        nextFireTime = UnityEngine.Random.Range(0f, fireRate);
+    }
 
     private void Update() {
         if (stopShooting) return;
@@ -48,6 +52,11 @@ public class ShooterTrap : MonoBehaviour {
     public FireDirection GetDirection() {
         return fireDirection;
     }
+
+    public void SetFireDirection(FireDirection direction) {
+        fireDirection = direction;
+    }
+
     public void StopShooting() {
         stopShooting = true;
     }

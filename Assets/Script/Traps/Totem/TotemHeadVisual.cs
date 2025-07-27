@@ -10,7 +10,8 @@ public class TotemHeadVisual : ShooterTrapVisual {
         base.Awake();
     }
 
-    private void Start() {
+    private new void Start() {
+        base.Start();
         if (shooterTrap is TotemHead totemHead) {
             totemHead.OnObjectFired += TotemHead_OnObjectFired;
         }

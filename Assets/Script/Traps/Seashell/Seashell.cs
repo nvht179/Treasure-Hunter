@@ -11,7 +11,8 @@ public class Seashell : ShooterTrap, IDamageable {
     [SerializeField] private float maxHealthPoint = 10f;
     private float currentHealthPoint;
 
-    private void Awake() {
+    private new void Awake() {
+        base.Awake();
         fireDelay = 0.15f;
         currentHealthPoint = maxHealthPoint;
     }

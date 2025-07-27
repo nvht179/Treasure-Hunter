@@ -5,7 +5,8 @@ using UnityEngine;
 using static ShooterTrap;
 
 public class Cannon : ShooterTrap {
-    private void Awake() {
+    private new void Awake() {
+        base.Awake();
         fireDelay = 0.05f;
     }
 }

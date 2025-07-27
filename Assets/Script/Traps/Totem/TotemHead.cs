@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class TotemHead : ShooterTrap {
     
-    private void Awake() {
+    private new void Awake() {
+        base.Awake();
         fireDelay = 0.15f;
     }
 }

@@ -20,7 +20,8 @@ public class CannonVisual : ShooterTrapVisual {
         }
     }
 
-    private void Start() {
+    private new void Start() {
+        base.Start();
         if (shooterTrap is Cannon cannon) {
             cannon.OnObjectFired += Cannon_OnCannonBallFired;
         }
