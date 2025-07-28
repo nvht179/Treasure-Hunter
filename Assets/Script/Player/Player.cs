@@ -7,7 +7,6 @@ public class Player : MonoBehaviour, IDamageable
 {
     [Header("Jump System")]
     [SerializeField] private float jumpPower;
-    [SerializeField] private float fallMultiplier;
     [SerializeField] private float jumpDegrader;
 
     [Header("Movement")]
@@ -173,7 +172,7 @@ public class Player : MonoBehaviour, IDamageable
         rb.gravityScale = gravityScale;
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(attackOrigin.position, attackRadius);
     }
