@@ -100,6 +100,7 @@ public class Player : MonoBehaviour, IDamageable
         {
             airAttackTimer = AirAttackTime;
         }
+
         isGrounded = Physics2D.OverlapCircle(playerPivot.position, GroundCheckRadius, groundLayer);
         if (isGrounded)
         {
@@ -118,7 +119,7 @@ public class Player : MonoBehaviour, IDamageable
         {
             velocityX = 0;
         }
-        
+
         // vertical movement
         var velocityY = currentVelocity.y;
 
@@ -126,6 +127,7 @@ public class Player : MonoBehaviour, IDamageable
         {
             velocityY -= gravityVector.y * jumpDegrader * Time.fixedDeltaTime;
         }
+
         rb.velocity = new Vector2(velocityX, velocityY);
     }
 
@@ -144,6 +146,7 @@ public class Player : MonoBehaviour, IDamageable
                     StartCoroutine(DelayedResetGravityScale());
                     hasAirAttacked = true;
                 }
+
                 var enemiesInRange = new Collider2D[10];
                 _ = Physics2D.OverlapCircleNonAlloc(attackOrigin.position, attackRadius, enemiesInRange, enemyLayer);
                 foreach (var enemy in enemiesInRange)
