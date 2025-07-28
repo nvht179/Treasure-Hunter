@@ -28,7 +28,7 @@ public class DestroyedFragments : MonoBehaviour {
             // Launch fragment in a random direction
             Vector2 force = UnityEngine.Random.insideUnitCircle.normalized * UnityEngine.Random.Range(3f, 6f);
             rb.AddForce(force, ForceMode2D.Impulse);
-            rb.AddTorque(UnityEngine.Random.Range(-200f, 200f)); // Spin the fragment
+            rb.AddTorque(UnityEngine.Random.Range(-100f, 100f)); // Spin the fragment
         }
     }
 }

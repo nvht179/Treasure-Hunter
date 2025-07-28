@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu()]
+[CreateAssetMenu(menuName = "Trap/TotemHead")]
 public class TotemHeadSO : ScriptableObject {
     [Header("General")]
     public string totemName;

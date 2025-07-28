@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d755ce070f16cce45a585dbe8405f806, type: 3}
+  m_Name: SilverCoin
+  m_EditorClassIdentifier: 
+  itemName: Silver Coin
+  icon: {fileID: 21300000, guid: ce924bd6132ff46418999c98292bcd8b, type: 3}
+  prefab: {fileID: 7496000254365503891, guid: a930f5a79a194344b83cb77be379eda7, type: 3}
+  type: 2
+  stackable: 1
+  maxStack: 1000

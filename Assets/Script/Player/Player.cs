@@ -27,6 +27,9 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private float attackCooldownTime;
     [SerializeField] private float maxHealthPoint;
 
+    [Header("Inventory")]
+    [SerializeField] private UI_Inventory uiInventory;
+
     private const float GroundCheckRadius = 0.05f;
     private const float AirAttackTime = 0.5f;
 
@@ -48,6 +51,8 @@ public class Player : MonoBehaviour, IDamageable
     public bool IsFacingRight { get; set; }
     private Rigidbody2D rb;
 
+    private Inventory inventory;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -56,6 +61,9 @@ public class Player : MonoBehaviour, IDamageable
         hasAirAttacked = false;
         currentHealthPoint = maxHealthPoint;
         gravityScale = rb.gravityScale;
+
+        inventory = new Inventory();
+        uiInventory.SetInventory(inventory);
     }
 
     private void Start()
