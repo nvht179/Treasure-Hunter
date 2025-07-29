@@ -13,6 +13,12 @@ public class CrabbyVisual : MonoBehaviour
 
     private static readonly int XVelocity = Animator.StringToHash("XVelocity");
     private static readonly int YVelocity = Animator.StringToHash("YVelocity");
+    private static readonly int Attack = Animator.StringToHash("Attack");
+    private static readonly int IsJumping = Animator.StringToHash("IsJumping");
+    private static readonly int IsCharging = Animator.StringToHash("IsCharging");
+    private static readonly int Charging = Animator.StringToHash("Charging");
+
+    private bool playOnce;
 
     private void Awake()
     {
@@ -20,11 +26,32 @@ public class CrabbyVisual : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    private void Start()
+    {
+        crabby.OnAttack += CrabbyOnAttack;
+    }
+
+    private void CrabbyOnAttack(object sender, EventArgs e)
+    {
+        animator.SetTrigger(Attack);
+    }
+
     private void Update()
     {
         HandleFlipX();
-
+        var isJumping = !crabby.IsGrounded();
+        var isCharging = crabby.IsCharging();
+        if (isCharging && !playOnce)
+        {
+            animator.SetTrigger(Charging);
+            playOnce = true;
+        }
+        else if (!isCharging)
+        {
+            playOnce = false;
+        }
         var velocity = crabby.GetVelocity();
+        animator.SetBool(IsJumping, isJumping);
         animator.SetFloat(XVelocity, math.abs(velocity.x));
         animator.SetFloat(YVelocity, math.abs(velocity.y));
     }
