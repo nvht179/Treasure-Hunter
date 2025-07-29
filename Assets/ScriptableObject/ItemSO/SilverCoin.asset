@@ -17,4 +17,4 @@ MonoBehaviour:
   prefab: {fileID: 7496000254365503891, guid: a930f5a79a194344b83cb77be379eda7, type: 3}
   type: 2
   stackable: 1
-  maxStack: 1000
+  maxStack: 9

@@ -8,11 +8,6 @@ public class Item {
     public ItemSO itemSO;
     public int quantity;
 
-    public Item() {
-        itemSO = null;
-        quantity = 0;
-    }
-
     public Item(ItemSO itemSO)
     {
         this.itemSO = itemSO;

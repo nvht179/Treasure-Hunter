@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: _ItemList
   m_EditorClassIdentifier: 
   items:
-  - {fileID: 11400000, guid: 514a51d096136b64ca715b2f36520b13, type: 2}
   - {fileID: 11400000, guid: 63b53ff6e847f9442beeab60147bc05a, type: 2}
   - {fileID: 11400000, guid: c855dd0e5cfd79f48ba6816d6d710434, type: 2}
   - {fileID: 11400000, guid: 4a82f1426e667fd499c9d79ffe6ee3c1, type: 2}

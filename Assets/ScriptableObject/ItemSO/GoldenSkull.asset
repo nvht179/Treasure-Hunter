@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d755ce070f16cce45a585dbe8405f806, type: 3}
   m_Name: GoldenSkull
   m_EditorClassIdentifier: 
-  itemName: GoldenSkull
+  itemName: Golden Skull
   icon: {fileID: 21300000, guid: ca04330107c6c3e4fb3068bd291126cd, type: 3}
   prefab: {fileID: 1614522995293048218, guid: 79820075970996a42a58a491a36195e1, type: 3}
   type: 2
