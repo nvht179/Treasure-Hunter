@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ public class UI_Inventory : MonoBehaviour {
     [SerializeField] private Transform itemSlotContainer;
     [SerializeField] private Transform itemSlotTemplate;
     [SerializeField] private ItemListSO itemListSO;
+    [SerializeField] private TextMeshProUGUI description;
 
     private void Awake() {
         itemSlotTemplate.gameObject.SetActive(false);
@@ -51,8 +53,10 @@ public class UI_Inventory : MonoBehaviour {
             if (item.itemSO != null && item.itemSO.prefab != null) {
                 Transform itemPrefab = Instantiate(item.itemSO.prefab, image.transform);
                 itemPrefab.localPosition = new Vector3(0, 0, -1);
-                itemPrefab.localScale = new Vector3(24, 24, 1);
+                itemPrefab.localScale = new Vector3(40, 40, 1);
             }
+
+            description.text = item.itemSO != null ? item.itemSO.itemName : "No Item";
             x++;
             if(x > 3) {
                 x = 0;
