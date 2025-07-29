@@ -1219,6 +1219,9 @@ MonoBehaviour:
   itemSlotTemplate: {fileID: 9110468431750440709}
   itemListSO: {fileID: 11400000, guid: 06b774b0e5baf434d885edd5254c587e, type: 2}
   description: {fileID: 8519758020609473309}
+  closeButton: {fileID: 0}
+  nextPageButton: {fileID: 0}
+  previousPageButton: {fileID: 0}
 --- !u!1 &4560000854967577243
 GameObject:
   m_ObjectHideFlags: 0
