@@ -19,6 +19,7 @@ public class GameInput : MonoBehaviour
     public event EventHandler OnJumpAction;
     public event EventHandler OnPauseAction;
     public event EventHandler OnResumeAction;
+    public event EventHandler OnInventoryAction;
 
     private PlayerInputActions playerInputActions;
     private InputActionMap currentInputActionMap;
@@ -31,7 +32,13 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.Attack.performed += AttackOnPerformed;
         playerInputActions.Player.Jump.performed += JumpOnPerformed;
         playerInputActions.Player.Pause.performed += PauseOnPerformed;
+        playerInputActions.Player.Inventory.performed += InventoryOnPerformed;
         playerInputActions.UI.Resume.performed += ResumeOnPerformed;
+    }
+
+    private void InventoryOnPerformed(InputAction.CallbackContext context)
+    {
+        OnInventoryAction?.Invoke(this, EventArgs.Empty);
     }
 
     private void ResumeOnPerformed(InputAction.CallbackContext context)
