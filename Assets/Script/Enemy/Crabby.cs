@@ -20,6 +20,8 @@ public class Crabby : MonoBehaviour, IDamageable
     [SerializeField] private float attackDamage;
     [SerializeField] private float attackRange;
     [SerializeField] private float chargeTime;
+    [SerializeField] private float hitTime;
+    [SerializeField] private float deadHitTime;
     [SerializeField] private float rechargeTime;
     [SerializeField] private float maxHealth;
 
@@ -155,12 +157,12 @@ public class Crabby : MonoBehaviour, IDamageable
         if (currentHealth == 0)
         {
             state = CrabbyState.DeadHit;
-            deadHitTimer = crabbyVisual.GetCurrentRemainingTime();
+            deadHitTimer = deadHitTime;
             return;
         }
 
         state = CrabbyState.Hit;
-        hitTimer = crabbyVisual.GetCurrentRemainingTime();
+        hitTimer = hitTime;
     }
 
     // TODO: fix crabby not following attacking pattern when pushing it towards a wall

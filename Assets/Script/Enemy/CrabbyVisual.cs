@@ -79,6 +79,7 @@ public class CrabbyVisual : MonoBehaviour
     }
 
     // get the remaining time until the hit animation finishes
+    // flawed
     public float GetCurrentRemainingTime()
     {
         var currentState = animator.GetCurrentAnimatorStateInfo(0);
