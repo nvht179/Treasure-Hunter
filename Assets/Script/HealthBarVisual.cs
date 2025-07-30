@@ -2,26 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthBarVisual : MonoBehaviour
 {
     [SerializeField] private Player player;
-    private const float MaxWidth = 235;
-    private RectTransform rectTransform;
-
-    public void Awake()
-    {
-        rectTransform = GetComponent<RectTransform>();
-    }
+    [SerializeField] private Image barImage;
 
     public void Start()
     {
         player.OnDamageTaken += PlayerOnDamageTaken;
+        barImage.fillAmount = 1;
     }
 
     private void PlayerOnDamageTaken(object sender, IDamageable.OnDamageTakenEventArgs e)
     {
-        var width = MaxWidth * (e.CurrentHealth / e.MaxHealth);
-        rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
+        var healthNormalized = e.CurrentHealth / e.MaxHealth;
+        barImage.fillAmount = healthNormalized;
     }
 }

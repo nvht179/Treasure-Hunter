@@ -25,6 +25,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "AttackAlternate",
+                    "type": "Button",
+                    "id": "a45c3635-f19f-4484-a5b1-5bf4edaed661",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "9ded33d4-e8f5-4146-a086-db6faffffef4",
@@ -149,6 +158,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3ae303a1-deb9-41b9-8e27-14625813a9b2",
+                    "path": "<Keyboard>/k",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AttackAlternate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

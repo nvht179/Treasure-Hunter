@@ -16,6 +16,7 @@ public class GameInput : MonoBehaviour
     }
 
     public event EventHandler OnAttackAction;
+    public event EventHandler OnAttackAlternateAction;
     public event EventHandler OnJumpAction;
     public event EventHandler OnPauseAction;
     public event EventHandler OnResumeAction;
@@ -30,6 +31,7 @@ public class GameInput : MonoBehaviour
 
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Attack.performed += AttackOnPerformed;
+        playerInputActions.Player.AttackAlternate.performed += AttackAlternateOnPerformed;
         playerInputActions.Player.Jump.performed += JumpOnPerformed;
         playerInputActions.Player.Pause.performed += PauseOnPerformed;
         playerInputActions.Player.Inventory.performed += InventoryOnPerformed;
@@ -59,6 +61,11 @@ public class GameInput : MonoBehaviour
     private void AttackOnPerformed(InputAction.CallbackContext obj)
     {
         OnAttackAction?.Invoke(this, EventArgs.Empty);
+    }
+    
+    private void AttackAlternateOnPerformed(InputAction.CallbackContext obj)
+    {
+        OnAttackAlternateAction?.Invoke(this, EventArgs.Empty);
     }
 
     public Vector2 GetMovementVectorNormalized()

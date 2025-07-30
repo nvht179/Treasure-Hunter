@@ -13,6 +13,7 @@ public class CrabbyHealthBar : MonoBehaviour
     {
         crabby.OnDamageTaken += CrabbyOnDamageTaken;
         barImage.fillAmount = 1;
+        gameObject.SetActive(false);
     }
 
     private void CrabbyOnDamageTaken(object sender, IDamageable.OnDamageTakenEventArgs e)

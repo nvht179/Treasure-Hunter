@@ -108,7 +108,7 @@ public class Crabby : MonoBehaviour, IDamageable
                 DeadHit();
                 break;
             case CrabbyState.Dead:
-                gameObject.SetActive(false);
+                Destroy(gameObject);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Hit
+  m_Name: EmbeddedSword
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,13 +21,13 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 21300000, guid: ec5382bd2c8824c4cb9bf2dec09c8877, type: 3}
+      value: {fileID: 557294886, guid: 3704e8b90b86c3a4e91f06615e145867, type: 3}
     - time: 0.16666667
-      value: {fileID: 21300000, guid: 5677a790ece634040a490c8247f87bff, type: 3}
+      value: {fileID: 2025383062, guid: 69a2077f9f1070644900b46290ab5796, type: 3}
     - time: 0.33333334
-      value: {fileID: 21300000, guid: 82a262ea3f726674285fbd3fab728927, type: 3}
+      value: {fileID: 948638034, guid: 4163aceef53c6fe4fa858c2eee4e77f6, type: 3}
     - time: 0.5
-      value: {fileID: 21300000, guid: 8dc41f1d3ee4fed408aeb383d48a0d56, type: 3}
+      value: {fileID: -1472596613, guid: bbeb1343a6ef04c4e9219c4271dea966, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -50,10 +50,10 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 21300000, guid: ec5382bd2c8824c4cb9bf2dec09c8877, type: 3}
-    - {fileID: 21300000, guid: 5677a790ece634040a490c8247f87bff, type: 3}
-    - {fileID: 21300000, guid: 82a262ea3f726674285fbd3fab728927, type: 3}
-    - {fileID: 21300000, guid: 8dc41f1d3ee4fed408aeb383d48a0d56, type: 3}
+    - {fileID: 557294886, guid: 3704e8b90b86c3a4e91f06615e145867, type: 3}
+    - {fileID: 2025383062, guid: 69a2077f9f1070644900b46290ab5796, type: 3}
+    - {fileID: 948638034, guid: 4163aceef53c6fe4fa858c2eee4e77f6, type: 3}
+    - {fileID: -1472596613, guid: bbeb1343a6ef04c4e9219c4271dea966, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

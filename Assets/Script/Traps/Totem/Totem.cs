@@ -66,7 +66,7 @@ public class Totem : MonoBehaviour {
         // 2) determine how many heads
         int count = Random.Range(minHeads, maxHeads + 1);
 
-        // 3) allow duplicates — pick with replacement
+        // 3) allow duplicates & pick with replacement
         var pool = config.allHeads;
 
         float currentY = 0;

@@ -20,11 +20,15 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private PlayerVisual playerVisual;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private FlyingObjectSO flyingSwordSO;
 
     [Header("Attack")]
     [SerializeField] private int playerDamage;
     [SerializeField] private float attackCooldownTime;
+    [SerializeField] private float attackAlternateCooldownTime;
+    [SerializeField] private float attackAlternateStaminaCost;
     [SerializeField] private float maxHealthPoint;
+    [SerializeField] private float maxStamina;
 
     [Header("Inventory")]
     [SerializeField] private UI_Inventory uiInventory;
@@ -34,15 +38,23 @@ public class Player : MonoBehaviour, IDamageable
 
     public event EventHandler OnDestroyed;
     public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
+    public event EventHandler<OnStaminaUsedEventArgs> OnStaminaUsed;
+    public class OnStaminaUsedEventArgs : EventArgs
+    {
+        public float CurrentStamina;
+        public float MaxStamina;
+    }
 
     private float gravityScale;
     private float currentHealthPoint;
+    private float currentStamina;
     private bool isGrounded;
     private bool isConstantlyAttacking;
     private bool isAttacking;
     private bool isDamaged;
     private bool hasAirAttacked;
     private float attackCooldownTimer;
+    private float attackAlternateCooldownTimer;
     private float airAttackTimer;
     private Vector3 moveVector;
     private int moveDirection;
@@ -59,7 +71,9 @@ public class Player : MonoBehaviour, IDamageable
         isConstantlyAttacking = false;
         hasAirAttacked = false;
         currentHealthPoint = maxHealthPoint;
+        currentStamina = maxStamina;
         gravityScale = rb.gravityScale;
+        attackAlternateCooldownTimer = attackAlternateCooldownTime;
 
         inventory = new Inventory();
         uiInventory.SetInventory(inventory);
@@ -69,6 +83,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         gameInput.OnJumpAction += PlayerOnJump;
         gameInput.OnAttackAction += PlayerOnAttack;
+        gameInput.OnAttackAlternateAction += PlayerOnAttackAlternate;
         gravityVector = new Vector2(0, -Physics2D.gravity.y);
     }
 
@@ -84,6 +99,27 @@ public class Player : MonoBehaviour, IDamageable
     {
         isConstantlyAttacking = !isConstantlyAttacking;
     }
+    
+    private void PlayerOnAttackAlternate(object sender, EventArgs e)
+    {
+        if (attackAlternateCooldownTimer < 0 && currentStamina > 0)
+        {
+            var flyingSwordTransform = Instantiate(flyingSwordSO.prefab, attackOrigin.position, attackOrigin.rotation);
+            flyingSwordTransform.SetParent(transform);
+            if (flyingSwordTransform.TryGetComponent<FlyingSword>(out var flyingSword))
+            {
+                flyingSword.Direction = IsFacingRight ? 1 : -1;
+            }
+
+            attackAlternateCooldownTimer = attackAlternateCooldownTime;
+            currentStamina = Mathf.Clamp(currentStamina - attackAlternateStaminaCost, 0, maxStamina);
+            OnStaminaUsed?.Invoke(this, new OnStaminaUsedEventArgs
+            {
+                CurrentStamina = currentStamina,
+                MaxStamina = maxStamina
+            });
+        }
+    }
 
     private void Update()
     {
@@ -91,10 +127,11 @@ public class Player : MonoBehaviour, IDamageable
         var inputVector = gameInput.GetMovementVectorNormalized();
         moveVector = new Vector3(inputVector.x, inputVector.y, 0);
 
-        HandleAttacking();
+        HandleAttack();
 
         // update states
         moveDirection = moveVector.x > 0 ? 1 : -1;
+        attackAlternateCooldownTimer -= Time.deltaTime;
         airAttackTimer -= Time.deltaTime;
         if (isAttacking && !isGrounded)
         {
@@ -132,7 +169,7 @@ public class Player : MonoBehaviour, IDamageable
     }
 
 
-    private void HandleAttacking()
+    private void HandleAttack()
     {
         if (attackCooldownTimer <= 0)
         {
