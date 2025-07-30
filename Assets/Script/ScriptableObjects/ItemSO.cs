@@ -12,6 +12,9 @@ public class ItemSO : ScriptableObject {
     public ItemType type;
     public bool stackable;
     public int maxStack;
+
+    public int buyPrice;
+    public int sellPrice;
 }
 
 public enum ItemType { Weapon, Potion, Resource }

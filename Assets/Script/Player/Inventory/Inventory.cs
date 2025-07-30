@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Inventory {
 
+    private int money;
     private List<Item> itemList;
 
     public Inventory() {
@@ -50,6 +51,20 @@ public class Inventory {
                 return;
             }
         }
+    }
+
+    public void EarnMoney(int amount) {
+        money += amount;
+    }
+
+    public void SpendMoney(int amount) {
+        if (amount <= money) {
+            money -= amount;
+        }
+    }
+
+    public int GetMoney() {
+        return money;
     }
 
     public List<Item> GetItemList() {

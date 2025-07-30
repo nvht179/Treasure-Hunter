@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class UI_Inventory : MonoBehaviour {
+public class ShopManager : MonoBehaviour {
 
     public event EventHandler<OnItemSelectedEventArgs> OnItemSelected;
     public class OnItemSelectedEventArgs : EventArgs {
         public Item item;
     }
 
+    [Header("Shop Settings")]
+    [SerializeField] private ItemListSO shopItemListSO;
+
     [Header("UI Elements")]
     [SerializeField] private Transform itemSlotContainer;
     [SerializeField] private Transform itemSlotTemplate;
-    [SerializeField] private ItemListSO itemListSO;
 
     [Header("Navigation")]
     [SerializeField] private UnityEngine.UI.Button closeButton;
@@ -21,26 +23,33 @@ public class UI_Inventory : MonoBehaviour {
     [SerializeField] private UnityEngine.UI.Button previousPageButton;
 
     [Header("Actions")]
-    [SerializeField] private UnityEngine.UI.Button useButton;
-    [SerializeField] private UnityEngine.UI.Button dropButton;
+    [SerializeField] private UnityEngine.UI.Button buyButton;
 
-    private Inventory inventory;
-    private bool isInventoryShown;
-    private int maxPage;
+
     private const int NumItemPerPage = 6;
+    private Inventory playerInventory;
+    private Inventory shopInventory;
+    private int maxPage;
     private int currentPage = 0;
     private Item selectedItem;
 
     private void Awake() {
-        SetListener();
+        SetupShop();
+        SetupListener();
     }
 
     private void Start() {
-        GameInput.Instance.OnInventoryAction += GameInput_OnInventoryAction;
         Hide();
     }
 
-    private void SetListener() {
+    private void SetupShop() {
+        shopInventory = new Inventory();
+        foreach (ItemSO itemSO in shopItemListSO.items) {
+            shopInventory.AddItem(new Item(itemSO));
+        }
+    }
+
+    private void SetupListener() {
         closeButton.onClick.AddListener(() => {
             Hide();
         });
@@ -57,61 +66,36 @@ public class UI_Inventory : MonoBehaviour {
             }
         });
 
-        useButton.onClick.AddListener(() => {
-            if (selectedItem != null) {
-                // Implement use item logic here
-                Debug.Log($"Using item: {selectedItem.itemSO.itemName}");
+        buyButton.onClick.AddListener(() => {
+            if (selectedItem == null) return;
+            // Check if player can afford the item
+            if (playerInventory.GetItemListCount() < selectedItem.itemSO.buyPrice) {
+                // TODO: Show Message to player that they can't afford the item
+                return;
             }
+            // Add item to player's inventory
+            playerInventory.AddItem(new Item(selectedItem.itemSO, 1));
+            shopInventory.RemoveItem(selectedItem);
+            selectedItem = null;
+            RefreshInventoryItems();
         });
 
-        dropButton.onClick.AddListener(() => {
-            if (selectedItem != null) {
-                inventory.RemoveItem(selectedItem);
-                if(selectedItem.quantity == 0) {
-                    selectedItem = null; // Clear selection if item is fully removed
-                }
-                RefreshInventoryItems();
-            }
-        });
     }
 
     private void Hide() {
         gameObject.SetActive(false);
-        isInventoryShown = false;
     }
 
     private void Show() {
         gameObject.SetActive(true);
-        isInventoryShown = true;
         itemSlotTemplate.gameObject.SetActive(false);
         currentPage = 0;
         RefreshInventoryItems();
     }
 
-    private void GameInput_OnInventoryAction(object sender, EventArgs e) {
-        isInventoryShown = !isInventoryShown;
-        if (isInventoryShown) {
-            Show();
-        }
-        else {
-            Hide();
-        }
-    }
-
     public void SetInventory(Inventory inventory) {
-        if (itemListSO != null) {
-            foreach (ItemSO itemSO in itemListSO.items) {
-                Item item = new(itemSO);
-                inventory.AddItem(item);
-            }
-            foreach (ItemSO itemSO in itemListSO.items) {
-                Item item = new(itemSO);
-                inventory.AddItem(item);
-            }
-        }
-        this.inventory = inventory;
-        currentPage = 0;
-        RefreshInventoryItems();
+        // TODO: Set when Player Interacts with Shop
+        this.playerInventory = inventory;
     }
 
     private void RefreshInventoryItems() {
@@ -119,7 +103,7 @@ public class UI_Inventory : MonoBehaviour {
     }
 
     private void RefreshInventoryItems(int pageNumber) {
-        int totalItems = inventory.GetItemListCount();
+        int totalItems = shopItemListSO.items.Count;
         maxPage = Mathf.Max(0, (totalItems - 1) / NumItemPerPage);
 
         // Clean previous slots
@@ -136,7 +120,7 @@ public class UI_Inventory : MonoBehaviour {
 
         int x = 0;
         int y = 0;
-        List<Item> itemList = inventory.GetItemList();
+        List<Item> itemList = playerInventory.GetItemList();
 
         for (int i = startIndex; i < endIndex; i++) {
             Item item = itemList[i];
