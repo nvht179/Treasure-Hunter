@@ -61,8 +61,8 @@ public class Player : MonoBehaviour, IDamageable
         currentHealthPoint = maxHealthPoint;
         gravityScale = rb.gravityScale;
 
-        inventory = new Inventory();
-        uiInventory.SetInventory(inventory);
+        //inventory = new Inventory();
+        //uiInventory.SetInventory(inventory);
     }
 
     private void Start()
