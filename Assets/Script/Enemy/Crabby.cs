@@ -1,13 +1,16 @@
 using System;
+using System.Collections;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 
-public class Crabby : MonoBehaviour
+public class Crabby : MonoBehaviour, IDamageable
 {
     [SerializeField] private float moveSpeed;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Player player;
+    [SerializeField] private CrabbyVisual crabbyVisual;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private Transform attackOrigin;
     [SerializeField] private float visionDistance;
@@ -18,17 +21,23 @@ public class Crabby : MonoBehaviour
     [SerializeField] private float attackRange;
     [SerializeField] private float chargeTime;
     [SerializeField] private float rechargeTime;
+    [SerializeField] private float maxHealth;
 
     public event EventHandler OnAttack;
+    public event EventHandler OnDestroyed;
+    public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
-    private enum CrabbyState
+    public enum CrabbyState
     {
         Wandering,
         Pursuing,
         Waiting,
         Charging,
         Attacking,
-        Recharging
+        Recharging,
+        Hit,
+        DeadHit,
+        Dead,
     }
 
     private Rigidbody2D rb;
@@ -38,7 +47,11 @@ public class Crabby : MonoBehaviour
     private Vector3 groundAndWallCheckPosition;
     private float chargeTimer;
     private float rechargeTimer;
+    private float hitTimer;
+    private float deadHitTimer;
+    private float currentHealth;
     private bool hasAttacked;
+    private bool isRecharging;
 
     private const float EyeHeightToBodyRatio = 0.75f;
     private const float GroundCheckDistance = 0.1f;
@@ -51,11 +64,15 @@ public class Crabby : MonoBehaviour
         chargeTimer = chargeTime;
         rechargeTimer = rechargeTime;
         state = CrabbyState.Wandering;
+        currentHealth = maxHealth;
+        isRecharging = false;
     }
 
     private void Update()
     {
-        CheckForPlayer();
+        ManageStates();
+        Debug.Log($"state: {state}");
+        Debug.Log($"recharge timer {rechargeTimer}");
         groundAndWallCheckPosition = new Vector3(transform.position.x + moveDirection * groundAndWallCheckOriginOffset,
             transform.position.y, transform.position.z);
         attackOrigin.position = new Vector3(moveDirection * attackOrigin.position.x, attackOrigin.position.y,
@@ -84,6 +101,15 @@ public class Crabby : MonoBehaviour
             case CrabbyState.Recharging:
                 Recharge();
                 break;
+            case CrabbyState.Hit:
+                Hit();
+                break;
+            case CrabbyState.DeadHit:
+                DeadHit();
+                break;
+            case CrabbyState.Dead:
+                gameObject.SetActive(false);
+                break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -99,14 +125,6 @@ public class Crabby : MonoBehaviour
     {
         rb.velocity = new Vector2(0, rb.velocity.y);
         rechargeTimer -= Time.fixedDeltaTime;
-
-        if (rechargeTimer <= 0)
-        {
-            state = CrabbyState.Wandering;
-            chargeTimer = chargeTime;
-            rechargeTimer = rechargeTime;
-            hasAttacked = false;
-        }
     }
 
     private void Attack()
@@ -127,52 +145,118 @@ public class Crabby : MonoBehaviour
         hasAttacked = true;
     }
 
-    private void CheckForPlayer()
+    public void TakeDamage(float damage)
     {
+        currentHealth = math.clamp(currentHealth - damage, 0, maxHealth);
+        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+        {
+            CurrentHealth = currentHealth,
+            MaxHealth = maxHealth
+        });
+
+        if (currentHealth == 0)
+        {
+            state = CrabbyState.DeadHit;
+            deadHitTimer = crabbyVisual.GetCurrentRemainingTime();
+            return;
+        }
+
+        state = CrabbyState.Hit;
+        hitTimer = crabbyVisual.GetCurrentRemainingTime();
+    }
+
+    // TODO: fix crabby not following attacking pattern when pushing it towards a wall
+    private void ManageStates()
+    {
+        if (state == CrabbyState.Dead) return;
         var playerDetectedRight = CastVisionRay(Vector2.right);
         var playerDetectedLeft = CastVisionRay(Vector2.left);
 
-        if (playerDetectedLeft || playerDetectedRight)
+        if (state != CrabbyState.Recharging && state != CrabbyState.Hit && state != CrabbyState.DeadHit)
         {
-            if (HasContinuousPathToPlayer())
+            if (playerDetectedLeft || playerDetectedRight)
             {
-                if (IsHittingWall())
+                if (HasContinuousPathToPlayer())
                 {
-                    state = CrabbyState.Waiting;
+                    if (IsHittingWall())
+                    {
+                        state = CrabbyState.Waiting;
+                    }
+                    else
+                    {
+                        state = CrabbyState.Pursuing;
+                        moveDirection = playerDetectedRight ? 1 : -1;
+                    }
                 }
                 else
                 {
-                    state = CrabbyState.Pursuing;
-                    moveDirection = playerDetectedRight ? 1 : -1;
+                    state = CrabbyState.Wandering;
                 }
             }
             else
             {
                 state = CrabbyState.Wandering;
             }
-        }
-        else
-        {
-            state = CrabbyState.Wandering;
-        }
 
-        if (IsNearPlayer())
-        {
-            if (chargeTimer > 0)
+            if (IsNearPlayer())
             {
-                if (state != CrabbyState.Charging)
+                if (chargeTimer > 0)
                 {
-                    state = CrabbyState.Charging;
-                    hasAttacked = false;
+                    if (state != CrabbyState.Charging)
+                    {
+                        state = CrabbyState.Charging;
+                        hasAttacked = false;
+                    }
                 }
-            }
-            else if (chargeTimer <= 0 && !hasAttacked)
-            {
-                state = CrabbyState.Attacking;
+                else if (chargeTimer <= 0)
+                {
+                    if (!hasAttacked)
+                    {
+                        state = CrabbyState.Attacking;
+                    }
+                    else
+                    {
+                        state = CrabbyState.Recharging;
+                    }
+                }
             }
             else
             {
+                chargeTimer = chargeTime;
+                state = CrabbyState.Wandering;
+            }
+        }
+
+        if (state == CrabbyState.Recharging)
+        {
+            isRecharging = true;
+            if (rechargeTimer <= 0)
+            {
+                state = CrabbyState.Wandering;
+                chargeTimer = chargeTime;
+                rechargeTimer = rechargeTime;
+                hasAttacked = false;
+                isRecharging = false;
+            }
+        }
+
+        if (state == CrabbyState.Hit)
+        {
+            if (isRecharging)
+            {
                 state = CrabbyState.Recharging;
+            }
+            else if (hitTimer <= 0)
+            {
+                state = CrabbyState.Wandering;
+            }
+        }
+        
+        if (state == CrabbyState.DeadHit)
+        {
+            if (deadHitTimer <= 0)
+            {
+                state = CrabbyState.Dead;
             }
         }
     }
@@ -243,6 +327,18 @@ public class Crabby : MonoBehaviour
         rb.velocity = new Vector2(0, rb.velocity.y);
     }
 
+    private void Hit()
+    {
+        rb.velocity = new Vector2(0, rb.velocity.y);
+        hitTimer -= Time.fixedDeltaTime;
+    }
+    
+    private void DeadHit()
+    {
+        rb.velocity = new Vector2(0, rb.velocity.y);
+        deadHitTimer -= Time.fixedDeltaTime;
+    }
+
     private bool IsGroundAhead()
     {
         var hit = Physics2D.Raycast(groundAndWallCheckPosition, Vector2.down, groundAndWallCheckOriginOffset,
@@ -266,14 +362,14 @@ public class Crabby : MonoBehaviour
                Mathf.Abs(playerPos.y - crabbyPos.y) < nearPlayerThreshold;
     }
 
-    public bool IsCharging()
+    public CrabbyState GetState()
     {
-        return state == CrabbyState.Charging;
+        return state;
     }
 
     public bool IsGrounded()
     {
-        var hit = Physics2D.Raycast(transform.position,Vector2.down, groundAndWallCheckOriginOffset,
+        var hit = Physics2D.Raycast(transform.position, Vector2.down, groundAndWallCheckOriginOffset,
             groundLayer);
         return hit.collider != null;
     }
