@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Inventory/Item")]
 public class ItemSO : ScriptableObject {
     public string itemName;
+    public string description;
     public Sprite icon;
     public Transform prefab;
     public ItemType type;

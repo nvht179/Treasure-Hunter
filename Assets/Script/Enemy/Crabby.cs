@@ -71,8 +71,6 @@ public class Crabby : MonoBehaviour, IDamageable
     private void Update()
     {
         ManageStates();
-        Debug.Log($"state: {state}");
-        Debug.Log($"recharge timer {rechargeTimer}");
         groundAndWallCheckPosition = new Vector3(transform.position.x + moveDirection * groundAndWallCheckOriginOffset,
             transform.position.y, transform.position.z);
         attackOrigin.position = new Vector3(moveDirection * attackOrigin.position.x, attackOrigin.position.y,

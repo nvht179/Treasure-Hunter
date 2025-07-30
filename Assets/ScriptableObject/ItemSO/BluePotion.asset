@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: BluePotion
   m_EditorClassIdentifier: 
   itemName: Blue Potion
+  description: This is description
   icon: {fileID: 21300000, guid: 9a28ee95c304fe84ba2e51452d453e9b, type: 3}
   prefab: {fileID: 4746369949643043994, guid: 0bd7605c765a07e42a5cd086167a9430, type: 3}
   type: 1

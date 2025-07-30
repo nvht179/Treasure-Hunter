@@ -1,24 +1,28 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static UnityEditor.Progress;
 
 public class UI_Inventory : MonoBehaviour {
+
+    public event EventHandler<OnItemSelectedEventArgs> OnItemSelected;
+    public class OnItemSelectedEventArgs : EventArgs {
+        public Item item;
+    }
 
     [Header("UI Elements")]
     [SerializeField] private Transform itemSlotContainer;
     [SerializeField] private Transform itemSlotTemplate;
     [SerializeField] private ItemListSO itemListSO;
-    [SerializeField] private TextMeshProUGUI description;
 
     [Header("Navigation")]
     [SerializeField] private UnityEngine.UI.Button closeButton;
     [SerializeField] private UnityEngine.UI.Button nextPageButton;
     [SerializeField] private UnityEngine.UI.Button previousPageButton;
+
+    [Header("Actions")]
+    [SerializeField] private UnityEngine.UI.Button useButton;
+    [SerializeField] private UnityEngine.UI.Button dropButton;
 
     private Inventory inventory;
     private bool isInventoryShown;
@@ -28,6 +32,15 @@ public class UI_Inventory : MonoBehaviour {
     private Item selectedItem;
 
     private void Awake() {
+        SetListener();
+    }
+
+    private void Start() {
+        GameInput.Instance.OnInventoryAction += GameInput_OnInventoryAction;
+        Hide();
+    }
+
+    private void SetListener() {
         closeButton.onClick.AddListener(() => {
             Hide();
         });
@@ -43,11 +56,23 @@ public class UI_Inventory : MonoBehaviour {
                 RefreshInventoryItems();
             }
         });
-    }
 
-    private void Start() {
-        GameInput.Instance.OnInventoryAction += GameInput_OnInventoryAction;
-        Hide();
+        useButton.onClick.AddListener(() => {
+            if (selectedItem != null) {
+                // Implement use item logic here
+                Debug.Log($"Using item: {selectedItem.itemSO.itemName}");
+            }
+        });
+
+        dropButton.onClick.AddListener(() => {
+            if (selectedItem != null) {
+                inventory.RemoveItem(selectedItem);
+                if(selectedItem.quantity == 0) {
+                    selectedItem = null; // Clear selection if item is fully removed
+                }
+                RefreshInventoryItems();
+            }
+        });
     }
 
     private void Hide() {
@@ -123,12 +148,10 @@ public class UI_Inventory : MonoBehaviour {
             // Visuals
             UnityEngine.UI.Button button = itemSlotTransform.Find("ItemSlotButton").GetComponent<UnityEngine.UI.Button>();
 
-            foreach (Transform child in button.transform)
-            {
+            foreach (Transform child in button.transform) {
                 Destroy(child.gameObject);
             }
-            if (item.itemSO != null && item.itemSO.prefab != null)
-            {
+            if (item.itemSO != null && item.itemSO.prefab != null) {
                 Transform itemPrefab = Instantiate(item.itemSO.prefab, button.transform);
                 itemPrefab.localPosition = new Vector3(0, 0, -1);
                 itemPrefab.localScale = new Vector3(40, 40, 1);
@@ -137,8 +160,15 @@ public class UI_Inventory : MonoBehaviour {
             // Button click logic for selection
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() => {
+                if(selectedItem == item) {
+                    return;
+                }
                 selectedItem = item;
-                RefreshInventoryItems(currentPage); // Refresh to update visual "Selected"
+                RefreshInventoryItems(currentPage);
+
+                OnItemSelected?.Invoke(this, new OnItemSelectedEventArgs {
+                    item = selectedItem
+                });
             });
 
             // Quantity text
@@ -165,11 +195,5 @@ public class UI_Inventory : MonoBehaviour {
         // disable/enable page buttons
         nextPageButton.interactable = currentPage < maxPage;
         previousPageButton.interactable = currentPage > 0;
-
-        if (selectedItem != null) {
-            description.text = selectedItem.itemSO != null ? selectedItem.itemSO.itemName : "No Item";
-        } else {
-            description.text = "No Item";
-        }
     }
 }

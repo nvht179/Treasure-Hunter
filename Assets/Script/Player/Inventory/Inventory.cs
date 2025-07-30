@@ -37,6 +37,21 @@ public class Inventory {
         itemList.Add(new Item(newItem.itemSO, newItem.quantity));
     }
 
+    public void RemoveItem(Item itemToRemove) {
+        if (itemToRemove == null || itemToRemove.itemSO == null) return;
+        for (int i = 0; i < itemList.Count; i++) {
+            Item item = itemList[i];
+            if (item.itemSO == itemToRemove.itemSO) {
+                if (item.quantity > 1) {
+                    --item.quantity;
+                } else {
+                    itemList.RemoveAt(i);
+                }
+                return;
+            }
+        }
+    }
+
     public List<Item> GetItemList() {
         return itemList;
     }

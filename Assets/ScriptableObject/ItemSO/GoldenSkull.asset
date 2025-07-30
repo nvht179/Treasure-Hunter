@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: GoldenSkull
   m_EditorClassIdentifier: 
   itemName: Golden Skull
+  description: This is description
   icon: {fileID: 21300000, guid: ca04330107c6c3e4fb3068bd291126cd, type: 3}
   prefab: {fileID: 1614522995293048218, guid: 79820075970996a42a58a491a36195e1, type: 3}
   type: 2
