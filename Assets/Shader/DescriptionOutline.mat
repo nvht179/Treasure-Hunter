@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SpriteOutlineShader
-  m_Shader: {fileID: -6465566751694194690, guid: fb78e46984456494e9a1f5a16b3435f6, type: 3}
+  m_Name: DescriptionOutline
+  m_Shader: {fileID: -6465566751694194690, guid: 37855017cca980345837d7920b19245f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -41,11 +41,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Thinkness: 1
+    - _Thinkness_X: 1
+    - _Thinkness_Y: 0.045
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &4348482685266188847
+--- !u!114 &3048031293813883493
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
