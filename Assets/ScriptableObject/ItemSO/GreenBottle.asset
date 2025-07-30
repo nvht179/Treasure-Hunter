@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d755ce070f16cce45a585dbe8405f806, type: 3}
   m_Name: GreenBottle
   m_EditorClassIdentifier: 
-  itemName: Green Bottle
-  description: This is description
+  itemName: Green Potion
+  description: 'consumable: let''s go gambling. lose half of your current health
+    or restore full health'
   icon: {fileID: 21300000, guid: 550b37465fce1c24a9d9b66dbe2fc534, type: 3}
   prefab: {fileID: 6750589394897516739, guid: cf5d86dd6415a5344b9a67d77b2b84f9, type: 3}
   type: 1

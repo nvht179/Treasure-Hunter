@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d755ce070f16cce45a585dbe8405f806, type: 3}
-  m_Name: GreenDiamond
+  m_Name: RedDiamond
   m_EditorClassIdentifier: 
-  itemName: Green Diamond
-  description: 'passive: your max HP is 1 now and cannot be increased. But you can
-    1 shot enemies too'
-  icon: {fileID: 21300000, guid: e35cf0fefc896934eb26751829c0da6e, type: 3}
-  prefab: {fileID: 1026737027931679828, guid: 986356cf77e0db947ba3b3010d8fdfea, type: 3}
-  type: 2
+  itemName: Red Diamond
+  description: 'passive: gain 10 max HP'
+  icon: {fileID: 21300000, guid: ba18bf89202be8148a05e829b1c38223, type: 3}
+  prefab: {fileID: 1628601066568278247, guid: d3e90ca49d6f2cf439e1a62b1318e778, type: 3}
+  type: 0
   stackable: 1
-  maxStack: 5
+  maxStack: 9

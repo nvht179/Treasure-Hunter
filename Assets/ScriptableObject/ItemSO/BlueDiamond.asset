@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BlueDiamond
   m_EditorClassIdentifier: 
   itemName: Blue Diamond
-  description: This is description
+  description: 'passive: gain 10 stamina'
   icon: {fileID: 21300000, guid: 6d64ec06bd3f98147a892bf6a7fda851, type: 3}
   prefab: {fileID: 2210254996843426065, guid: 35e956bf0cc63ae4e9f355c2f6c1d52b, type: 3}
   type: 2

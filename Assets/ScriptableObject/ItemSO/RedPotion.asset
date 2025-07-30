@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d755ce070f16cce45a585dbe8405f806, type: 3}
   m_Name: RedPotion
   m_EditorClassIdentifier: 
-  itemName: Red Potion
-  description: This is description
+  itemName: Heath Potion
+  description: 'consumable: Heal 10 HP imediately'
   icon: {fileID: 21300000, guid: 8620047e83b1bf34fa6fc859da44befa, type: 3}
   prefab: {fileID: 6596864508605293805, guid: 2ac8739883b9b0249a572bb3a9b1b722, type: 3}
   type: 2
