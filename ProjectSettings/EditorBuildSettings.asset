@@ -9,9 +9,18 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenuScene.unity
     guid: cf34c3c9dd138a4408db0de65a667af8
   - enabled: 1
+    path: Assets/Scenes/SettingsScene.unity
+    guid: 0ab1790798a748f4097e1de85b48dd47
+  - enabled: 1
     path: Assets/Scenes/LoadingScene.unity
     guid: 5c283833684907b419248a14ded97479
   - enabled: 1
     path: Assets/GameScene.unity
     guid: 65d90e36e5acd9141aa3b940939c5c51
+  - enabled: 1
+    path: Assets/Scenes/Levels/PalmTreeIslandScene.unity
+    guid: 96ae3e21a433e544180ef63a84cdcd21
+  - enabled: 1
+    path: Assets/Scenes/Levels/PirateShipScene.unity
+    guid: 99f9ff0bcc535bc46a027e649d620023
   m_configObjects: {}

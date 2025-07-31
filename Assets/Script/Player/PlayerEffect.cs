@@ -32,7 +32,7 @@ public class PlayerEffect : MonoBehaviour
 
     private void Start()
     {
-        gameInput.OnJumpAction += PlayerEffectOriginOnJumpAction;
+        GameInput.Instance.OnJumpAction += PlayerEffectOriginOnJumpAction;
     }
 
     private void PlayerEffectOriginOnJumpAction(object sender, EventArgs e)

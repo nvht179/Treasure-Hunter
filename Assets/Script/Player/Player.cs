@@ -13,7 +13,6 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private float moveSpeed = 5f;
 
     [Header("References")]
-    [SerializeField] private GameInput gameInput;
     [SerializeField] private Transform attackOrigin;
     [SerializeField] private float attackRadius;
     [SerializeField] private Transform playerPivot;
@@ -81,9 +80,9 @@ public class Player : MonoBehaviour, IDamageable
 
     private void Start()
     {
-        gameInput.OnJumpAction += PlayerOnJump;
-        gameInput.OnAttackAction += PlayerOnAttack;
-        gameInput.OnAttackAlternateAction += PlayerOnAttackAlternate;
+        GameInput.Instance.OnJumpAction += PlayerOnJump;
+        GameInput.Instance.OnAttackAction += PlayerOnAttack;
+        GameInput.Instance.OnAttackAlternateAction += PlayerOnAttackAlternate;
         gravityVector = new Vector2(0, -Physics2D.gravity.y);
     }
 
@@ -124,7 +123,7 @@ public class Player : MonoBehaviour, IDamageable
     private void Update()
     {
         // handle input
-        var inputVector = gameInput.GetMovementVectorNormalized();
+        var inputVector = GameInput.Instance.GetMovementVectorNormalized();
         moveVector = new Vector3(inputVector.x, inputVector.y, 0);
 
         HandleAttack();

@@ -3,10 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : PersistentManager<GameManager>
 {
-    public static GameManager Instance { get; private set; }
-
     private enum State
     {
         WaitingToStart,
@@ -20,9 +18,9 @@ public class GameManager : MonoBehaviour
     private State state;
     private bool isGamePaused = false;
 
-    private void Awake()
+    protected override void Awake()
     {
-        Instance = this; // TODO: need dont destroy on load ???
+        base.Awake();
         state = State.WaitingToStart;
     }
 
@@ -31,19 +29,19 @@ public class GameManager : MonoBehaviour
         GameInput.Instance.OnPauseAction += GameInput_OnPauseAction;
         GameInput.Instance.OnResumeAction += GameInput_OnResumeAction;
         GameInput.Instance.EnableActionMap(GameInput.ActionMap.Player);
-        PauseManager.Instance.PauseGame();
+        //GamePauseManager.Instance.PauseGame();
     }
 
     private void GameInput_OnResumeAction(object sender, EventArgs e)
     {
         Debug.Log("GameInput_OnPauseAction -> resume");
-        PauseManager.Instance.TogglePauseGame();
+        GamePauseManager.Instance.ResumeGame();
     }
 
     private void GameInput_OnPauseAction(object sender, EventArgs e)
     {
         Debug.Log("GameInput_OnPauseAction -> pause");
-        PauseManager.Instance.TogglePauseGame();
+        GamePauseManager.Instance.PauseGame();
     }
 
     public bool IsGamePlaying()

@@ -8,20 +8,37 @@ public static class SceneLoader
     public enum Scene
     {
         MainMenuScene = 0,
-        LoadingScene = 1,
-        GameScene = 2,
-        OptionsScene = 3,
+        SettingsScene = 1,
+        LoadingScene = 2,
+        GameScene = 3,
         HowToPlayScene = 4,
         CreditsScene = 5
     }
 
-    private static Scene targetScene;
+    private static Scene targetScene = Scene.MainMenuScene;
+    private static Scene lastScene = Scene.MainMenuScene;
 
     public static void Load(Scene targetScene)
     {
+        lastScene = SceneLoader.targetScene;
         SceneLoader.targetScene = targetScene;
 
+        Debug.Log($"Loading scene: {targetScene.ToString()}");
         SceneManager.LoadScene(Scene.LoadingScene.ToString()); // calling target scene here will immediately skip loading scene -> callback
+    }
+
+    public static void LoadLastScene()
+    {
+        if (lastScene == Scene.LoadingScene)
+        {
+            // If we are already in the loading scene, we should not change the target scene
+            // to avoid an infinite loop of loading the same scene.
+            return;
+        }
+
+        Debug.Log($"Loading last scene: {lastScene.ToString()}");
+        targetScene = lastScene;
+        SceneManager.LoadScene(Scene.LoadingScene.ToString());
     }
 
     public static void LoaderCallback()

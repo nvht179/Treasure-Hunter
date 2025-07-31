@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class MainMenuUI : MonoBehaviour
 {
     [SerializeField] private Button playButton;
-    [SerializeField] private Button optionButton;
+    [SerializeField] private Button settingsButton;
     [SerializeField] private Button quitButton;
 
     private void Awake()
@@ -16,6 +16,10 @@ public class MainMenuUI : MonoBehaviour
         playButton.onClick.AddListener(() =>
         {
             SceneLoader.Load(SceneLoader.Scene.GameScene);
+        });
+        settingsButton.onClick.AddListener(() =>
+        {
+            SettingsMenuUI.Instance.Show(() => { });
         });
         quitButton.onClick.AddListener(() =>
         {
