@@ -10,6 +10,7 @@ public class Seashell : ShooterTrap, IDamageable {
 
     [SerializeField] private float maxHealthPoint = 50f;
     private float currentHealthPoint;
+    private bool isDead;
 
     private new void Awake() {
         base.Awake();
@@ -23,9 +24,12 @@ public class Seashell : ShooterTrap, IDamageable {
             MaxHealth = maxHealthPoint,
             CurrentHealth = currentHealthPoint
         });
-        if (currentHealthPoint <= 0) {
+        if (currentHealthPoint <= 0 && !isDead)
+        {
+            isDead = true;
             OnDestroyed?.Invoke(this, EventArgs.Empty);
             StopShooting();
+            CoinSpawner.Instance.SpawnCoin(transform.position);
             Destroy(gameObject, 2f);
         }
     }

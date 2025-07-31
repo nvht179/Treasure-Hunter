@@ -8,6 +8,7 @@ public class DestroyedFragments : MonoBehaviour {
     [SerializeField] private GameObject[] fragments;
 
     private IDamageable damageableObject;
+    private bool isDestroyed = false;
 
     private void Awake() {
         damageableObject = damageableGameObject.GetComponent<IDamageable>();
@@ -16,11 +17,10 @@ public class DestroyedFragments : MonoBehaviour {
         }
     }
 
-    private void Start() { 
-        damageableObject.OnDestroyed += HandleDestroyed;
-    }
-
-    private void HandleDestroyed(object sender, EventArgs e) {
+    private void Update() {
+        if(!isDestroyed) {
+            return;
+        }
         foreach (GameObject frag in fragments) {
             frag.SetActive(true);
             Rigidbody2D rb = frag.GetComponent<Rigidbody2D>();
@@ -30,5 +30,14 @@ public class DestroyedFragments : MonoBehaviour {
             rb.AddForce(force, ForceMode2D.Impulse);
             rb.AddTorque(UnityEngine.Random.Range(-100f, 100f)); // Spin the fragment
         }
+        isDestroyed = false;
+    }
+
+    private void Start() { 
+        damageableObject.OnDestroyed += HandleDestroyed;
+    }
+
+    private void HandleDestroyed(object sender, EventArgs e) {
+        isDestroyed = true;
     }
 }
