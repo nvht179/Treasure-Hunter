@@ -10,7 +10,6 @@ public class Crabby : MonoBehaviour, IDamageable
     [SerializeField] private float moveSpeed;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Player player;
-    [SerializeField] private CrabbyVisual crabbyVisual;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private Transform attackOrigin;
     [SerializeField] private float visionDistance;
