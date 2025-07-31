@@ -22,6 +22,7 @@ public class GameInput : PersistentManager<GameInput>
         Move_Right,
         Jump,
         Attack,
+        AttackAlternate,
         Interact,
         Inventory,
         Pause,
@@ -128,6 +129,8 @@ public class GameInput : PersistentManager<GameInput>
                 return playerInputActions.Player.MoveHorizontal.bindings[2].ToDisplayString();
             case Binding.Attack:
                 return playerInputActions.Player.Attack.bindings[0].ToDisplayString(InputBinding.DisplayStringOptions.DontIncludeInteractions);
+            case Binding.AttackAlternate:
+                return playerInputActions.Player.AttackAlternate.bindings[0].ToDisplayString(InputBinding.DisplayStringOptions.DontIncludeInteractions);
             case Binding.Jump:
                 return playerInputActions.Player.Jump.bindings[0].ToDisplayString();
             case Binding.Pause:
@@ -169,6 +172,10 @@ public class GameInput : PersistentManager<GameInput>
                 break;
             case Binding.Attack:
                 inputAction = playerInputActions.Player.Attack;
+                bindingIndex = 0;
+                break;
+            case Binding.AttackAlternate:
+                inputAction = playerInputActions.Player.AttackAlternate;
                 bindingIndex = 0;
                 break;
             case Binding.Inventory:

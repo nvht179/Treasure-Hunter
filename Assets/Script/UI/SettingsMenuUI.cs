@@ -39,6 +39,7 @@ public class SettingsMenuUI : PersistentManager<SettingsMenuUI>
     [SerializeField] private Button moveRightButton;
     [SerializeField] private Button jumpButton;
     [SerializeField] private Button attackButton;
+    [SerializeField] private Button attackAlternateButton;
     [SerializeField] private Button pauseButton;
     [SerializeField] private Button inventoryButton;
     [SerializeField] private Button interactButton;
@@ -46,6 +47,7 @@ public class SettingsMenuUI : PersistentManager<SettingsMenuUI>
     [SerializeField] private TextMeshProUGUI moveRightText;
     [SerializeField] private TextMeshProUGUI jumpText;
     [SerializeField] private TextMeshProUGUI attackText;
+    [SerializeField] private TextMeshProUGUI attackAlternateText;
     [SerializeField] private TextMeshProUGUI pauseText;
     [SerializeField] private TextMeshProUGUI inventoryText;
     [SerializeField] private TextMeshProUGUI interactText;
@@ -92,6 +94,7 @@ public class SettingsMenuUI : PersistentManager<SettingsMenuUI>
         moveRightButton.onClick.AddListener(() => { RebindBinding(GameInput.Binding.Move_Right); });
         jumpButton.onClick.AddListener(() => { RebindBinding(GameInput.Binding.Jump); });
         attackButton.onClick.AddListener(() => { RebindBinding(GameInput.Binding.Attack); });
+        attackAlternateButton.onClick.AddListener(() => { RebindBinding(GameInput.Binding.AttackAlternate); });
         pauseButton.onClick.AddListener(() => { RebindBinding(GameInput.Binding.Pause); });
         inventoryButton.onClick.AddListener(() => { RebindBinding(GameInput.Binding.Inventory); }); 
         interactButton.onClick.AddListener(() => { RebindBinding(GameInput.Binding.Interact); });
@@ -135,9 +138,10 @@ public class SettingsMenuUI : PersistentManager<SettingsMenuUI>
         moveRightText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Move_Right);
         jumpText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Jump);
         attackText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Attack);
+        attackAlternateText.text = GameInput.Instance.GetBindingText(GameInput.Binding.AttackAlternate);
         pauseText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Pause);
         inventoryText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Inventory);
-        interactText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Inventory);
+        interactText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Interact);
 
         float savedVolume = MusicManager.Instance.GetVolume() * 100f;
         musicVolumeSlider.value = savedVolume;
