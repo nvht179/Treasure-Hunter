@@ -7,16 +7,21 @@ public static class SceneLoader
 {
     public enum Scene
     {
-        MainMenuScene = 0,
-        SettingsScene = 1,
-        LoadingScene = 2,
-        GameScene = 3,
-        HowToPlayScene = 4,
-        CreditsScene = 5
+        MainMenuScene,
+        LoadingScene,
+        ChooseLevelScene,
+        GameScene,
+        PalmTreeIslandScene,
+        PirateShipScene,
+        BossScene,
+        HowToPlayScene,
+        CreditsScene,
     }
 
     private static Scene targetScene = Scene.MainMenuScene;
     private static Scene lastScene = Scene.MainMenuScene;
+    public const Scene firstNormalLevelScene = Scene.PalmTreeIslandScene;
+    public const Scene firstBossLevelScene = Scene.BossScene;
 
     public static void Load(Scene targetScene)
     {

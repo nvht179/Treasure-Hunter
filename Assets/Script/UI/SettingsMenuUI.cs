@@ -41,12 +41,14 @@ public class SettingsMenuUI : PersistentManager<SettingsMenuUI>
     [SerializeField] private Button attackButton;
     [SerializeField] private Button pauseButton;
     [SerializeField] private Button inventoryButton;
+    [SerializeField] private Button interactButton;
     [SerializeField] private TextMeshProUGUI moveLeftText;
     [SerializeField] private TextMeshProUGUI moveRightText;
     [SerializeField] private TextMeshProUGUI jumpText;
     [SerializeField] private TextMeshProUGUI attackText;
     [SerializeField] private TextMeshProUGUI pauseText;
     [SerializeField] private TextMeshProUGUI inventoryText;
+    [SerializeField] private TextMeshProUGUI interactText;
 
     [SerializeField] private Transform pressToRebindKeyTransform;
 
@@ -92,6 +94,7 @@ public class SettingsMenuUI : PersistentManager<SettingsMenuUI>
         attackButton.onClick.AddListener(() => { RebindBinding(GameInput.Binding.Attack); });
         pauseButton.onClick.AddListener(() => { RebindBinding(GameInput.Binding.Pause); });
         inventoryButton.onClick.AddListener(() => { RebindBinding(GameInput.Binding.Inventory); }); 
+        interactButton.onClick.AddListener(() => { RebindBinding(GameInput.Binding.Interact); });
     }
 
     private void Start()
@@ -134,6 +137,7 @@ public class SettingsMenuUI : PersistentManager<SettingsMenuUI>
         attackText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Attack);
         pauseText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Pause);
         inventoryText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Inventory);
+        interactText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Inventory);
 
         float savedVolume = MusicManager.Instance.GetVolume() * 100f;
         musicVolumeSlider.value = savedVolume;

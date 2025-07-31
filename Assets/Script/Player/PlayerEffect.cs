@@ -7,7 +7,6 @@ using UnityEngine;
 public class PlayerEffect : MonoBehaviour
 {
     [SerializeField] private Player player;
-    [SerializeField] private GameInput gameInput;
 
     private Animator animator;
     private bool isGrounded;

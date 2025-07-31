@@ -134,6 +134,8 @@ public class GameInput : PersistentManager<GameInput>
                 return playerInputActions.Player.Pause.bindings[0].ToDisplayString();
             case Binding.Inventory:
                 return playerInputActions.Player.Inventory.bindings[0].ToDisplayString();
+            case Binding.Interact:
+                return playerInputActions.Player.Interact.bindings[0].ToDisplayString();
             default:
                 return "";
         }
@@ -171,6 +173,10 @@ public class GameInput : PersistentManager<GameInput>
                 break;
             case Binding.Inventory:
                 inputAction = playerInputActions.Player.Inventory;
+                bindingIndex = 0;
+                break;
+            case Binding.Interact:
+                inputAction = playerInputActions.Player.Interact;
                 bindingIndex = 0;
                 break;
         }
