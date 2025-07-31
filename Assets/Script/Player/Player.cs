@@ -50,6 +50,12 @@ public class Player : MonoBehaviour, IDamageable
         public float CurrentStamina;
         public float MaxStamina;
     }
+    public event EventHandler<OnGoldChangedEventArgs> OnGoldChanged;
+    public class OnGoldChangedEventArgs : EventArgs
+    {
+        public int currentGold;
+        public int changeAmount;
+    }
 
     private float gravityScale;
     private float currentHealthPoint;
@@ -85,6 +91,7 @@ public class Player : MonoBehaviour, IDamageable
 
         inventory = new Inventory();
         uiInventory.SetInventory(inventory);
+        money = 0;
     }
 
     private void Start()
@@ -95,6 +102,7 @@ public class Player : MonoBehaviour, IDamageable
         GameInput.Instance.OnInteractAction += PlayerOnInteract;
 
         gravityVector = new Vector2(0, -Physics2D.gravity.y);
+
     }
 
     private void PlayerOnInteract(object sender, EventArgs e) {
@@ -251,6 +259,12 @@ public class Player : MonoBehaviour, IDamageable
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.TryGetComponent<ItemWorld>(out var itemWorld)) {
+            OnGoldChanged?.Invoke(this, new OnGoldChangedEventArgs
+            {
+                currentGold = money,
+                changeAmount = itemWorld.GetItem().quantity
+            });
+
             money += itemWorld.GetItem().quantity;
             itemWorld.DestroySelf();
         }
@@ -284,9 +298,23 @@ public class Player : MonoBehaviour, IDamageable
         });
     }
 
+    public void BuyItem(int price) {
+        OnGoldChanged?.Invoke(this, new OnGoldChangedEventArgs
+        {
+            currentGold = money,
+            changeAmount = -price
+        });
+        money -= price;
+    }
+
     public Inventory GetInventory()
     {
         return inventory;
+    }
+
+    public int GetMoney()
+    {
+        return money;
     }
 
     public Vector3 GetMoveDirection()

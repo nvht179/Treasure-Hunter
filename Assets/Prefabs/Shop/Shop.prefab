@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shopUI: {fileID: 0}
+  shopItemListSO: {fileID: 11400000, guid: e1e77104a7c592f4dbb03c780f11c5a4, type: 2}
 --- !u!61 &4794958836366013503
 BoxCollider2D:
   m_ObjectHideFlags: 0

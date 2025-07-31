@@ -19,3 +19,4 @@ MonoBehaviour:
   type: 2
   stackable: 0
   maxStack: 1
+  buyPrice: 100

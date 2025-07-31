@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Shop : MonoBehaviour, IInteractiveObject {
@@ -11,10 +9,12 @@ public class Shop : MonoBehaviour, IInteractiveObject {
     }
 
     [SerializeField] private ShopUI shopUI;
+    [SerializeField] private ItemListSO shopItemListSO;
 
     public void Interact(Player player) {
         OnInteract?.Invoke(this, new OnShopInteractEventArgs {
             player = player
         });
+        shopUI.OpenShopUI(player, shopItemListSO);
     }
 }

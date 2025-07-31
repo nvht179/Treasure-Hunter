@@ -6,9 +6,9 @@ using UnityEngine;
 public class ShopUI : MonoBehaviour, ISelectItem {
 
     public event EventHandler<ISelectItem.OnItemSelectedEventArgs> OnItemSelected;
+    public event EventHandler OnNotEnoughMoney;
 
     [Header("Shop Settings")]
-    [SerializeField] private Shop shop;
     [SerializeField] private Transform shopVisuals;
     [SerializeField] private ItemListSO shopItemListSO;
 
@@ -24,6 +24,7 @@ public class ShopUI : MonoBehaviour, ISelectItem {
     [Header("Actions")]
     [SerializeField] private UnityEngine.UI.Button buyButton;
 
+    private Player player;
     private const int NumItemPerPage = 6;
     private Inventory playerInventory;
     private Inventory shopInventory;
@@ -32,26 +33,19 @@ public class ShopUI : MonoBehaviour, ISelectItem {
     private Item selectedItem;
 
     private void Awake() {
-        SetupShop();
-        RefreshInventoryItems();
+        SetupListener();
         Hide();
     }
 
-    private void Start() {
-        shop.OnInteract += ShopOnInteract;
-    }
-
-    private void ShopOnInteract(object sender, Shop.OnShopInteractEventArgs e) {
-        SetInventory(e.player.GetInventory());
-        Show();
-    }
-
-    private void SetupShop() {
+    public void OpenShopUI(Player player, ItemListSO itemListSO) {
+        this.player = player;
         shopInventory = new Inventory();
-        foreach (ItemSO itemSO in shopItemListSO.items) {
+        foreach (ItemSO itemSO in itemListSO.items) {
             shopInventory.AddItem(new Item(itemSO));
         }
-        SetupListener();
+        RefreshInventoryItems();
+        SetInventory(player.GetInventory());
+        Show();
     }
 
     private void SetupListener() {
@@ -74,8 +68,8 @@ public class ShopUI : MonoBehaviour, ISelectItem {
         buyButton.onClick.AddListener(() => {
             if (selectedItem == null) return;
             // Check if player can afford the item
-            if (playerInventory.GetItemListCount() < selectedItem.itemSO.buyPrice) {
-                // TODO: Show Message to player that they can't afford the item
+            if (player.GetMoney() < selectedItem.itemSO.buyPrice) {
+                OnNotEnoughMoney?.Invoke(this, EventArgs.Empty);
                 return;
             }
             // Add item to player's inventory
