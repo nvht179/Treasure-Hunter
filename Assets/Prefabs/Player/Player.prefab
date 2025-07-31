@@ -79,7 +79,6 @@ MonoBehaviour:
   jumpPower: 10
   jumpDegrader: 3
   moveSpeed: 5
-  gameInput: {fileID: 0}
   attackOrigin: {fileID: 6210624782623218792}
   attackRadius: 0.5
   playerPivot: {fileID: 289685678331913250}
@@ -90,6 +89,9 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
+  interactiveObjectLayer:
+    serializedVersion: 2
+    m_Bits: 0
   flyingSwordSO: {fileID: 11400000, guid: b7cdcf9d9e099a44a92bc65e32b72c2f, type: 2}
   playerDamage: 5
   attackCooldownTime: 0.3
@@ -130,8 +132,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.005, y: 0.43}
-  m_Size: {x: 0.5, y: 0.85}
+  m_Offset: {x: -0.0049999915, y: 0.31419012}
+  m_Size: {x: 0.5, y: 0.61838025}
   m_Direction: 0
 --- !u!1 &3937380537759552638
 GameObject:
