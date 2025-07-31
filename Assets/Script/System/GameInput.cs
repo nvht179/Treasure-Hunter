@@ -22,12 +22,14 @@ public class GameInput : PersistentManager<GameInput>
         Move_Right,
         Jump,
         Attack,
+        Interact,
         Inventory,
         Pause,
     }
 
     public event EventHandler OnAttackAction;
     public event EventHandler OnAttackAlternateAction;
+    public event EventHandler OnInteractAction;
     public event EventHandler OnJumpAction;
     public event EventHandler OnPauseAction;
     public event EventHandler OnResumeAction;
@@ -50,10 +52,16 @@ public class GameInput : PersistentManager<GameInput>
 
         playerInputActions.Player.Attack.performed += AttackOnPerformed;
         playerInputActions.Player.AttackAlternate.performed += AttackAlternateOnPerformed;
+        playerInputActions.Player.Interact.performed += InteractOnPerformed;
         playerInputActions.Player.Jump.performed += JumpOnPerformed;
         playerInputActions.Player.Pause.performed += PauseOnPerformed;
         playerInputActions.Player.Inventory.performed += InventoryOnPerformed;
         playerInputActions.UI.Resume.performed += ResumeOnPerformed;
+    }
+
+    private void InteractOnPerformed(InputAction.CallbackContext context) 
+    {
+        OnInteractAction?.Invoke(this, EventArgs.Empty);
     }
 
     private void InventoryOnPerformed(InputAction.CallbackContext context)

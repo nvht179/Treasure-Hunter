@@ -168,10 +168,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd525515db0d7447879ce28f92d7b0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiInventory: {fileID: 3474132415686520502}
+  selectItemInventoryGameObject: {fileID: 4449077634338514640}
   itemVisualTemplate: {fileID: 3753877996855236040}
   descriptionText: {fileID: 8042103670339079996}
   itemNameText: {fileID: 6711469559028792903}
+  priceText: {fileID: 0}
 --- !u!1 &914856719345576932
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,7 +620,7 @@ GameObject:
   - component: {fileID: 5257790176522098799}
   - component: {fileID: 3474132415686520502}
   m_Layer: 5
-  m_Name: InventoryManager
+  m_Name: InventoryUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

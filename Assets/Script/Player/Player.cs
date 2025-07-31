@@ -2,6 +2,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour, IDamageable
 {
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private PlayerVisual playerVisual;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask interactiveObjectLayer;
     [SerializeField] private FlyingObjectSO flyingSwordSO;
 
     [Header("Attack")]
@@ -34,6 +36,11 @@ public class Player : MonoBehaviour, IDamageable
 
     private const float GroundCheckRadius = 0.05f;
     private const float AirAttackTime = 0.5f;
+
+    public event EventHandler<OnSelectedObjectChangedEventArgs> OnSelectedObjectChanged;
+    public class OnSelectedObjectChangedEventArgs : EventArgs {
+        public IInteractiveObject selectedObject;
+    }
 
     public event EventHandler OnDestroyed;
     public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
@@ -62,6 +69,7 @@ public class Player : MonoBehaviour, IDamageable
     private Rigidbody2D rb;
 
     private Inventory inventory;
+    private IInteractiveObject selectedObject;
 
     private void Awake()
     {
@@ -83,7 +91,13 @@ public class Player : MonoBehaviour, IDamageable
         GameInput.Instance.OnJumpAction += PlayerOnJump;
         GameInput.Instance.OnAttackAction += PlayerOnAttack;
         GameInput.Instance.OnAttackAlternateAction += PlayerOnAttackAlternate;
+        GameInput.Instance.OnInteractAction += PlayerOnInteract;
+
         gravityVector = new Vector2(0, -Physics2D.gravity.y);
+    }
+
+    private void PlayerOnInteract(object sender, EventArgs e) {
+        selectedObject?.Interact(this);
     }
 
     private void PlayerOnJump(object sender, EventArgs e)
@@ -120,11 +134,33 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
 
-    private void Update()
-    {
+    private void Update() {
+        HandleUpdateState();
+        HandleInteractions();
+    }
+
+    private void HandleInteractions() {
+        float interactionDistance = 1.5f;
+        Vector2 moveDir = moveDirection == -1 ? Vector2.left : Vector2.right;
+
+        RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, moveDir, interactionDistance, interactiveObjectLayer);
+        if (raycastHit.collider != null) {
+            if (raycastHit.collider.TryGetComponent(out IInteractiveObject interactiveObject))  {
+                if (interactiveObject != selectedObject) {
+                    SetSelectedObject(interactiveObject);
+                }
+            } else {
+                SetSelectedObject(null);
+            }
+        } else {
+            SetSelectedObject(null);
+        }
+    }
+
+    private void HandleUpdateState() {
         // handle input
         var inputVector = GameInput.Instance.GetMovementVectorNormalized();
-        moveVector = new Vector3(inputVector.x, inputVector.y, 0);
+        moveVector = (Vector3)inputVector;
 
         HandleAttack();
 
@@ -142,6 +178,13 @@ public class Player : MonoBehaviour, IDamageable
         {
             hasAirAttacked = false;
         }
+    }
+
+    private void SetSelectedObject(IInteractiveObject selectedObject) {
+        this.selectedObject = selectedObject;
+        OnSelectedObjectChanged?.Invoke(this, new OnSelectedObjectChangedEventArgs {
+            selectedObject = this.selectedObject
+        });
     }
 
     private void FixedUpdate()
@@ -231,6 +274,11 @@ public class Player : MonoBehaviour, IDamageable
             CurrentHealth = currentHealthPoint,
             MaxHealth = maxHealthPoint
         });
+    }
+
+    public Inventory GetInventory()
+    {
+        return inventory;
     }
 
     public Vector3 GetMoveDirection()
