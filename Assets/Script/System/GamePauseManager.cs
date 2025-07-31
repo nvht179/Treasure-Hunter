@@ -7,11 +7,13 @@ using UnityEngine.UI;
 public class GamePauseManager : PersistentManager<GamePauseManager>
 {
 
+    public event Action OnPauseRequested;
+    public event Action OnResumeRequested;
+    public event Action OnReturnToMainMenuRequested;
+
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button mainMenuButton;
-
-    public bool isGamePaused;
 
     protected override void Awake()
     {
@@ -20,11 +22,9 @@ public class GamePauseManager : PersistentManager<GamePauseManager>
 
     private void Start()
     {
-        isGamePaused = false;
-
         resumeButton.onClick.AddListener(() =>
         {
-            ResumeGame();
+            OnResumeRequested?.Invoke();
         });
         settingsButton.onClick.AddListener(() =>
         {
@@ -33,32 +33,15 @@ public class GamePauseManager : PersistentManager<GamePauseManager>
         });
         mainMenuButton.onClick.AddListener(() =>
         {
-            Time.timeScale = 1f;
-            isGamePaused = false;
-            Hide();
-            SceneLoader.Load(SceneLoader.Scene.MainMenuScene);
+            OnReturnToMainMenuRequested?.Invoke();
         });
 
         Hide();
     }
 
-    public void TogglePauseGame()
-    {
-        isGamePaused = !isGamePaused;
-        if (isGamePaused)
-        {
-            PauseGame();
-        }
-        else
-        {
-            ResumeGame();
-        }
-    }
-
     public void PauseGame()
     {
         Time.timeScale = 0f;
-        isGamePaused = true;
         GameInput.Instance.EnableActionMap(GameInput.ActionMap.UI);
         Show();
     }
@@ -66,9 +49,9 @@ public class GamePauseManager : PersistentManager<GamePauseManager>
     public void ResumeGame()
     {
         Time.timeScale = 1f;
-        isGamePaused = false;
         GameInput.Instance.EnableActionMap(GameInput.ActionMap.Player);
         Hide();
+        OnResumeRequested?.Invoke();
     }
 
     private void Show()

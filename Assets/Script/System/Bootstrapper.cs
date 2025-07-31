@@ -7,7 +7,7 @@ public static class Bootstrapper
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     public static void Execute()
     {
-        var systemPrefab = Resources.Load<GameObject>("System");
+        var systemPrefab = Resources.Load<GameObject>(SystemResourcePath);
 
         if (systemPrefab == null)
         {

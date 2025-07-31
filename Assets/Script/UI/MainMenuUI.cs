@@ -10,6 +10,8 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button playButton;
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button quitButton;
+    [SerializeField] private Button tutorialButton;
+    [SerializeField] private Button creditsButton;
 
     private void Awake()
     {
@@ -17,14 +19,26 @@ public class MainMenuUI : MonoBehaviour
         {
             SceneLoader.Load(SceneLoader.Scene.ChooseLevelScene);
         });
+
         settingsButton.onClick.AddListener(() =>
         {
             SettingsMenuUI.Instance.Show(() => { });
         });
+
         quitButton.onClick.AddListener(() =>
         {
             Debug.Log("Quit button clicked");
             Application.Quit();
+        });
+
+        tutorialButton.onClick.AddListener(() =>
+        {
+            SceneLoader.Load(SceneLoader.Scene.TutorialScene);
+        });
+
+        creditsButton.onClick.AddListener(() =>
+        {
+            SceneLoader.Load(SceneLoader.Scene.CreditsScene);
         });
     }
 }

@@ -60,6 +60,23 @@ public class GameInput : PersistentManager<GameInput>
         playerInputActions.UI.Resume.performed += ResumeOnPerformed;
     }
 
+    private void Start()
+    {
+        GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
+    }
+
+    private void GameManager_OnStateChanged(object sender, EventArgs e)
+    {
+        if (GameManager.Instance.IsGamePlaying())
+        {
+            EnableActionMap(ActionMap.Player);
+        }
+        else
+        {
+            DisableActionMap(ActionMap.Player);
+        }
+    }
+
     private void InteractOnPerformed(InputAction.CallbackContext context) 
     {
         OnInteractAction?.Invoke(this, EventArgs.Empty);

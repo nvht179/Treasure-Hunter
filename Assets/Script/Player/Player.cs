@@ -46,6 +46,8 @@ public class Player : MonoBehaviour, IDamageable
     public event EventHandler OnDestroyed;
     public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
     public event EventHandler<OnStaminaUsedEventArgs> OnStaminaUsed;
+    public event Action OnPlayerDied;
+    public event Action OnPlayerWon;
     public class OnStaminaUsedEventArgs : EventArgs
     {
         public float CurrentStamina;
@@ -106,6 +108,15 @@ public class Player : MonoBehaviour, IDamageable
 
         gravityVector = new Vector2(0, -Physics2D.gravity.y);
 
+    }
+
+    private void OnDestroy()
+    {
+        GameInput.Instance.OnJumpAction -= PlayerOnJump;
+        GameInput.Instance.OnAttackAction -= PlayerOnAttack;
+        GameInput.Instance.OnAttackAlternateAction -= PlayerOnAttackAlternate;
+        GameInput.Instance.OnInteractAction -= PlayerOnInteract;
+        OnDestroyed?.Invoke(this, EventArgs.Empty);
     }
 
     private void PlayerOnInteract(object sender, EventArgs e)
@@ -314,6 +325,11 @@ public class Player : MonoBehaviour, IDamageable
             CurrentHealth = currentHealthPoint,
             MaxHealth = maxHealthPoint
         });
+
+        if (currentHealthPoint <= 0)
+        {
+            OnPlayerDied?.Invoke();
+        }
     }
 
     public void BuyItem(int price)

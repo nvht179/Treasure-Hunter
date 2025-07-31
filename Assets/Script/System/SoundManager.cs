@@ -22,15 +22,15 @@ public class SoundManager : PersistentManager<SoundManager>
         volume = PlayerPrefs.GetFloat(PLAYER_PREFS_SOUND_EFFECTS_VOLUME, 1f);
     }
 
-    //    private void Start()
-    //    {
-    //        DeliveryManager.Instance.OnRecipeSuccess += DeliveryManager_OnRecipeSuccess;
-    //        DeliveryManager.Instance.OnRecipeFailed += DeliveryManager_OnRecipeFailed;
-    //        CuttingCounter.OnAnyCut += CuttingCounter_OnAnyCut;
-    //        Player.Instance.OnPickedSomething += Player_OnPickedSomething;
-    //        BaseCounter.OnAnyObjectPlacedHere += BaseCounter_OnAnyObjectPlacedHere;
-    //        TrashCounter.OnAnyObjectTrashed += TrashCounter_OnAnyObjectTrashed;
-    //    }
+    //private void Start()
+    //{
+        //        DeliveryManager.Instance.OnRecipeSuccess += DeliveryManager_OnRecipeSuccess;
+        //        DeliveryManager.Instance.OnRecipeFailed += DeliveryManager_OnRecipeFailed;
+        //        CuttingCounter.OnAnyCut += CuttingCounter_OnAnyCut;
+                //Player.Instance.OnPickedSomething += Player_OnPickedSomething;
+        //        BaseCounter.OnAnyObjectPlacedHere += BaseCounter_OnAnyObjectPlacedHere;
+        //        TrashCounter.OnAnyObjectTrashed += TrashCounter_OnAnyObjectTrashed;
+    //}
 
     //    private void TrashCounter_OnAnyObjectTrashed(object sender, System.EventArgs e)
     //    {
