@@ -70,6 +70,7 @@ public class Player : MonoBehaviour, IDamageable
 
     private Inventory inventory;
     private IInteractiveObject selectedObject;
+    private int money;
 
     private void Awake()
     {
@@ -245,6 +246,13 @@ public class Player : MonoBehaviour, IDamageable
         {
             isAttacking = false;
             attackCooldownTimer -= Time.deltaTime;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.TryGetComponent<ItemWorld>(out var itemWorld)) {
+            money += itemWorld.GetItem().quantity;
+            itemWorld.DestroySelf();
         }
     }
 

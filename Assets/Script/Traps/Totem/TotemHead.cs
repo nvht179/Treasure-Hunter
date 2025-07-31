@@ -11,6 +11,7 @@ public class TotemHead : ShooterTrap, IDamageable {
     [SerializeField] private float maxHealthPoint = 20f;
 
     private float currentHealthPoint;
+    private bool isDead = false;
 
     private new void Awake()
     {
@@ -25,12 +26,14 @@ public class TotemHead : ShooterTrap, IDamageable {
             MaxHealth = maxHealthPoint,
             CurrentHealth = currentHealthPoint
         });
-        if (currentHealthPoint <= 0) {
+        if (currentHealthPoint <= 0 && !isDead) {
+            isDead = true;
             OnDestroyed?.Invoke(this, EventArgs.Empty);
             StopShooting();
             if (TryGetComponent<Collider2D>(out var col2d)) {
                 col2d.enabled = false;
             }
+            CoinSpawner.Instance.SpawnCoin(transform.position);
             Destroy(gameObject, 2f);
         }
     }
