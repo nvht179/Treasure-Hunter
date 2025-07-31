@@ -13,12 +13,9 @@ MonoBehaviour:
   m_Name: _ShopItemList
   m_EditorClassIdentifier: 
   items:
-  - {fileID: 11400000, guid: 514a51d096136b64ca715b2f36520b13, type: 2}
   - {fileID: 11400000, guid: 63b53ff6e847f9442beeab60147bc05a, type: 2}
   - {fileID: 11400000, guid: c855dd0e5cfd79f48ba6816d6d710434, type: 2}
-  - {fileID: 11400000, guid: 4a82f1426e667fd499c9d79ffe6ee3c1, type: 2}
   - {fileID: 11400000, guid: 14ec06ccc4f814148b3b27665b5f3204, type: 2}
   - {fileID: 11400000, guid: 4cc02f41b36fe7e4fa87fa6148285750, type: 2}
   - {fileID: 11400000, guid: 47baa83f95c069f479e9fc81f809e62f, type: 2}
   - {fileID: 11400000, guid: 2b9ee8014d0ef434d9d712cbf428f979, type: 2}
-  - {fileID: 11400000, guid: 393b80efe412b9c4ab91ee677c5306ef, type: 2}

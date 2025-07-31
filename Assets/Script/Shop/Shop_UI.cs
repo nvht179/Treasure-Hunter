@@ -39,7 +39,7 @@ public class ShopUI : MonoBehaviour, ISelectItem {
 
     public void OpenShopUI(Player player, ItemListSO itemListSO) {
         this.player = player;
-        shopInventory = new Inventory();
+        shopInventory = new Inventory(null);
         foreach (ItemSO itemSO in itemListSO.items) {
             shopInventory.AddItem(new Item(itemSO));
         }

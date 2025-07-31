@@ -55,9 +55,13 @@ public class UI_Inventory : MonoBehaviour, ISelectItem {
         });
 
         useButton.onClick.AddListener(() => {
-            if (selectedItem != null) {
-                // Implement use item logic here
-                Debug.Log($"Using item: {selectedItem.itemSO.itemName}");
+            if (selectedItem != null && selectedItem.itemSO.consumable) {
+                inventory.UseItem(selectedItem);
+                inventory.RemoveItem(selectedItem);
+                if (selectedItem.quantity == 0) {
+                    selectedItem = null; // TODO
+                }
+                RefreshInventoryItems();
             }
         });
 
@@ -65,7 +69,7 @@ public class UI_Inventory : MonoBehaviour, ISelectItem {
             if (selectedItem != null) {
                 inventory.RemoveItem(selectedItem);
                 if(selectedItem.quantity == 0) {
-                    selectedItem = null; // Clear selection if item is fully removed
+                    selectedItem = null; // TODO
                 }
                 RefreshInventoryItems();
             }

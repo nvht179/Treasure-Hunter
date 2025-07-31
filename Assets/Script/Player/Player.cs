@@ -38,7 +38,8 @@ public class Player : MonoBehaviour, IDamageable
     private const float AirAttackTime = 0.5f;
 
     public event EventHandler<OnSelectedObjectChangedEventArgs> OnSelectedObjectChanged;
-    public class OnSelectedObjectChangedEventArgs : EventArgs {
+    public class OnSelectedObjectChangedEventArgs : EventArgs
+    {
         public IInteractiveObject selectedObject;
     }
 
@@ -56,6 +57,8 @@ public class Player : MonoBehaviour, IDamageable
         public int currentGold;
         public int changeAmount;
     }
+
+    private Action<Item> useItemAction;
 
     private float gravityScale;
     private float currentHealthPoint;
@@ -89,7 +92,7 @@ public class Player : MonoBehaviour, IDamageable
         gravityScale = rb.gravityScale;
         attackAlternateCooldownTimer = attackAlternateCooldownTime;
 
-        inventory = new Inventory();
+        inventory = new Inventory(UseItem);
         uiInventory.SetInventory(inventory);
         money = 0;
     }
@@ -105,7 +108,8 @@ public class Player : MonoBehaviour, IDamageable
 
     }
 
-    private void PlayerOnInteract(object sender, EventArgs e) {
+    private void PlayerOnInteract(object sender, EventArgs e)
+    {
         selectedObject?.Interact(this);
     }
 
@@ -121,7 +125,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         isConstantlyAttacking = !isConstantlyAttacking;
     }
-    
+
     private void PlayerOnAttackAlternate(object sender, EventArgs e)
     {
         if (attackAlternateCooldownTimer < 0 && currentStamina > 0)
@@ -143,30 +147,40 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
 
-    private void Update() {
+    private void Update()
+    {
         HandleUpdateState();
         HandleInteractions();
     }
 
-    private void HandleInteractions() {
+    private void HandleInteractions()
+    {
         float interactionDistance = 1.5f;
         Vector2 moveDir = moveDirection == -1 ? Vector2.left : Vector2.right;
 
         RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, moveDir, interactionDistance, interactiveObjectLayer);
-        if (raycastHit.collider != null) {
-            if (raycastHit.collider.TryGetComponent(out IInteractiveObject interactiveObject))  {
-                if (interactiveObject != selectedObject) {
+        if (raycastHit.collider != null)
+        {
+            if (raycastHit.collider.TryGetComponent(out IInteractiveObject interactiveObject))
+            {
+                if (interactiveObject != selectedObject)
+                {
                     SetSelectedObject(interactiveObject);
                 }
-            } else {
+            }
+            else
+            {
                 SetSelectedObject(null);
             }
-        } else {
+        }
+        else
+        {
             SetSelectedObject(null);
         }
     }
 
-    private void HandleUpdateState() {
+    private void HandleUpdateState()
+    {
         // handle input
         var inputVector = GameInput.Instance.GetMovementVectorNormalized();
         moveVector = (Vector3)inputVector;
@@ -189,9 +203,11 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
 
-    private void SetSelectedObject(IInteractiveObject selectedObject) {
+    private void SetSelectedObject(IInteractiveObject selectedObject)
+    {
         this.selectedObject = selectedObject;
-        OnSelectedObjectChanged?.Invoke(this, new OnSelectedObjectChangedEventArgs {
+        OnSelectedObjectChanged?.Invoke(this, new OnSelectedObjectChangedEventArgs
+        {
             selectedObject = this.selectedObject
         });
     }
@@ -257,8 +273,10 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.TryGetComponent<ItemWorld>(out var itemWorld)) {
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<ItemWorld>(out var itemWorld))
+        {
             OnGoldChanged?.Invoke(this, new OnGoldChangedEventArgs
             {
                 currentGold = money,
@@ -298,7 +316,8 @@ public class Player : MonoBehaviour, IDamageable
         });
     }
 
-    public void BuyItem(int price) {
+    public void BuyItem(int price)
+    {
         OnGoldChanged?.Invoke(this, new OnGoldChangedEventArgs
         {
             currentGold = money,
@@ -345,5 +364,95 @@ public class Player : MonoBehaviour, IDamageable
     public bool IsConstantlyAttacking()
     {
         return isConstantlyAttacking;
+    }
+
+    private void UseItem(Item item)
+    {
+        switch(item.itemSO.name)
+        {
+            case "Blue Potion":
+                BluePotion();
+                break;
+            case "Green Potion":
+                GreenPotion();
+                break;
+            case "Health Potion":
+                RedPotion();
+                break;
+        }
+    }
+
+    private void BlueDiamond()
+    {
+        maxStamina += 10;
+        currentStamina += 10;
+        OnStaminaUsed?.Invoke(this, new OnStaminaUsedEventArgs
+        {
+            CurrentStamina = currentStamina,
+            MaxStamina = maxStamina
+        });
+    }
+
+    private void BluePotion()
+    {
+        // TODO: Restore stamina rate in 5s
+    }
+
+    private void GoldenSkull()
+    {
+        maxHealthPoint += 50;
+        playerDamage += 5;
+    }
+
+    private void GreenPotion()
+    {
+        int chance = UnityEngine.Random.Range(0, 100);
+        if(chance < 50)
+        {
+            currentHealthPoint /= 2;
+        }
+        else
+        {
+            currentHealthPoint = maxHealthPoint;
+        }
+
+        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+        {
+            CurrentHealth = currentHealthPoint,
+            MaxHealth = maxHealthPoint
+        });
+    }
+
+    private void GreenDiamond()
+    {
+        currentHealthPoint = 1;
+        maxHealthPoint = 1;
+        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+        {
+            CurrentHealth = currentHealthPoint,
+            MaxHealth = maxHealthPoint
+        });
+        playerDamage = 99999;
+    }
+
+    private void RedDiamond()
+    {
+        maxHealthPoint += 10;
+        currentHealthPoint += 10;
+        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+        {
+            CurrentHealth = currentHealthPoint,
+            MaxHealth = maxHealthPoint
+        });
+    }
+
+    private void RedPotion()
+    {
+        currentHealthPoint = Mathf.Clamp(currentHealthPoint + 10, 0, maxHealthPoint);
+        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+        {
+            CurrentHealth = currentHealthPoint,
+            MaxHealth = maxHealthPoint
+        });
     }
 }
