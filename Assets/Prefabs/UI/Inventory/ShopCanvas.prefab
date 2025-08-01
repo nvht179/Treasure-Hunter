@@ -386,7 +386,7 @@ GameObject:
   - component: {fileID: 7284176090671419080}
   - component: {fileID: 2272111637278059494}
   m_Layer: 5
-  m_Name: Shop_UI
+  m_Name: ShopUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -424,7 +424,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d73a4a59f49f2d34595f0cff543efde1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shop: {fileID: 0}
   shopVisuals: {fileID: 707372788918871860}
   shopItemListSO: {fileID: 11400000, guid: e1e77104a7c592f4dbb03c780f11c5a4, type: 2}
   itemSlotContainer: {fileID: 5401542861847893646}

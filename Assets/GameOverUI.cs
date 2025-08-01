@@ -47,10 +47,10 @@ public class GameOverUI : MonoBehaviour
         GameManager.Instance.OnStateChanged -= GameManager_OnStateChanged;
     }
 
-    private void GameManager_OnStateChanged(object sender, System.EventArgs e)
+    private void GameManager_OnStateChanged(GameManager.State oldState, GameManager.State newState)
     {
         Debug.Log("GameOverUI -> GameManager_OnStateChanged");
-        if (GameManager.Instance.IsGameOver())
+        if (newState == GameManager.State.LevelLost)
         {
             Show();
         }
@@ -62,6 +62,7 @@ public class GameOverUI : MonoBehaviour
 
     public void Show()
     {
+        scoreText.text = $"Score: {GameManager.Instance.GetScore()}";
         gameObject.SetActive(true);
     }
 

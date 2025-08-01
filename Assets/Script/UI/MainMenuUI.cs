@@ -33,7 +33,7 @@ public class MainMenuUI : MonoBehaviour
 
         tutorialButton.onClick.AddListener(() =>
         {
-            SceneLoader.Load(SceneLoader.Scene.TutorialScene);
+            SceneLoader.Load(SceneLoader.Scene.GameScene);
         });
 
         creditsButton.onClick.AddListener(() =>

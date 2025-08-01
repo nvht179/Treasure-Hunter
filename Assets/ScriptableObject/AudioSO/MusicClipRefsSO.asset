@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2381c33911eb2ac41ac67038116bd13b, type: 3}
+  m_Name: MusicClipRefsSO
+  m_EditorClassIdentifier: 
+  background:
+  - {fileID: 8300000, guid: b81294b2b754dc44fbb8405dfc9276a0, type: 3}
+  inGame:
+  - {fileID: 8300000, guid: cc1d7d00d0d20a6468859a48295d9b3a, type: 3}
+  - {fileID: 8300000, guid: ce5312114debe034c87f0cd24e34fb60, type: 3}
+  - {fileID: 8300000, guid: c05ca0448f9e38b419998f75913f8b7f, type: 3}

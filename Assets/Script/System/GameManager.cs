@@ -8,10 +8,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : PersistentManager<GameManager>
 {
 
-    public event EventHandler OnStateChanged;
+    public event Action<State, State> OnStateChanged;
 
-    private enum State
+    public enum State
     {
+        None,
         WaitingToStart,
         GamePlaying,
         Paused,
@@ -20,15 +21,16 @@ public class GameManager : PersistentManager<GameManager>
     }
 
     [SerializeField] private State state;
+    public State CurrentState => state;
 
     protected override void Awake()
     {
         base.Awake();
 
         SceneLoader.OnGameSceneLoaded += HandleGameSceneLoaded;
-        SetState(State.WaitingToStart);
+        SceneLoader.OnNonGameSceneLoaded += HandleNonGameSceneLoaded;
 
-        Debug.Log("GameManager: Awake called, initializing game state.");
+        state = State.None;
     }
 
     private void Start()
@@ -39,39 +41,50 @@ public class GameManager : PersistentManager<GameManager>
         GamePauseManager.Instance.OnPauseRequested += () =>
         {
             if (state == State.GamePlaying)
+            {
                 SetState(State.Paused);
+            }
         };
         GamePauseManager.Instance.OnResumeRequested += () =>
         {
             if (state == State.Paused)
+            {
                 SetState(State.GamePlaying);
+            }
         };
         GamePauseManager.Instance.OnReturnToMainMenuRequested += () =>
         {
             SetState(State.WaitingToStart);
             SceneLoader.Load(SceneLoader.Scene.MainMenuScene);
         };
-
-        Debug.Log("GameManager: Waiting for game scene to load...");
     }
 
     private void OnDestroy()
     {
         SceneLoader.OnGameSceneLoaded -= HandleGameSceneLoaded;
-
+        SceneLoader.OnNonGameSceneLoaded -= HandleNonGameSceneLoaded;
     }
 
-    private void HandleGameSceneLoaded(SceneLoader.Scene loaded)
+    private void HandleNonGameSceneLoaded(SceneLoader.Scene loadedScene)
+    {
+        GameInput.Instance.EnableActionMap(GameInput.ActionMap.UI);
+        SetState(State.WaitingToStart);
+        Debug.Log("GameManager: Non-game scene found.");
+    }
+
+    private void HandleGameSceneLoaded(SceneLoader.Scene loadedScene)
     {
         // Now the target scene has finished loading!
         var player = FindObjectOfType<Player>();
         if (player == null)
         {
             Debug.Log("GameManager: No player found in scene. Cannot set up game state.");
+            GameInput.Instance.EnableActionMap(GameInput.ActionMap.UI);
+            SetState(State.WaitingToStart);
             return;
         }
 
-        Debug.Log("GameManager: Player found in scene, setting up game state.");
+        Debug.Log("GameManager: Player found in GAME scene, setting up game state.");
         player.OnDied += HandlePlayerDied;
         player.OnWon += HandlePlayerWon;
         SetState(State.GamePlaying);
@@ -119,31 +132,17 @@ public class GameManager : PersistentManager<GameManager>
         }
     }
 
-    public bool IsPaused()
+    public int GetScore()
     {
-        return state == State.Paused;
-    }
-
-    public bool IsGamePlaying()
-    {
-        return state == State.GamePlaying;
-    }
-
-    public bool IsGameWon()
-    {
-        return state == State.LevelWon;
-    }
-
-    public bool IsGameOver()
-    {
-        return state == State.LevelLost;
+        return 0;
     }
 
     private void SetState(State newState)
     {
         if (state == newState) return;
+        State oldState = state;
         state = newState;
-        OnStateChanged?.Invoke(this, EventArgs.Empty);
+        OnStateChanged?.Invoke(oldState, newState);
         Debug.Log($"GameManager: State changed to {state}");
     }
 }

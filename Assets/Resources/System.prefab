@@ -453,6 +453,18 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2416185781765231574, guid: 6507b747f4a94374eacfa9a50a0d0265, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416185781765231574, guid: 6507b747f4a94374eacfa9a50a0d0265, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416185781765231574, guid: 6507b747f4a94374eacfa9a50a0d0265, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2771275930507839797, guid: 6507b747f4a94374eacfa9a50a0d0265, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -595,6 +607,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 850838277130909827}
     m_Modifications:
+    - target: {fileID: 1232458402893878678, guid: 713db388ff25b4a44ba898d409cf19d8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2462493593168784466, guid: 713db388ff25b4a44ba898d409cf19d8, type: 3}
       propertyPath: m_Name
       value: MusicManager

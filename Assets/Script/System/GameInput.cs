@@ -65,9 +65,9 @@ public class GameInput : PersistentManager<GameInput>
         GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
     }
 
-    private void GameManager_OnStateChanged(object sender, EventArgs e)
+    private void GameManager_OnStateChanged(GameManager.State oldState, GameManager.State newState)
     {
-        if (GameManager.Instance.IsGamePlaying())
+        if (newState == GameManager.State.GamePlaying)
         {
             EnableActionMap(ActionMap.Player);
         }

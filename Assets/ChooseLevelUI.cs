@@ -48,7 +48,7 @@ public class ChooseLevelUI : MonoBehaviour
         PopulateCurrentPageButtons();
 
         tutorialButton.onClick.AddListener(() =>
-            SceneLoader.Load(SceneLoader.Scene.GameScene)
+            SceneLoader.Load(SceneLoader.Scene.TutorialScene)
         );
 
         backButton.onClick.AddListener(() =>

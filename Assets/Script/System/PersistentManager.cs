@@ -14,7 +14,6 @@ public abstract class PersistentManager<T> : MonoBehaviour where T : MonoBehavio
             Destroy(gameObject);
             return;
         }
-        Debug.Log($"Setting Instance of PersistentManager<{typeof(T).Name}> to this");
 
         Instance = this as T;
         //DontDestroyOnLoad(gameObject);

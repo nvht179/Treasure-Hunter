@@ -4124,6 +4124,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8887316251991163385, guid: c5cf555a801c4c9459d75157e4a9bf1d, type: 3}
   m_PrefabInstance: {fileID: 850116565}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &873046709 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8362083672132949905, guid: f66c0e78935681c429e1ba55c6293b3e, type: 3}
+  m_PrefabInstance: {fileID: 955589876}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d73a4a59f49f2d34595f0cff543efde1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &907102838
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24586,6 +24597,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7211451077693187454, guid: 94b24344b63606d4f978bf5ca98889b7, type: 3}
+      propertyPath: shopUI
+      value: 
+      objectReference: {fileID: 873046709}
     - target: {fileID: 8284521221782018330, guid: 94b24344b63606d4f978bf5ca98889b7, type: 3}
       propertyPath: player
       value: 

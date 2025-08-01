@@ -44,6 +44,7 @@ public class Player : MonoBehaviour, IDamageable
     }
 
     // Sound effects
+    public event EventHandler OnMoveHorizontal;
     public event EventHandler OnJump;
     public event EventHandler OnJumpLand;
     public event EventHandler OnAttack;
@@ -88,6 +89,8 @@ public class Player : MonoBehaviour, IDamageable
     private Inventory inventory;
     private IInteractiveObject selectedObject;
     private int money;
+    [SerializeField] private float footstepInterval = 0.4f;
+    private float footstepTimer;
 
     private void Awake()
     {
@@ -222,6 +225,21 @@ public class Player : MonoBehaviour, IDamageable
         if (isGrounded)
         {
             hasAirAttacked = false;
+        }
+
+        // TODO: modularize this
+        if (moveVector.x != 0 && isGrounded)
+        {
+            footstepTimer -= Time.deltaTime;
+            if (footstepTimer <= 0f)
+            {
+                OnMoveHorizontal?.Invoke(this, EventArgs.Empty);
+                footstepTimer = footstepInterval;
+            }
+        }
+        else
+        {
+            footstepTimer = 0f; // reset when not moving
         }
     }
 

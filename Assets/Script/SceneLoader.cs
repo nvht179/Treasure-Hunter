@@ -23,6 +23,7 @@ public static class SceneLoader
     public const Scene firstBossLevelScene = Scene.BossScene;
 
     public static event Action<Scene> OnGameSceneLoaded;
+    public static event Action<Scene> OnNonGameSceneLoaded;
 
     private static Scene targetScene = Scene.MainMenuScene;
     private static Scene currentScene = Scene.GameScene;
@@ -33,7 +34,6 @@ public static class SceneLoader
         SceneManager.sceneLoaded += OnSceneLoadedWrapper;
     }
 
-    // TODO: Remove later
     private static void OnSceneLoadedWrapper(UnityEngine.SceneManagement.Scene unityScene, LoadSceneMode mode)
     {
         if (unityScene.name == Scene.LoadingScene.ToString())
@@ -41,8 +41,16 @@ public static class SceneLoader
 
         if (Enum.TryParse(unityScene.name, out Scene parsed))
         {
+            Debug.Log($"OnSceneLoadedWrapper: {parsed}");
             currentScene = parsed;
-            OnGameSceneLoaded?.Invoke(parsed);
+            if (IsGameScene(parsed))
+            {
+                OnGameSceneLoaded?.Invoke(parsed);
+            }
+            else
+            {
+                OnNonGameSceneLoaded?.Invoke(parsed);
+            }
         }
         else
         {
@@ -78,15 +86,7 @@ public static class SceneLoader
         SceneManager.LoadScene(targetScene.ToString());
         currentScene = targetScene;
 
-        if (IsGameScene(currentScene))
-        {
-            OnGameSceneLoaded?.Invoke(currentScene);
-            Debug.Log($"Game scene loaded: {currentScene.ToString()}");
-        }
-        else
-        {
-            Debug.Log($"Non-game scene loaded: {currentScene.ToString()}");
-        }
+        Debug.Log($"LoaderCallback: {currentScene}");
     }
 
     public static void ReloadCurrentScene()

@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class AudioClipRefsSO : ScriptableObject
 {
+    // TODO: Capitalize
     public AudioClip[] move;
     public AudioClip[] jump;
     public AudioClip[] jumpLand;
@@ -19,4 +20,6 @@ public class AudioClipRefsSO : ScriptableObject
     public AudioClip[] swordHit;
     public AudioClip[] swordMiss;
     public AudioClip[] opponentHit;
+
+    public AudioClip[] buttonClick;
 }

@@ -47,10 +47,10 @@ public class GameWonUI : MonoBehaviour
         GameManager.Instance.OnStateChanged -= GameManager_OnStateChanged;
     }
 
-    private void GameManager_OnStateChanged(object sender, System.EventArgs e)
+    private void GameManager_OnStateChanged(GameManager.State oldState, GameManager.State newState)
     {
         Debug.Log("GameWonUI -> GameManager_OnStateChanged");
-        if (GameManager.Instance.IsGameWon())
+        if (newState == GameManager.State.LevelWon)
         {
             Show();
         }
@@ -63,6 +63,7 @@ public class GameWonUI : MonoBehaviour
     public void Show()
     {
         gameObject.SetActive(true);
+        scoreText.text = $"Score: {GameManager.Instance.GetScore()}";
     }
 
     public void Hide()

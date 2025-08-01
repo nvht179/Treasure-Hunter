@@ -25,6 +25,7 @@ public class SoundManager : PersistentManager<SoundManager>
     public void AttachPlayerSound(Player player)
     {
         if (player == null) return;
+        player.OnMoveHorizontal += Player_OnMoveHorizontal;
         player.OnJump += Player_OnJump;
         player.OnJumpLand += Player_OnJumpLand; // not yet implemented in Player.cs: when to invoke?
         player.OnAttack += Player_OnAttack;
@@ -37,6 +38,12 @@ public class SoundManager : PersistentManager<SoundManager>
         inventoryUI.OnInventoryClose += Player_OnInventoryClose;
         inventoryUI.OnItemUse += Player_OnItemUse;
         inventoryUI.OnItemDrop += Player_OnItemDrop;
+    }
+
+    private void Player_OnMoveHorizontal(object sender, System.EventArgs e)
+    {
+        Debug.Log("Player_OnMoveHorizontal");
+        PlaySound(audioClipRefsSO.move, ((Player)sender).transform.position);
     }
 
     private void Player_OnItemDrop(object sender, System.EventArgs e)
@@ -103,7 +110,7 @@ public class SoundManager : PersistentManager<SoundManager>
     {
         if (audioClipArray == null || audioClipArray.Length == 0)
         {
-            Debug.LogWarning("No audio clips available to plasy at position: " + position);
+            Debug.LogWarning("No audio clips available to play at position: " + position);
             return;
         }
         PlaySound(audioClipArray[Random.Range(0, audioClipArray.Length)], position, volume);
@@ -113,21 +120,6 @@ public class SoundManager : PersistentManager<SoundManager>
     {
         AudioSource.PlayClipAtPoint(audioClip, position, volumeMultiplier * volume);
     }
-
-    //    public void PlayFootstepsSound(Vector3 position, float volume)
-    //    {
-    //        PlaySound(audioClipRefsSO.footstep, position, volume);
-    //    }
-
-    //    public void PlayCountdownSound()
-    //    {
-    //        PlaySound(audioClipRefsSO.warning, Vector3.zero);
-    //    }
-
-    //    public void PlayWarningSound(Vector3 position)
-    //    {
-    //        PlaySound(audioClipRefsSO.warning, position);
-    //    }
 
     public void SetVolume(float volume)
     {
@@ -142,5 +134,9 @@ public class SoundManager : PersistentManager<SoundManager>
         return volume;
     }
 
-
+    public void PlayButtonSound()
+    {
+        Debug.Log("PlayButtonSound");
+        PlaySound(audioClipRefsSO.buttonClick, Vector3.zero, volume);
+    }
 }
