@@ -41,7 +41,7 @@ public class FlyingSword : MonoBehaviour
         if ((collisionLayer & (1 << other.gameObject.layer)) != 0) {
             rb.velocity = Vector2.zero;
             var hitPlayer = other.collider.GetComponent<IDamageable>();
-            hitPlayer?.TakeDamage(flyingObjectSO.damage);
+            hitPlayer?.TakeDamage(this, flyingObjectSO.damage);
             transform.SetParent(other.transform);
             isEmbedded = true;
         }

@@ -20,7 +20,7 @@ public class TotemHead : ShooterTrap, IDamageable {
         currentHealthPoint = maxHealthPoint;
     }
 
-    public void TakeDamage(float damage) {
+    public void TakeDamage(MonoBehaviour offender, float damage) {
         currentHealthPoint = Mathf.Clamp(currentHealthPoint - damage, 0, maxHealthPoint);
         OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs {
             MaxHealth = maxHealthPoint,

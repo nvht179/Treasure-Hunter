@@ -195,7 +195,7 @@ namespace Script.Enemy.PinkStar
             Destroy(gameObject);
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(MonoBehaviour offender, float damage)
         {
             currentState.TakeDamage(damage);
             OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs

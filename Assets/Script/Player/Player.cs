@@ -30,6 +30,8 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private float attackAlternateStaminaCost;
     [SerializeField] private float maxHealthPoint;
     [SerializeField] private float maxStamina;
+    [SerializeField] private float knockbackForce;
+    [SerializeField] private float knockbackDuration;
 
     [Header("Inventory")]
     [SerializeField] private InventoryUI inventoryUI;
@@ -84,6 +86,8 @@ public class Player : MonoBehaviour, IDamageable
     private Vector3 moveVector;
     private int moveDirection;
     private Vector2 gravityVector;
+    private Vector2 knockbackVelocity;
+    private float knockbackTimer;
     public bool IsFacingRight { get; set; }
     private Rigidbody2D rb;
 
@@ -256,6 +260,13 @@ public class Player : MonoBehaviour, IDamageable
     private void FixedUpdate()
     {
         var currentVelocity = rb.velocity;
+        
+        if (knockbackTimer > 0)
+        {
+            knockbackTimer -= Time.fixedDeltaTime;
+            rb.velocity = knockbackVelocity;
+            return; // Skip normal movement
+        }
 
         // horizontal movement
         var velocityX = moveVector.x == 0 ? 0 : moveSpeed * moveDirection;
@@ -307,7 +318,7 @@ public class Player : MonoBehaviour, IDamageable
                     if (enemy != null)
                     {
                         var damageable = enemy.GetComponent<IDamageable>();
-                        damageable?.TakeDamage(playerDamage);
+                        damageable?.TakeDamage(this, playerDamage);
                     }
                 }
 
@@ -358,7 +369,7 @@ public class Player : MonoBehaviour, IDamageable
     //     transform.position += moveDistance * moveDirX;
     // }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(MonoBehaviour offender, float damage)
     {
         currentHealthPoint = Mathf.Clamp(currentHealthPoint - damage, 0, maxHealthPoint);
         OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
@@ -370,6 +381,13 @@ public class Player : MonoBehaviour, IDamageable
         if (currentHealthPoint <= 0)
         {
             OnDied?.Invoke();
+        }
+        
+        if (offender != null && offender.transform != null)
+        {
+            var knockbackDir = (transform.position - offender.transform.position).normalized;
+            knockbackVelocity = knockbackDir * knockbackForce;
+            knockbackTimer = knockbackDuration;
         }
     }
 

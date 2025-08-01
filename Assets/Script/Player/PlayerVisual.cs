@@ -19,6 +19,7 @@ public class PlayerVisual : MonoBehaviour
     private static readonly int IsConstantlyAttacking = Animator.StringToHash("IsConstantlyAttacking");
     private static readonly int XVelocity = Animator.StringToHash("XVelocity");
     private static readonly int YVelocity = Animator.StringToHash("YVelocity");
+    private static readonly int Hit = Animator.StringToHash("Hit");
 
 
     private void Awake()
@@ -26,6 +27,16 @@ public class PlayerVisual : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         initialAttackOriginPosition = attackOrigin.localPosition;
+    }
+
+    private void Start()
+    {
+        player.OnDamageTaken += PlayerOnDamageTaken;
+    }
+
+    private void PlayerOnDamageTaken(object sender, IDamageable.OnDamageTakenEventArgs e)
+    {
+        animator.SetTrigger(Hit);
     }
 
     private void Update()

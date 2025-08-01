@@ -27,7 +27,7 @@ namespace Script.Enemy.PinkStar
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                other.gameObject.GetComponent<Player>().TakeDamage(PinkStar.AttackDamage);
+                other.gameObject.GetComponent<Player>().TakeDamage(PinkStar, PinkStar.AttackDamage);
             }
             
             PinkStar.SwitchState(PinkStar.RechargeState);

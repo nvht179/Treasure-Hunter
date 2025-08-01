@@ -133,7 +133,7 @@ public class Crabby : MonoBehaviour, IDamageable
             if (playerCollider != null)
             {
                 var damageable = playerCollider.GetComponent<IDamageable>();
-                damageable?.TakeDamage(attackDamage);
+                damageable?.TakeDamage(this, attackDamage);
             }
         }
 
@@ -142,7 +142,7 @@ public class Crabby : MonoBehaviour, IDamageable
         hasAttacked = true;
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(MonoBehaviour offender, float damage)
     {
         currentHealth = math.clamp(currentHealth - damage, 0, maxHealth);
         OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs

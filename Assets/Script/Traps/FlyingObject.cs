@@ -39,7 +39,7 @@ public class FlyingObject : MonoBehaviour {
     }
 
     protected void DamageObject(IDamageable damageable) {
-        damageable?.TakeDamage(flyingObjectSO.damage);
+        damageable?.TakeDamage(this, flyingObjectSO.damage);
     }
 
     public void SetDirection(Vector2 direction)

@@ -12,5 +12,7 @@ public interface IDamageable {
         public float MaxHealth;
         public float CurrentHealth;
     }
-    void TakeDamage(float damage);
+    
+    // TODO: offender should be something else other than MonoBehaviour
+    void TakeDamage(MonoBehaviour offender, float damage);
 }
