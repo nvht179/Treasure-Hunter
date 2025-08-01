@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameOverUI : MonoBehaviour
+public class GameLostUI : MonoBehaviour
 {
     [SerializeField] private Button homeButton;
     [SerializeField] private Button restartButton;
@@ -63,6 +64,7 @@ public class GameOverUI : MonoBehaviour
     public void Show()
     {
         scoreText.text = $"Score: {GameManager.Instance.GetScore()}";
+        timeTakenText.text = $"Time: {GameManager.Instance.GetTimeTaken()}";
         gameObject.SetActive(true);
     }
 

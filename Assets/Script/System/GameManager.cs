@@ -85,12 +85,19 @@ public class GameManager : PersistentManager<GameManager>
         }
 
         Debug.Log("GameManager: Player found in GAME scene, setting up game state.");
-        player.OnDied += HandlePlayerDied;
+        player.OnDead += HandlePlayerDied;
         player.OnWon += HandlePlayerWon;
         SetState(State.GamePlaying);
 
         GameInput.Instance.EnableActionMap(GameInput.ActionMap.Player);
+
         SoundManager.Instance.AttachPlayerSound(player);
+        var shop = FindObjectOfType<Shop>();
+        var shopUI = FindObjectOfType<ShopUI>();
+        if (shop != null && shopUI != null)
+        {
+            SoundManager.Instance.AttachShopSound(shop, shopUI);
+        }
     }
 
     private void HandlePlayerWon()
@@ -135,6 +142,11 @@ public class GameManager : PersistentManager<GameManager>
     public int GetScore()
     {
         return 0;
+    }
+
+    public string GetTimeTaken()
+    {
+        return "hh:mm:ss";
     }
 
     private void SetState(State newState)

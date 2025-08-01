@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: AudioClipRefsSO
   m_EditorClassIdentifier: 
   move:
-  - {fileID: 8300000, guid: c8006a78ae9570640888950df386e2bb, type: 3}
-  - {fileID: 8300000, guid: 3d16ac5baca9055429cb399301d71cb2, type: 3}
+  - {fileID: 8300000, guid: b282dd962ce4d6a40b4bba13615fefa1, type: 3}
+  - {fileID: 8300000, guid: 9ae17ad51a4ffa442bd0fb170701a912, type: 3}
+  - {fileID: 8300000, guid: 3b664ed50cd189148a1b301867e18760, type: 3}
   jump:
   - {fileID: 8300000, guid: 0a77537a65a7c4345a13749acf475af6, type: 3}
   - {fileID: 8300000, guid: 3dc61217ddf643b46bb47e81b78cd0fd, type: 3}
@@ -31,17 +32,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7d2ff259fa748d049b78ca6ef6f39bc1, type: 3}
   - {fileID: 8300000, guid: 504a49fd3382a5c47b7e9e32ad50b3d8, type: 3}
   - {fileID: 8300000, guid: 99aaf96826af73049b243f67a9f67e36, type: 3}
-  interact: []
-  inventoryOpen:
-  - {fileID: 8300000, guid: b4c137af8d1a5bf49b0817c9a9d6e9b4, type: 3}
-  - {fileID: 8300000, guid: e9467ea6965f4b344b14f76754a2d0a9, type: 3}
-  - {fileID: 8300000, guid: 60af916814b378e4fb89d1afb0ab1c41, type: 3}
-  inventoryClose:
-  - {fileID: 8300000, guid: b4c137af8d1a5bf49b0817c9a9d6e9b4, type: 3}
-  - {fileID: 8300000, guid: e9467ea6965f4b344b14f76754a2d0a9, type: 3}
-  - {fileID: 8300000, guid: 60af916814b378e4fb89d1afb0ab1c41, type: 3}
-  itemUse: []
-  itemDrop: []
   throwKnife:
   - {fileID: 8300000, guid: 25beb6990e842254aa1ed13e52826f0b, type: 3}
   swordHit:
@@ -52,6 +42,35 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 81a3fe760f71cd3489cda263e655e24e, type: 3}
   - {fileID: 8300000, guid: a43f3747a5e82364faad5a81e5ef1a54, type: 3}
   - {fileID: 8300000, guid: 58d2f9ea3f5601a488d674b7a49dc6f4, type: 3}
-  opponentHit: []
-  buttonClick:
-  - {fileID: 8300000, guid: f16f4f2453b54f048a1b2601b9804a6b, type: 3}
+  playerGotHit: []
+  playerDead:
+  - {fileID: 8300000, guid: 22f9246037bde2b4ba4cc5e56522e045, type: 3}
+  inventoryOpen:
+  - {fileID: 8300000, guid: b4c137af8d1a5bf49b0817c9a9d6e9b4, type: 3}
+  - {fileID: 8300000, guid: e9467ea6965f4b344b14f76754a2d0a9, type: 3}
+  - {fileID: 8300000, guid: 60af916814b378e4fb89d1afb0ab1c41, type: 3}
+  inventoryClose:
+  - {fileID: 8300000, guid: b4c137af8d1a5bf49b0817c9a9d6e9b4, type: 3}
+  - {fileID: 8300000, guid: e9467ea6965f4b344b14f76754a2d0a9, type: 3}
+  - {fileID: 8300000, guid: 60af916814b378e4fb89d1afb0ab1c41, type: 3}
+  shopOpen:
+  - {fileID: 8300000, guid: f508e3df358801a4193d2d25710552cb, type: 3}
+  - {fileID: 8300000, guid: a0d8d22baa9fd694fb6034fa15d63d68, type: 3}
+  - {fileID: 8300000, guid: 60b80bda98406b1428a510c46775b364, type: 3}
+  - {fileID: 8300000, guid: e18b1bada7023dc4d9d325c836c3c1a7, type: 3}
+  shopClose:
+  - {fileID: 8300000, guid: cfc5235b0f1f3ea4da0eb59fd5c1e486, type: 3}
+  - {fileID: 8300000, guid: 97bb087faa96d19499da8b93eb8de0d4, type: 3}
+  - {fileID: 8300000, guid: d642b80336ce6774589ca20c18ea063e, type: 3}
+  itemUse: []
+  itemDrop:
+  - {fileID: 8300000, guid: beb61ba4ff7cdb045bee310f2b6ab345, type: 3}
+  itemBuy: {fileID: 8300000, guid: a19033ccad7c4b040b5f22a84036eec6, type: 3}
+  greenPotionSuccess: {fileID: 8300000, guid: 14002693ebb29fc4e8f3e0d8ee771b9a, type: 3}
+  greenPotionFail: {fileID: 8300000, guid: 20088bf6f81713d4fb6a0653e9d5b131, type: 3}
+  bluePotionUsed: {fileID: 8300000, guid: ace270d18dea7f14ea567e3ac447fae2, type: 3}
+  redPotionUsed: {fileID: 8300000, guid: 297e8e7bbb1d62141b5d7858fdbd0fb3, type: 3}
+  keyCollected: {fileID: 8300000, guid: 93b808d98f7f56b4b984d30f5d1279ff, type: 3}
+  buttonClick: {fileID: 8300000, guid: f16f4f2453b54f048a1b2601b9804a6b, type: 3}
+  won: {fileID: 8300000, guid: 9372a6cd79d35a14783ba3f6c2ae2e1f, type: 3}
+  lost: {fileID: 8300000, guid: 03f233bd80d1a6547b68e25bbd546267, type: 3}

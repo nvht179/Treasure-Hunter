@@ -65,7 +65,7 @@ public class MusicManager : PersistentManager<MusicManager>
                 break;
             case GameManager.State.Paused:
                 Debug.Log("GameManager_OnStateChanged: Game is paused, stopping music.");
-                gameMusicSource.Stop();
+                gameMusicSource.Pause();
                 break;
         }
     }

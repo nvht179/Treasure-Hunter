@@ -33,6 +33,8 @@ public class ShopUI : MonoBehaviour, ISelectItem {
     private int currentPage = 0;
     private Item selectedItem;
 
+    public event EventHandler OnItemBuy;
+
     private void Awake() {
         SetupListener();
         Hide();
@@ -79,6 +81,8 @@ public class ShopUI : MonoBehaviour, ISelectItem {
             shopInventory.RemoveItem(selectedItem);
             selectedItem = null;
             RefreshInventoryItems();
+
+            OnItemBuy?.Invoke(this, EventArgs.Empty);
         });
 
     }

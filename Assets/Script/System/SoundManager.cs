@@ -9,7 +9,6 @@ public class SoundManager : PersistentManager<SoundManager>
     private const string PLAYER_PREFS_SOUND_EFFECTS_VOLUME = "SoundEffectsVolume";
 
 
-
     [SerializeField] private AudioClipRefsSO audioClipRefsSO;
 
 
@@ -22,6 +21,25 @@ public class SoundManager : PersistentManager<SoundManager>
         volume = PlayerPrefs.GetFloat(PLAYER_PREFS_SOUND_EFFECTS_VOLUME, 1f);
     }
 
+    private void Start()
+    {
+        GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
+    }
+
+    private void GameManager_OnStateChanged(GameManager.State oldState, GameManager.State newState)
+    {
+        if (newState == GameManager.State.LevelWon)
+        {
+            PlaySound(audioClipRefsSO.won, Vector3.zero);
+            Debug.Log("SoundManager: Game won sound played.");
+        }
+        else if (newState == GameManager.State.LevelLost)
+        {
+            PlaySound(audioClipRefsSO.lost, Vector3.zero);
+            Debug.Log("SoundManager: Game lost sound played.");
+        }
+    }
+
     public void AttachPlayerSound(Player player)
     {
         if (player == null) return;
@@ -31,7 +49,12 @@ public class SoundManager : PersistentManager<SoundManager>
         player.OnAttack += Player_OnAttack;
         player.OnAirAttack += Player_OnAirAttack;
         player.OnAttackAlternate += Player_OnAttackAlternate;
-        player.OnInteract += Player_OnInteract;
+        player.OnItemDrop += Player_OnItemDrop;
+        player.OnGreenPotionSuccess += Player_OnGreenPotionSuccess;
+        player.OnGreenPotionFail += Player_OnGreenPotionFail;
+        player.OnBluePotionUsed += Player_OnBluePotionUsed;
+        player.OnRedPotionUsed += Player_OnRedPotionUsed;
+        player.OnKeyCollected += Player_OnKeyCollected;
 
         InventoryUI inventoryUI = player.GetInventoryUI();
         inventoryUI.OnInventoryOpen += Player_OnInventoryOpen;
@@ -40,10 +63,66 @@ public class SoundManager : PersistentManager<SoundManager>
         inventoryUI.OnItemDrop += Player_OnItemDrop;
     }
 
+    private void Player_OnKeyCollected(object sender, System.EventArgs e)
+    {
+        Debug.Log("Player_OnKeyCollected");
+        PlaySound(audioClipRefsSO.keyCollected, ((Player)sender).transform.position);
+    }
+
+    public void AttachShopSound(Shop shop, ShopUI shopUI)
+    {
+        if (shop == null) return;
+        shop.OnShopOpen += Player_OnShopOpen;
+        shop.OnShopClose += Player_OnShopClose;
+        shopUI.OnItemBuy += Player_OnItemBuy;
+    }
+
+    private void Player_OnRedPotionUsed(object sender, System.EventArgs e)
+    {
+        Debug.Log("Player_OnRedPotionUsed");
+        PlaySound(audioClipRefsSO.redPotionUsed, ((Player)sender).transform.position);
+    }
+
+    private void Player_OnGreenPotionFail(object sender, System.EventArgs e)
+    {
+        Debug.Log("Player_OnGreenPotionFail");
+        PlaySound(audioClipRefsSO.greenPotionFail, ((Player)sender).transform.position);
+    }
+
+    private void Player_OnGreenPotionSuccess(object sender, System.EventArgs e)
+    {
+        Debug.Log("Player_OnGreenPotionSuccess");
+        PlaySound(audioClipRefsSO.greenPotionSuccess, ((Player)sender).transform.position);
+    }
+
+    private void Player_OnBluePotionUsed(object sender, System.EventArgs e)
+    {
+        Debug.Log("Player_OnBluePotionUsed");
+        PlaySound(audioClipRefsSO.bluePotionUsed, ((Player)sender).transform.position);
+    }
+
+    private void Player_OnItemBuy(object sender, System.EventArgs e)
+    {
+        Debug.Log("Player_OnItemBuy");
+        PlaySound(audioClipRefsSO.itemBuy, ((ShopUI)sender).transform.position);
+    }
+
+    private void Player_OnShopClose(object sender, System.EventArgs e)
+    {
+        Debug.Log("Player_OnShopClose");
+        PlaySound(audioClipRefsSO.shopClose, ((Shop)sender).transform.position);
+    }
+
+    private void Player_OnShopOpen(object sender, System.EventArgs e)
+    {
+        Debug.Log("Player_OnShopOpen");
+        PlaySound(audioClipRefsSO.shopOpen, ((Shop)sender).transform.position);
+    }
+
     private void Player_OnMoveHorizontal(object sender, System.EventArgs e)
     {
         Debug.Log("Player_OnMoveHorizontal");
-        PlaySound(audioClipRefsSO.move, ((Player)sender).transform.position);
+        PlaySound(audioClipRefsSO.move, ((Player)sender).transform.position, 0.5f);
     }
 
     private void Player_OnItemDrop(object sender, System.EventArgs e)
@@ -76,12 +155,6 @@ public class SoundManager : PersistentManager<SoundManager>
         PlaySound(audioClipRefsSO.inventoryOpen, ((InventoryUI)sender).transform.position);
     }
 
-    private void Player_OnInteract(object sender, System.EventArgs e)
-    {
-        Debug.Log("Player_OnInteract");
-        PlaySound(audioClipRefsSO.interact, ((Player)sender).transform.position);
-    }
-
     private void Player_OnAttackAlternate(object sender, System.EventArgs e)
     {
         Debug.Log("Player_OnAttackAlternate");
@@ -110,7 +183,7 @@ public class SoundManager : PersistentManager<SoundManager>
     {
         if (audioClipArray == null || audioClipArray.Length == 0)
         {
-            Debug.LogWarning("No audio clips available to play at position: " + position);
+            Debug.Log("No audio clips available to play at position: " + position);
             return;
         }
         PlaySound(audioClipArray[Random.Range(0, audioClipArray.Length)], position, volume);
@@ -118,6 +191,11 @@ public class SoundManager : PersistentManager<SoundManager>
 
     private void PlaySound(AudioClip audioClip, Vector3 position, float volumeMultiplier = 1f)
     {
+        if (audioClip == null)
+        {
+            Debug.Log("No audio clip available");
+            return;
+        }
         AudioSource.PlayClipAtPoint(audioClip, position, volumeMultiplier * volume);
     }
 

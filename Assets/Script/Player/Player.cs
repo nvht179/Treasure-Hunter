@@ -52,13 +52,20 @@ public class Player : MonoBehaviour, IDamageable
     public event EventHandler OnAttack;
     public event EventHandler OnAirAttack;
     public event EventHandler OnAttackAlternate;
-    public event EventHandler OnInteract;
 
+    public event EventHandler OnGreenPotionFail;
+    public event EventHandler OnGreenPotionSuccess;
+    public event EventHandler OnBluePotionUsed;
+    public event EventHandler OnRedPotionUsed;
+    public event EventHandler OnItemDrop;
+    public event EventHandler OnKeyCollected;
+
+    public event EventHandler OnHealthChanged; // For refactor
     public event EventHandler OnDestroyed;
     public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
     public event EventHandler<OnStaminaUsedEventArgs> OnStaminaUsed;
     public event EventHandler OnNeedKey;
-    public event Action OnDied;
+    public event Action OnDead;
     public event Action OnWon;
     public class OnStaminaUsedEventArgs : EventArgs
     {
@@ -93,7 +100,7 @@ public class Player : MonoBehaviour, IDamageable
 
     private Inventory inventory;
     private IInteractiveObject selectedObject;
-    private int money;
+    [SerializeField] private int money; // TODO: remove later (Error: no update coin)
     [SerializeField] private float footstepInterval = 0.4f;
     private float footstepTimer;
 
@@ -110,7 +117,7 @@ public class Player : MonoBehaviour, IDamageable
 
         inventory = new Inventory(UseItem, WearItem, DropItem);
         inventoryUI.SetInventory(inventory);
-        money = 0;
+        money = 200;
     }
 
     private void Start()
@@ -136,7 +143,6 @@ public class Player : MonoBehaviour, IDamageable
     private void PlayerOnInteract(object sender, EventArgs e)
     {
         selectedObject?.Interact(this);
-        OnInteract?.Invoke(this, EventArgs.Empty);
     }
 
     private void PlayerOnJump(object sender, EventArgs e)
@@ -348,6 +354,7 @@ public class Player : MonoBehaviour, IDamageable
         if (collision.TryGetComponent<KeyWorld>(out var keyWorld))
         {
             inventory.AddItem(keyWorld.GetItem());
+            OnKeyCollected?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -380,7 +387,7 @@ public class Player : MonoBehaviour, IDamageable
 
         if (currentHealthPoint <= 0)
         {
-            OnDied?.Invoke();
+            OnDead?.Invoke();
         }
         
         if (offender != null && offender.transform != null)
@@ -486,7 +493,11 @@ public class Player : MonoBehaviour, IDamageable
             case ItemType.RedDiamond:
                 DropRedDiamond();
                 break;
+            default:
+                return;
         }
+
+        OnItemDrop?.Invoke(this, EventArgs.Empty);
     }
 
     public InventoryUI GetInventoryUI()
@@ -524,6 +535,7 @@ public class Player : MonoBehaviour, IDamageable
     private void BluePotion()
     {
         // TODO: Restore stamina rate in 5s
+        OnBluePotionUsed?.Invoke(this, EventArgs.Empty);
     }
 
     private void GoldenSkull()
@@ -543,10 +555,12 @@ public class Player : MonoBehaviour, IDamageable
         if(chance < 50)
         {
             currentHealthPoint /= 2;
+            OnGreenPotionFail?.Invoke(this, EventArgs.Empty);
         }
         else
         {
             currentHealthPoint = maxHealthPoint;
+            OnGreenPotionSuccess?.Invoke(this, EventArgs.Empty);
         }
 
         OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs

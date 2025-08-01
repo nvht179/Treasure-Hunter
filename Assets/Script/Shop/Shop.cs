@@ -8,6 +8,10 @@ public class Shop : MonoBehaviour, IInteractiveObject {
         public Player player;
     }
 
+    // Sound effect
+    public event EventHandler OnShopOpen;
+    public event EventHandler OnShopClose;
+
     [SerializeField] private ShopUI shopUI;
     [SerializeField] private ItemListSO shopItemListSO;
 
@@ -35,9 +39,11 @@ public class Shop : MonoBehaviour, IInteractiveObject {
         });
         if (!shopUI.IsOpened()) {
             shopUI.OpenShopUI(player, shopInventory);
+            OnShopOpen?.Invoke(this, EventArgs.Empty);
         }
         else {
             shopUI.CloseShopUI();
+            OnShopClose?.Invoke(this, EventArgs.Empty);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -11,6 +12,9 @@ public class GameWonUI : MonoBehaviour
     [SerializeField] private Button exitButton;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI timeTakenText;
+
+    // Sound effect
+    private event EventHandler OnGameWon;
 
     private void Awake()
     {
@@ -53,6 +57,7 @@ public class GameWonUI : MonoBehaviour
         if (newState == GameManager.State.LevelWon)
         {
             Show();
+            OnGameWon?.Invoke(this, EventArgs.Empty);
         }
         else
         {
@@ -62,8 +67,9 @@ public class GameWonUI : MonoBehaviour
 
     public void Show()
     {
-        gameObject.SetActive(true);
         scoreText.text = $"Score: {GameManager.Instance.GetScore()}";
+        timeTakenText.text = $"Time: {GameManager.Instance.GetTimeTaken()}";
+        gameObject.SetActive(true);
     }
 
     public void Hide()
