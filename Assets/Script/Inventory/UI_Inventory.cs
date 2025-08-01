@@ -100,16 +100,6 @@ public class UI_Inventory : MonoBehaviour, ISelectItem {
     }
 
     public void SetInventory(Inventory inventory) {
-        if (itemListSO != null) {
-            foreach (ItemSO itemSO in itemListSO.items) {
-                Item item = new(itemSO);
-                inventory.AddItem(item);
-            }
-            foreach (ItemSO itemSO in itemListSO.items) {
-                Item item = new(itemSO);
-                inventory.AddItem(item);
-            }
-        }
         this.inventory = inventory;
         currentPage = 0;
         RefreshInventoryItems();

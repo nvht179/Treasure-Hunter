@@ -62,8 +62,6 @@ public class Player : MonoBehaviour, IDamageable
         public int changeAmount;
     }
 
-    private Action<Item> useItemAction;
-
     private float gravityScale;
     private float currentHealthPoint;
     private float currentStamina;
@@ -96,7 +94,7 @@ public class Player : MonoBehaviour, IDamageable
         gravityScale = rb.gravityScale;
         attackAlternateCooldownTimer = attackAlternateCooldownTime;
 
-        inventory = new Inventory(UseItem);
+        inventory = new Inventory(UseItem, WearItem, DropItem);
         uiInventory.SetInventory(inventory);
         money = 0;
     }
@@ -385,18 +383,56 @@ public class Player : MonoBehaviour, IDamageable
         return isConstantlyAttacking;
     }
 
+    private void WearItem(Item item)
+    {
+        switch(item.itemSO.itemType)
+        {
+            case ItemType.BlueDiamond:
+                BlueDiamond();
+                break;
+            case ItemType.GoldenSkull:
+                GoldenSkull();
+                break;
+            case ItemType.GreenDiamond:
+                GreenDiamond();
+                break;
+            case ItemType.RedDiamond:
+                RedDiamond();
+                break;
+        }
+    }
+
+    private void DropItem(Item item)
+    {
+        switch(item.itemSO.itemType)
+        {
+            case ItemType.BlueDiamond:
+                DropBlueDiamond();
+                break;
+            case ItemType.GoldenSkull:
+                DropGoldenSkull();
+                break;
+            case ItemType.GreenDiamond:
+                DropGreenDiamond();
+                break;
+            case ItemType.RedDiamond:
+                DropRedDiamond();
+                break;
+        }
+    }
+
     private void UseItem(Item item)
     {
-        switch(item.itemSO.name)
+        switch(item.itemSO.itemType)
         {
-            case "Blue Potion":
+            case ItemType.BluePotion:
                 BluePotion();
                 break;
-            case "Green Potion":
+            case ItemType.GreenPotion:
                 GreenPotion();
                 break;
-            case "Health Potion":
-                RedPotion();
+            case ItemType.HealthPotion:
+                HealthPotion();
                 break;
         }
     }
@@ -421,6 +457,11 @@ public class Player : MonoBehaviour, IDamageable
     {
         maxHealthPoint += 50;
         playerDamage += 5;
+        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+        {
+            CurrentHealth = currentHealthPoint,
+            MaxHealth = maxHealthPoint
+        });
     }
 
     private void GreenPotion()
@@ -465,9 +506,55 @@ public class Player : MonoBehaviour, IDamageable
         });
     }
 
-    private void RedPotion()
+    private void HealthPotion()
     {
         currentHealthPoint = Mathf.Clamp(currentHealthPoint + 10, 0, maxHealthPoint);
+        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+        {
+            CurrentHealth = currentHealthPoint,
+            MaxHealth = maxHealthPoint
+        });
+    }
+
+    private void DropBlueDiamond()
+    {
+        maxStamina -= 10;
+        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+        OnStaminaUsed?.Invoke(this, new OnStaminaUsedEventArgs
+        {
+            CurrentStamina = currentStamina,
+            MaxStamina = maxStamina
+        });
+    }
+
+    private void DropGoldenSkull()
+    {
+        maxHealthPoint -= 50;
+        playerDamage -= 5;
+        currentHealthPoint = Mathf.Clamp(currentHealthPoint, 0, maxHealthPoint);
+        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+        {
+            CurrentHealth = currentHealthPoint,
+            MaxHealth = maxHealthPoint
+        });
+    }
+
+    private void DropGreenDiamond()
+    {
+        currentHealthPoint = 100;
+        maxHealthPoint = 100;
+        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+        {
+            CurrentHealth = currentHealthPoint,
+            MaxHealth = maxHealthPoint
+        });
+        playerDamage = 5;
+    }
+
+    private void DropRedDiamond()
+    {
+        maxHealthPoint -= 10;
+        currentHealthPoint = Mathf.Clamp(currentHealthPoint, 0, maxHealthPoint);
         OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
         {
             CurrentHealth = currentHealthPoint,

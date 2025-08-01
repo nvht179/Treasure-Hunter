@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d755ce070f16cce45a585dbe8405f806, type: 3}
-  m_Name: GreenBottle
+  m_Name: GreenPotion
   m_EditorClassIdentifier: 
   itemName: Green Potion
   description: 'consumable: let''s go gambling. lose half of your current health

@@ -37,12 +37,9 @@ public class ShopUI : MonoBehaviour, ISelectItem {
         Hide();
     }
 
-    public void OpenShopUI(Player player, ItemListSO itemListSO) {
+    public void OpenShopUI(Player player, Inventory inventory) {
         this.player = player;
-        shopInventory = new Inventory(null);
-        foreach (ItemSO itemSO in itemListSO.items) {
-            shopInventory.AddItem(new Item(itemSO));
-        }
+        shopInventory = inventory;
         RefreshInventoryItems();
         SetInventory(player.GetInventory());
         Show();
@@ -101,7 +98,8 @@ public class ShopUI : MonoBehaviour, ISelectItem {
     }
 
     private void RefreshInventoryItems(int pageNumber) {
-        int totalItems = shopItemListSO.items.Count;
+        List<Item> itemList = shopInventory.GetItemList();
+        int totalItems = shopInventory.GetItemListCount();
         maxPage = Mathf.Max(0, (totalItems - 1) / NumItemPerPage);
 
         // Clean previous slots
@@ -118,7 +116,6 @@ public class ShopUI : MonoBehaviour, ISelectItem {
 
         int x = 0;
         int y = 0;
-        List<Item> itemList = shopInventory.GetItemList();
 
         for (int i = startIndex; i < endIndex; i++) {
             Item item = itemList[i];
