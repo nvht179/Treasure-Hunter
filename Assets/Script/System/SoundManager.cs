@@ -133,10 +133,4 @@ public class SoundManager : PersistentManager<SoundManager>
     {
         return volume;
     }
-
-    public void PlayButtonSound()
-    {
-        Debug.Log("PlayButtonSound");
-        PlaySound(audioClipRefsSO.buttonClick, Vector3.zero, volume);
-    }
 }

@@ -41,7 +41,6 @@ public class GamePauseManager : PersistentManager<GamePauseManager>
         Hide();
     }
 
-
     public void PauseGame()
     {
         Time.timeScale = 0f;

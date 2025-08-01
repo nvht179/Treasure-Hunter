@@ -53,3 +53,5 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a43f3747a5e82364faad5a81e5ef1a54, type: 3}
   - {fileID: 8300000, guid: 58d2f9ea3f5601a488d674b7a49dc6f4, type: 3}
   opponentHit: []
+  buttonClick:
+  - {fileID: 8300000, guid: f16f4f2453b54f048a1b2601b9804a6b, type: 3}
