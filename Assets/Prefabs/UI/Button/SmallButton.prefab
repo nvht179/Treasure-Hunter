@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3508850787397986448}
   - component: {fileID: 1950414617348389840}
   - component: {fileID: 54321863606105490}
+  - component: {fileID: 7578487064137934289}
   m_Layer: 5
   m_Name: SmallButton
   m_TagString: Untagged
@@ -120,19 +121,22 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1950414617348389840}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6732759549243100294, guid: 4512f0fb8feeb9541bc362ab88038f72, type: 3}
-        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
-        m_MethodName: PlayButtonSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &7578487064137934289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715785979586613855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42a05d50685093043adaf442c7f278c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSound: {fileID: 8300000, guid: f16f4f2453b54f048a1b2601b9804a6b, type: 3}
+  hoverSound: {fileID: 0}
+  volume: 1
 --- !u!1 &7374969825476614619
 GameObject:
   m_ObjectHideFlags: 0

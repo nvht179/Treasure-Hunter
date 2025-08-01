@@ -41,7 +41,6 @@ public static class SceneLoader
 
         if (Enum.TryParse(unityScene.name, out Scene parsed))
         {
-            Debug.Log($"OnSceneLoadedWrapper: {parsed}");
             currentScene = parsed;
             if (IsGameScene(parsed))
             {
@@ -76,7 +75,7 @@ public static class SceneLoader
             return;
         }
 
-        Debug.Log($"Loading last scene: {lastScene.ToString()}");
+        Debug.Log($"Loading last scene: {lastScene}");
         targetScene = lastScene;
         SceneManager.LoadScene(Scene.LoadingScene.ToString());
     }
