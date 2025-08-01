@@ -9,9 +9,12 @@ public class AudioClipRefsSO : ScriptableObject
     public AudioClip[] jump;
     public AudioClip[] jumpLand;
     public AudioClip[] attack;
+    public AudioClip[] airAttack;
     public AudioClip[] interact;
     public AudioClip[] inventoryOpen;
     public AudioClip[] inventoryClose;
+    public AudioClip[] itemUse;
+    public AudioClip[] itemDrop;
     public AudioClip[] throwKnife;
     public AudioClip[] swordHit;
     public AudioClip[] swordMiss;

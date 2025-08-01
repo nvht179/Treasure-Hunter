@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class UI_Inventory : MonoBehaviour, ISelectItem {
+public class InventoryUI : MonoBehaviour, ISelectItem {
 
     public event EventHandler<ISelectItem.OnItemSelectedEventArgs> OnItemSelected;
+
+    // Sound effects
+    public event EventHandler OnInventoryOpen;
+    public event EventHandler OnInventoryClose;
+    public event EventHandler OnItemUse;
+    public event EventHandler OnItemDrop;
 
     [Header("UI Elements")]
     [SerializeField] private Transform itemSlotContainer;
@@ -37,6 +43,10 @@ public class UI_Inventory : MonoBehaviour, ISelectItem {
         Hide();
     }
 
+    private void OnDestroy() {
+        GameInput.Instance.OnInventoryAction -= GameInput_OnInventoryAction;
+    }
+
     private void SetListener() {
         closeButton.onClick.AddListener(() => {
             Hide();
@@ -62,6 +72,8 @@ public class UI_Inventory : MonoBehaviour, ISelectItem {
                     selectedItem = null; // TODO
                 }
                 RefreshInventoryItems();
+
+                OnItemUse?.Invoke(this, EventArgs.Empty);
             }
         });
 
@@ -72,6 +84,8 @@ public class UI_Inventory : MonoBehaviour, ISelectItem {
                     selectedItem = null; // TODO
                 }
                 RefreshInventoryItems();
+
+                OnItemDrop?.Invoke(this, EventArgs.Empty);
             }
         });
     }
@@ -92,9 +106,11 @@ public class UI_Inventory : MonoBehaviour, ISelectItem {
     private void GameInput_OnInventoryAction(object sender, EventArgs e) {
         isInventoryShown = !isInventoryShown;
         if (isInventoryShown) {
+            OnInventoryOpen?.Invoke(this, EventArgs.Empty);
             Show();
         }
         else {
+            OnInventoryClose?.Invoke(this, EventArgs.Empty);
             Hide();
         }
     }

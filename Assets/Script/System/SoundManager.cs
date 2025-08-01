@@ -22,22 +22,80 @@ public class SoundManager : PersistentManager<SoundManager>
         volume = PlayerPrefs.GetFloat(PLAYER_PREFS_SOUND_EFFECTS_VOLUME, 1f);
     }
 
-    private void Start()
-    {
-
-    }
-
     public void AttachPlayerSound(Player player)
     {
         if (player == null) return;
-        //player.OnAttack += Player_OnAttack;
-        //player.OnAttackAlternate += Player_OnAttackAlternate;
-        //player.OnInteract += Player_OnInteract;
         player.OnJump += Player_OnJump;
+        player.OnJumpLand += Player_OnJumpLand; // not yet implemented in Player.cs: when to invoke?
+        player.OnAttack += Player_OnAttack;
+        player.OnAirAttack += Player_OnAirAttack;
+        player.OnAttackAlternate += Player_OnAttackAlternate;
+        player.OnInteract += Player_OnInteract;
+
+        InventoryUI inventoryUI = player.GetInventoryUI();
+        inventoryUI.OnInventoryOpen += Player_OnInventoryOpen;
+        inventoryUI.OnInventoryClose += Player_OnInventoryClose;
+        inventoryUI.OnItemUse += Player_OnItemUse;
+        inventoryUI.OnItemDrop += Player_OnItemDrop;
+    }
+
+    private void Player_OnItemDrop(object sender, System.EventArgs e)
+    {
+        Debug.Log("Player_OnItemDrop");
+        PlaySound(audioClipRefsSO.itemDrop, ((InventoryUI)sender).transform.position);
+    }
+
+    private void Player_OnItemUse(object sender, System.EventArgs e)
+    {
+        Debug.Log("Player_OnItemUse");
+        PlaySound(audioClipRefsSO.itemUse, ((InventoryUI)sender).transform.position);
+    }
+
+    private void Player_OnJumpLand(object sender, System.EventArgs e)
+    {
+        Debug.Log("Player_OnJumpLand");
+        PlaySound(audioClipRefsSO.jumpLand, ((Player)sender).transform.position);
+    }
+
+    private void Player_OnInventoryClose(object sender, System.EventArgs e)
+    {
+        Debug.Log("Player_OnInventoryClose");
+        PlaySound(audioClipRefsSO.inventoryClose, ((InventoryUI)sender).transform.position);
+    }
+
+    private void Player_OnInventoryOpen(object sender, System.EventArgs e)
+    {
+        Debug.Log("Player_OnInventoryOpen");
+        PlaySound(audioClipRefsSO.inventoryOpen, ((InventoryUI)sender).transform.position);
+    }
+
+    private void Player_OnInteract(object sender, System.EventArgs e)
+    {
+        Debug.Log("Player_OnInteract");
+        PlaySound(audioClipRefsSO.interact, ((Player)sender).transform.position);
+    }
+
+    private void Player_OnAttackAlternate(object sender, System.EventArgs e)
+    {
+        Debug.Log("Player_OnAttackAlternate");
+        PlaySound(audioClipRefsSO.throwKnife, ((Player)sender).transform.position);
+    }
+
+    private void Player_OnAttack(object sender, System.EventArgs e)
+    {
+        Debug.Log("Player_OnAttack");
+        PlaySound(audioClipRefsSO.attack, ((Player)sender).transform.position);
+    }
+
+    private void Player_OnAirAttack(object sender, System.EventArgs e)
+    {
+        Debug.Log("Player_OnAirAttack");
+        PlaySound(audioClipRefsSO.airAttack, ((Player)sender).transform.position);
     }
 
     private void Player_OnJump(object sender, System.EventArgs e)
     {
+        Debug.Log("Player_OnJump");
         PlaySound(audioClipRefsSO.jump, ((Player)sender).transform.position);
     }
 

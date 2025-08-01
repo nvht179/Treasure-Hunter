@@ -24,10 +24,28 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7d2ff259fa748d049b78ca6ef6f39bc1, type: 3}
   - {fileID: 8300000, guid: 99aaf96826af73049b243f67a9f67e36, type: 3}
   - {fileID: 8300000, guid: 504a49fd3382a5c47b7e9e32ad50b3d8, type: 3}
+  airAttack:
+  - {fileID: 8300000, guid: 32beb9304d9b6064ab011fde430102b5, type: 3}
+  - {fileID: 8300000, guid: 7d2ff259fa748d049b78ca6ef6f39bc1, type: 3}
+  - {fileID: 8300000, guid: 504a49fd3382a5c47b7e9e32ad50b3d8, type: 3}
+  - {fileID: 8300000, guid: 99aaf96826af73049b243f67a9f67e36, type: 3}
   interact: []
-  inventoryOpen: []
-  inventoryClose: []
-  throwKnife: []
-  swordHit: []
-  swordMiss: []
+  inventoryOpen:
+  - {fileID: 8300000, guid: b4c137af8d1a5bf49b0817c9a9d6e9b4, type: 3}
+  - {fileID: 8300000, guid: e9467ea6965f4b344b14f76754a2d0a9, type: 3}
+  - {fileID: 8300000, guid: 60af916814b378e4fb89d1afb0ab1c41, type: 3}
+  inventoryClose:
+  - {fileID: 8300000, guid: b4c137af8d1a5bf49b0817c9a9d6e9b4, type: 3}
+  - {fileID: 8300000, guid: e9467ea6965f4b344b14f76754a2d0a9, type: 3}
+  - {fileID: 8300000, guid: 60af916814b378e4fb89d1afb0ab1c41, type: 3}
+  throwKnife:
+  - {fileID: 8300000, guid: 25beb6990e842254aa1ed13e52826f0b, type: 3}
+  swordHit:
+  - {fileID: 8300000, guid: ab0d0de93e00ed74a966fd8ef3561b56, type: 3}
+  - {fileID: 8300000, guid: 02f7f136263b02a48b365df0308b08a6, type: 3}
+  - {fileID: 8300000, guid: 79ac9ed434621ad488ec3dfc15d8c362, type: 3}
+  swordMiss:
+  - {fileID: 8300000, guid: 81a3fe760f71cd3489cda263e655e24e, type: 3}
+  - {fileID: 8300000, guid: a43f3747a5e82364faad5a81e5ef1a54, type: 3}
+  - {fileID: 8300000, guid: 58d2f9ea3f5601a488d674b7a49dc6f4, type: 3}
   opponentHit: []

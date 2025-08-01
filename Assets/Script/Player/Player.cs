@@ -32,7 +32,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private float maxStamina;
 
     [Header("Inventory")]
-    [SerializeField] private UI_Inventory uiInventory;
+    [SerializeField] private InventoryUI inventoryUI;
 
     private const float GroundCheckRadius = 0.05f;
     private const float AirAttackTime = 0.5f;
@@ -43,7 +43,13 @@ public class Player : MonoBehaviour, IDamageable
         public IInteractiveObject selectedObject;
     }
 
+    // Sound effects
     public event EventHandler OnJump;
+    public event EventHandler OnJumpLand;
+    public event EventHandler OnAttack;
+    public event EventHandler OnAirAttack;
+    public event EventHandler OnAttackAlternate;
+    public event EventHandler OnInteract;
 
     public event EventHandler OnDestroyed;
     public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
@@ -95,7 +101,7 @@ public class Player : MonoBehaviour, IDamageable
         attackAlternateCooldownTimer = attackAlternateCooldownTime;
 
         inventory = new Inventory(UseItem, WearItem, DropItem);
-        uiInventory.SetInventory(inventory);
+        inventoryUI.SetInventory(inventory);
         money = 0;
     }
 
@@ -122,6 +128,7 @@ public class Player : MonoBehaviour, IDamageable
     private void PlayerOnInteract(object sender, EventArgs e)
     {
         selectedObject?.Interact(this);
+        OnInteract?.Invoke(this, EventArgs.Empty);
     }
 
     private void PlayerOnJump(object sender, EventArgs e)
@@ -136,6 +143,7 @@ public class Player : MonoBehaviour, IDamageable
     private void PlayerOnAttack(object sender, EventArgs e)
     {
         isConstantlyAttacking = !isConstantlyAttacking;
+
     }
 
     private void PlayerOnAttackAlternate(object sender, EventArgs e)
@@ -156,6 +164,8 @@ public class Player : MonoBehaviour, IDamageable
                 CurrentStamina = currentStamina,
                 MaxStamina = maxStamina
             });
+
+            OnAttackAlternate?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -261,9 +271,16 @@ public class Player : MonoBehaviour, IDamageable
                     rb.gravityScale = 0;
                     StartCoroutine(DelayedResetGravityScale());
                     hasAirAttacked = true;
+                    OnAirAttack?.Invoke(this, EventArgs.Empty);
+                    Debug.Log("Player is attacking in the air");
+                }
+                else
+                {
+                    OnAirAttack?.Invoke(this, EventArgs.Empty);
+                    Debug.Log("Player is attacking on the ground");
                 }
 
-                var enemiesInRange = new Collider2D[10];
+                    var enemiesInRange = new Collider2D[10];
                 _ = Physics2D.OverlapCircleNonAlloc(attackOrigin.position, attackRadius, enemiesInRange, enemyLayer);
                 foreach (var enemy in enemiesInRange)
                 {
@@ -419,6 +436,11 @@ public class Player : MonoBehaviour, IDamageable
                 DropRedDiamond();
                 break;
         }
+    }
+
+    public InventoryUI GetInventoryUI()
+    {
+        return inventoryUI;
     }
 
     private void UseItem(Item item)
