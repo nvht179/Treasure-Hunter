@@ -16,16 +16,27 @@ namespace Script.Enemy.PinkStar
 
         public override void UpdateState()
         {
-            if (!PinkStar.IsGroundAhead() || PinkStar.IsWallAhead())
+            Rb.velocity = new Vector2(PinkStar.MoveSpeed * PinkStar.MoveDirection, Rb.velocity.y);
+            
+            if (PinkStar.IsGroundAhead() || PinkStar.IsWallAhead())
             {
                 PinkStar.MoveDirection *= -1;
-                Rb.velocity = new Vector2(0, Rb.velocity.y);
             }
 
-            if (PinkStar.IsPlayerDetected())
+            var playerDetectedRight = PinkStar.CastVisionRay(Vector2.right);
+            var playerDetectedLeft = PinkStar.CastVisionRay(Vector2.left);
+
+            if (playerDetectedLeft || playerDetectedRight)
             {
+                PinkStar.MoveDirection = playerDetectedLeft ? -1 : 1; 
                 PinkStar.SwitchState(PinkStar.ChargeState);
             }
+        }
+
+        public override void TakeDamage(float damage)
+        {
+            base.TakeDamage(damage);
+            PinkStar.SwitchState(PinkStar.HitState);
         }
     }
 }

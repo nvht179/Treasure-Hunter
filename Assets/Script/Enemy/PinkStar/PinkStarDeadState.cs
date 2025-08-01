@@ -26,5 +26,10 @@ namespace Script.Enemy.PinkStar
                 PinkStar.SelfDestroy();
             }
         }
+
+        public override void TakeDamage(float damage)
+        {
+            // do nothing
+        }
     }
 }

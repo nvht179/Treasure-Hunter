@@ -25,5 +25,10 @@ namespace Script.Enemy.PinkStar
         public virtual void OnCollisionEnter(Collision2D other)
         {
         }
+
+        public virtual void TakeDamage(float damage)
+        {
+            PinkStar.CurrentHealth -= damage;
+        }
     }
 }

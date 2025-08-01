@@ -28,5 +28,11 @@ namespace Script.Enemy.PinkStar
                 PinkStar.SwitchState(PinkStar.WanderState);
             }
         }
+
+        public override void TakeDamage(float damage)
+        {
+            base.TakeDamage(damage);
+            PinkStar.SwitchState(PinkStar.HitState);
+        }
     }
 }

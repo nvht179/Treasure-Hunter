@@ -21,11 +21,6 @@ namespace Script.Enemy.PinkStar
         {
             chargeTimer -= Time.deltaTime;
 
-            if (PinkStar.IsWallAhead() && !PinkStar.HasContinuousPathToPlayer())
-            {
-                PinkStar.SwitchState(PinkStar.WaitState);
-            }
-
             if (chargeTimer < 0)
             {
                 PinkStar.SwitchState(PinkStar.AttackState);

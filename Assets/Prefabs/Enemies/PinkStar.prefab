@@ -149,7 +149,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 35d1f30eb17014347a5772fd245caa3d, type: 3}
+  m_Sprite: {fileID: -1807183054, guid: 824c23ac4281ed047bbf6311aee5dce1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -342,11 +342,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8c2a77903380e0c4dbb071453c2224db, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: f54a21022af56e64ab0242790a0f9a4d, type: 3}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -681,10 +681,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6128822993723079748}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4163255cb3069724e8834af43364a686, type: 3}
+  m_Script: {fileID: 11500000, guid: 1533bdb28e2f4844b09246f30adcdecd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crabby: {fileID: 0}
+  enemyGameObject: {fileID: 8358746183751154280}
   barImage: {fileID: 1483847638076325937}
 --- !u!1 &6445031120736155546
 GameObject:
@@ -811,7 +811,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 1000
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -873,8 +873,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc60236eed97a2b4da39c51b580c2888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  moveSpeed: 5
+  maxHealth: 30
+  moveSpeed: 3
   chargeSpeed: 15
   visionDistance: 10
   attackDamage: 10

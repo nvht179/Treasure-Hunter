@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
+using Script.Enemy;
 using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.Controls;
 
 public class Crabby : MonoBehaviour, IDamageable
 {

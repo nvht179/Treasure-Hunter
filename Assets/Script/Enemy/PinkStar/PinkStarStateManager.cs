@@ -1,9 +1,10 @@
+using System;
 using Unity.Mathematics;
 using UnityEngine;
 
 namespace Script.Enemy.PinkStar
 {
-    public class PinkStarStateManager : MonoBehaviour
+    public class PinkStarStateManager : MonoBehaviour, IDamageable
     {
         [SerializeField] private float maxHealth;
         [SerializeField] private float moveSpeed;
@@ -18,9 +19,12 @@ namespace Script.Enemy.PinkStar
         [SerializeField] private LayerMask playerLayer;
 
         private const float GroundCheckDistance = 0.1f;
-        private const float GroundAndWallCheckAheadDistance = 1f;
+        private const float GroundAndWallCheckAheadDistance = 0.7f;
         public const float HitRecoverTime = 0.5f; // time to recover from being hit
-        public const float DeadShowTime = 1f; // time to for playing the DeadGround animation and showing enemy corpse 
+        public const float DeadShowTime = 0.5f; // time to for playing the DeadGround animation and showing enemy corpse 
+
+        public event EventHandler OnDestroyed;
+        public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
         public enum PinkStarState
         {
@@ -97,7 +101,7 @@ namespace Script.Enemy.PinkStar
             currentState.OnCollisionEnter(other);
         }
 
-        private bool CastVisionRay(Vector2 direction)
+        public bool CastVisionRay(Vector2 direction)
         {
             var wallHit = Physics2D.Raycast(pivot.position, direction, visionDistance, groundLayer);
             var maxDistance = wallHit.collider != null ? wallHit.distance : visionDistance;
@@ -154,7 +158,7 @@ namespace Script.Enemy.PinkStar
         {
             return currentState.GetCurrentState();
         }
-        
+
         // check if there is ground from pink star to player but does not check if there is low height blocking wall
         public bool HasContinuousPathToPlayer()
         {
@@ -188,7 +192,17 @@ namespace Script.Enemy.PinkStar
 
         public void SelfDestroy()
         {
-            Destroy(this);
+            Destroy(gameObject);
+        }
+
+        public void TakeDamage(float damage)
+        {
+            currentState.TakeDamage(damage);
+            OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+            {
+                CurrentHealth = CurrentHealth,
+                MaxHealth = maxHealth
+            });
         }
     }
 }

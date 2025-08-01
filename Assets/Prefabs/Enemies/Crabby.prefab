@@ -695,10 +695,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6128822993723079748}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4163255cb3069724e8834af43364a686, type: 3}
+  m_Script: {fileID: 11500000, guid: 1533bdb28e2f4844b09246f30adcdecd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crabby: {fileID: 2589672965037733270}
+  enemyGameObject: {fileID: 8358746183751154280}
   barImage: {fileID: 1483847638076325937}
 --- !u!1 &6445031120736155546
 GameObject:
@@ -892,7 +892,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   player: {fileID: 0}
-  crabbyVisual: {fileID: 1185192459941578513}
   playerLayer:
     serializedVersion: 2
     m_Bits: 8

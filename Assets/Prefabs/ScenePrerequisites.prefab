@@ -2434,14 +2434,6 @@ PrefabInstance:
       propertyPath: interactiveObjectLayer.m_Bits
       value: 1024
       objectReference: {fileID: 0}
-    - target: {fileID: 7465866809861149437, guid: e3874df57690bff4ba8d78644a801280, type: 3}
-      propertyPath: m_Size.y
-      value: 0.8200962
-      objectReference: {fileID: 0}
-    - target: {fileID: 7465866809861149437, guid: e3874df57690bff4ba8d78644a801280, type: 3}
-      propertyPath: m_Offset.y
-      value: 0.41504812
-      objectReference: {fileID: 0}
     - target: {fileID: 8865661576407353970, guid: e3874df57690bff4ba8d78644a801280, type: 3}
       propertyPath: player
       value: 

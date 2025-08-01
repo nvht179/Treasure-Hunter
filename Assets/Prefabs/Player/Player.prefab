@@ -99,7 +99,8 @@ MonoBehaviour:
   attackAlternateStaminaCost: 10
   maxHealthPoint: 100
   maxStamina: 100
-  uiInventory: {fileID: 0}
+  inventoryUI: {fileID: 0}
+  footstepInterval: 0.4
 --- !u!70 &7465866809861149437
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -132,8 +133,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0049999915, y: 0.31419012}
-  m_Size: {x: 0.5, y: 0.61838025}
+  m_Offset: {x: -0.005, y: 0.415}
+  m_Size: {x: 0.5, y: 0.82}
   m_Direction: 0
 --- !u!1 &3937380537759552638
 GameObject:

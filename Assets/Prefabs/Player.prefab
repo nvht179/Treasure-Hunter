@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7465866809861149437}
   m_Layer: 3
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -79,7 +79,6 @@ MonoBehaviour:
   jumpPower: 10
   jumpDegrader: 3
   moveSpeed: 5
-  gameInput: {fileID: 0}
   attackOrigin: {fileID: 6210624782623218792}
   attackRadius: 0.5
   playerPivot: {fileID: 289685678331913250}
@@ -90,10 +89,17 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
+  interactiveObjectLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  flyingSwordSO: {fileID: 0}
   playerDamage: 5
   attackCooldownTime: 0.3
+  attackAlternateCooldownTime: 0
+  attackAlternateStaminaCost: 0
   maxHealthPoint: 100
-  uiInventory: {fileID: 0}
+  maxStamina: 0
+  inventoryUI: {fileID: 0}
 --- !u!70 &7465866809861149437
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
