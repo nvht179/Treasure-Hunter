@@ -101,6 +101,11 @@ public class SoundManager : PersistentManager<SoundManager>
 
     private void PlaySound(AudioClip[] audioClipArray, Vector3 position, float volume = 1f)
     {
+        if (audioClipArray == null || audioClipArray.Length == 0)
+        {
+            Debug.LogWarning("No audio clips available to plasy at position: " + position);
+            return;
+        }
         PlaySound(audioClipArray[Random.Range(0, audioClipArray.Length)], position, volume);
     }
 

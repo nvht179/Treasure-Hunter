@@ -30,7 +30,13 @@ public class ItemWorld : MonoBehaviour {
     }
 
 
-    private Item item;
+    protected Item item;
+
+    protected virtual void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.TryGetComponent<Player>(out Player player)) {
+            DestroySelf();
+        }
+    }
 
     public void SetItem(Item item) {
         this.item = item;
@@ -42,5 +48,9 @@ public class ItemWorld : MonoBehaviour {
 
     public void DestroySelf() {
         Destroy(gameObject);
+    }
+
+    public void DestroySelf(float delay) {
+        Destroy(gameObject, delay);
     }
 }

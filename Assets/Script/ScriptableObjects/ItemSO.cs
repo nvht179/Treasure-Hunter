@@ -11,6 +11,7 @@ public class ItemSO : ScriptableObject {
     public Sprite icon;
     public Transform prefab;
 
+    public bool droppable;
     public bool consumable;
 
     public bool stackable;
@@ -29,4 +30,6 @@ public enum ItemType {
     HealthPotion,
     RedDiamond,
     SilverCoin,
+
+    GoldenKey,
 }

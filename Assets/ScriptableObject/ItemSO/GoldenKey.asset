@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d755ce070f16cce45a585dbe8405f806, type: 3}
-  m_Name: SilverCoin
+  m_Name: GoldenKey
   m_EditorClassIdentifier: 
-  itemName: Silver Coin
-  itemType: 8
-  description: 'passive: you are rich now!!!'
-  icon: {fileID: 21300000, guid: ce924bd6132ff46418999c98292bcd8b, type: 3}
-  prefab: {fileID: 7496000254365503891, guid: a930f5a79a194344b83cb77be379eda7, type: 3}
-  droppable: 1
+  itemName: Golden Key
+  itemType: 9
+  description: Bring to the door and win level!!!
+  icon: {fileID: 21300000, guid: 1601ba5b31c1fb0438c0cd02a93b0f9c, type: 3}
+  prefab: {fileID: 2100872154266148120, guid: 3e9fe9e2ea62dc54a807bb9db7d62ccd, type: 3}
+  droppable: 0
   consumable: 0
-  stackable: 1
-  maxStack: 9
+  stackable: 0
+  maxStack: 1
   buyPrice: 0

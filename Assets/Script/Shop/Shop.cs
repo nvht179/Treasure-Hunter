@@ -33,6 +33,11 @@ public class Shop : MonoBehaviour, IInteractiveObject {
         OnInteract?.Invoke(this, new OnShopInteractEventArgs {
             player = player
         });
-        shopUI.OpenShopUI(player, shopInventory);
+        if (!shopUI.IsOpened()) {
+            shopUI.OpenShopUI(player, shopInventory);
+        }
+        else {
+            shopUI.CloseShopUI();
+        }
     }
 }

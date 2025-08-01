@@ -304,16 +304,20 @@ public class Player : MonoBehaviour, IDamageable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<ItemWorld>(out var itemWorld))
+        if (collision.TryGetComponent<GoldCoinWorld>(out var goldCoin))
         {
             OnGoldChanged?.Invoke(this, new OnGoldChangedEventArgs
             {
                 currentGold = money,
-                changeAmount = itemWorld.GetItem().quantity
+                changeAmount = goldCoin.GetItem().quantity
             });
 
-            money += itemWorld.GetItem().quantity;
-            itemWorld.DestroySelf();
+            money += goldCoin.GetItem().quantity;
+        }
+
+        if (collision.TryGetComponent<KeyWorld>(out var keyWorld))
+        {
+            inventory.AddItem(keyWorld.GetItem());
         }
     }
 

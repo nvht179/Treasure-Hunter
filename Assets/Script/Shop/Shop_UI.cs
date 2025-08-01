@@ -25,6 +25,7 @@ public class ShopUI : MonoBehaviour, ISelectItem {
     [SerializeField] private UnityEngine.UI.Button buyButton;
 
     private Player player;
+    private bool isOpened = false;
     private const int NumItemPerPage = 6;
     private Inventory playerInventory;
     private Inventory shopInventory;
@@ -43,6 +44,10 @@ public class ShopUI : MonoBehaviour, ISelectItem {
         RefreshInventoryItems();
         SetInventory(player.GetInventory());
         Show();
+    }
+
+    public void CloseShopUI() {
+        Hide();
     }
 
     private void SetupListener() {
@@ -79,11 +84,13 @@ public class ShopUI : MonoBehaviour, ISelectItem {
     }
 
     private void Hide() {
+        isOpened = false;
         shopVisuals.gameObject.SetActive(false);
     }
 
     private void Show() {
         currentPage = 0;
+        isOpened = true;
         RefreshInventoryItems();
         shopVisuals.gameObject.SetActive(true);
         itemSlotTemplate.gameObject.SetActive(false);
@@ -172,5 +179,9 @@ public class ShopUI : MonoBehaviour, ISelectItem {
         // disable/enable page buttons
         nextPageButton.interactable = currentPage < maxPage;
         previousPageButton.interactable = currentPage > 0;
+    }
+
+    public bool IsOpened() {
+        return isOpened;
     }
 }

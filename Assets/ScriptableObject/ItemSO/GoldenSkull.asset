@@ -17,7 +17,8 @@ MonoBehaviour:
   description: 'passive: gain 50 max health and 5 attack damage'
   icon: {fileID: 21300000, guid: ca04330107c6c3e4fb3068bd291126cd, type: 3}
   prefab: {fileID: 1614522995293048218, guid: 79820075970996a42a58a491a36195e1, type: 3}
+  droppable: 1
   consumable: 0
   stackable: 0
   maxStack: 1
-  buyPrice: 0
+  buyPrice: 100
