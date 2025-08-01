@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: GoldCoin
   m_EditorClassIdentifier: 
   itemName: Gold Coin
+  itemType: 2
   description: 'passive: use this to trade'
   icon: {fileID: 21300000, guid: edd24a8dc3cef4745bc762dbaf662f6c, type: 3}
   prefab: {fileID: 3560732939561204806, guid: 43b383f1a506b934e936b87c595d502e, type: 3}
-  type: 2
+  consumable: 0
   stackable: 1
   maxStack: 9
+  buyPrice: 0

@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: RedDiamond
   m_EditorClassIdentifier: 
   itemName: Red Diamond
+  itemType: 7
   description: 'passive: gain 10 max HP'
   icon: {fileID: 21300000, guid: ba18bf89202be8148a05e829b1c38223, type: 3}
   prefab: {fileID: 1628601066568278247, guid: d3e90ca49d6f2cf439e1a62b1318e778, type: 3}
-  type: 0
+  consumable: 0
   stackable: 1
   maxStack: 9
+  buyPrice: 0

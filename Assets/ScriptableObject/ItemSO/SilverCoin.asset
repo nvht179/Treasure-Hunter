@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: SilverCoin
   m_EditorClassIdentifier: 
   itemName: Silver Coin
+  itemType: 8
   description: 'passive: you are rich now!!!'
   icon: {fileID: 21300000, guid: ce924bd6132ff46418999c98292bcd8b, type: 3}
   prefab: {fileID: 7496000254365503891, guid: a930f5a79a194344b83cb77be379eda7, type: 3}
-  type: 2
+  consumable: 0
   stackable: 1
   maxStack: 9
+  buyPrice: 0

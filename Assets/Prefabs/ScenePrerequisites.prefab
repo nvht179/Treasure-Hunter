@@ -2376,6 +2376,10 @@ PrefabInstance:
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7426713197866518868, guid: e3874df57690bff4ba8d78644a801280, type: 3}
+      propertyPath: inventoryUI
+      value: 
+      objectReference: {fileID: 8865567142376822721}
+    - target: {fileID: 7426713197866518868, guid: e3874df57690bff4ba8d78644a801280, type: 3}
       propertyPath: uiInventory
       value: 
       objectReference: {fileID: 8865567142376822721}
