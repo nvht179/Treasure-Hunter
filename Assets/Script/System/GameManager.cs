@@ -72,9 +72,12 @@ public class GameManager : PersistentManager<GameManager>
         }
 
         Debug.Log("GameManager: Player found in scene, setting up game state.");
-        player.OnPlayerDied += HandlePlayerDied;
-        player.OnPlayerWon += HandlePlayerWon;
+        player.OnDied += HandlePlayerDied;
+        player.OnWon += HandlePlayerWon;
         SetState(State.GamePlaying);
+
+        GameInput.Instance.EnableActionMap(GameInput.ActionMap.Player);
+        SoundManager.Instance.AttachPlayerSound(player);
     }
 
     private void HandlePlayerWon()
@@ -114,6 +117,11 @@ public class GameManager : PersistentManager<GameManager>
         {
             Debug.Log("Not in a playable state, cannot pause.");
         }
+    }
+
+    public bool IsPaused()
+    {
+        return state == State.Paused;
     }
 
     public bool IsGamePlaying()

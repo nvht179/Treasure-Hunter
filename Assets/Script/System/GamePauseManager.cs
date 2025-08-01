@@ -24,6 +24,7 @@ public class GamePauseManager : PersistentManager<GamePauseManager>
     {
         resumeButton.onClick.AddListener(() =>
         {
+            ResumeGame();
             OnResumeRequested?.Invoke();
         });
         settingsButton.onClick.AddListener(() =>
@@ -33,25 +34,24 @@ public class GamePauseManager : PersistentManager<GamePauseManager>
         });
         mainMenuButton.onClick.AddListener(() =>
         {
+            ResumeGame();
             OnReturnToMainMenuRequested?.Invoke();
         });
 
         Hide();
     }
 
+
     public void PauseGame()
     {
         Time.timeScale = 0f;
-        GameInput.Instance.EnableActionMap(GameInput.ActionMap.UI);
         Show();
     }
 
     public void ResumeGame()
     {
         Time.timeScale = 1f;
-        GameInput.Instance.EnableActionMap(GameInput.ActionMap.Player);
         Hide();
-        OnResumeRequested?.Invoke();
     }
 
     private void Show()

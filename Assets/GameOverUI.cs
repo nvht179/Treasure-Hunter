@@ -36,7 +36,7 @@ public class GameOverUI : MonoBehaviour
     private void Start()
     {
         Debug.Log("GameOverUI -> Start");
-        GameManager.Instance.OnStateChanged += KitchenGameManager_OnStateChanged;
+        GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
 
         Hide();
     }
@@ -44,12 +44,12 @@ public class GameOverUI : MonoBehaviour
     private void OnDestroy()
     {
         Debug.Log("GameOverUI -> OnDestroy");
-        GameManager.Instance.OnStateChanged -= KitchenGameManager_OnStateChanged;
+        GameManager.Instance.OnStateChanged -= GameManager_OnStateChanged;
     }
 
-    private void KitchenGameManager_OnStateChanged(object sender, System.EventArgs e)
+    private void GameManager_OnStateChanged(object sender, System.EventArgs e)
     {
-        Debug.Log("GameOverUI -> KitchenGameManager_OnStateChanged");
+        Debug.Log("GameOverUI -> GameManager_OnStateChanged");
         if (GameManager.Instance.IsGameOver())
         {
             Show();

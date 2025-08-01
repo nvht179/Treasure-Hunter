@@ -36,7 +36,7 @@ public class GameWonUI : MonoBehaviour
     private void Start()
     {
         Debug.Log("GameWonUI -> Start");
-        GameManager.Instance.OnStateChanged += KitchenGameManager_OnStateChanged;
+        GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
 
         Hide(); // always hide at start, NOT awake
     }
@@ -44,12 +44,12 @@ public class GameWonUI : MonoBehaviour
     private void OnDestroy()
     {
         Debug.Log("GameWonUI -> OnDestroy");
-        GameManager.Instance.OnStateChanged -= KitchenGameManager_OnStateChanged;
+        GameManager.Instance.OnStateChanged -= GameManager_OnStateChanged;
     }
 
-    private void KitchenGameManager_OnStateChanged(object sender, System.EventArgs e)
+    private void GameManager_OnStateChanged(object sender, System.EventArgs e)
     {
-        Debug.Log("GameWonUI -> KitchenGameManager_OnStateChanged");
+        Debug.Log("GameWonUI -> GameManager_OnStateChanged");
         if (GameManager.Instance.IsGameWon())
         {
             Show();

@@ -488,8 +488,8 @@ MonoBehaviour:
     bossLevel:
       scene: 6
   - normalLevels:
-    - scene: 5
-    - scene: 4
+    - scene: 3
+    - scene: 3
     bossLevel:
       scene: 6
   tutorialButton: {fileID: 324990121}

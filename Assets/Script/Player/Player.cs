@@ -43,11 +43,13 @@ public class Player : MonoBehaviour, IDamageable
         public IInteractiveObject selectedObject;
     }
 
+    public event EventHandler OnJump;
+
     public event EventHandler OnDestroyed;
     public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
     public event EventHandler<OnStaminaUsedEventArgs> OnStaminaUsed;
-    public event Action OnPlayerDied;
-    public event Action OnPlayerWon;
+    public event Action OnDied;
+    public event Action OnWon;
     public class OnStaminaUsedEventArgs : EventArgs
     {
         public float CurrentStamina;
@@ -129,6 +131,7 @@ public class Player : MonoBehaviour, IDamageable
         if (isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
+            OnJump.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -328,7 +331,7 @@ public class Player : MonoBehaviour, IDamageable
 
         if (currentHealthPoint <= 0)
         {
-            OnPlayerDied?.Invoke();
+            OnDied?.Invoke();
         }
     }
 

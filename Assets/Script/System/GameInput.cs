@@ -73,7 +73,7 @@ public class GameInput : PersistentManager<GameInput>
         }
         else
         {
-            DisableActionMap(ActionMap.Player);
+            EnableActionMap(ActionMap.UI);
         }
     }
 

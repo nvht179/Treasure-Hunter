@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89375c28172bb0e49bd9e83ae7395d30, type: 3}
+  m_Name: AudioClipRefsSO
+  m_EditorClassIdentifier: 
+  move: []
+  jump:
+  - {fileID: 8300000, guid: 0a77537a65a7c4345a13749acf475af6, type: 3}
+  - {fileID: 8300000, guid: 3dc61217ddf643b46bb47e81b78cd0fd, type: 3}
+  - {fileID: 8300000, guid: db60e6163492af3498692b7e5bab1c81, type: 3}
+  jumpLand:
+  - {fileID: 8300000, guid: cb2961190b415f84ab965e405578d849, type: 3}
+  - {fileID: 8300000, guid: 921f0626d2503514d9cd68eda3833898, type: 3}
+  attack:
+  - {fileID: 8300000, guid: 7d2ff259fa748d049b78ca6ef6f39bc1, type: 3}
+  - {fileID: 8300000, guid: 99aaf96826af73049b243f67a9f67e36, type: 3}
+  - {fileID: 8300000, guid: 504a49fd3382a5c47b7e9e32ad50b3d8, type: 3}
+  interact: []
+  inventoryOpen: []
+  inventoryClose: []
+  throwKnife: []
+  swordHit: []
+  swordMiss: []
+  opponentHit: []
