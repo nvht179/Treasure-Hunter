@@ -55,6 +55,7 @@ public class Player : MonoBehaviour, IDamageable
     public event EventHandler OnDestroyed;
     public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
     public event EventHandler<OnStaminaUsedEventArgs> OnStaminaUsed;
+    public event EventHandler OnNeedKey;
     public event Action OnDied;
     public event Action OnWon;
     public class OnStaminaUsedEventArgs : EventArgs
@@ -180,10 +181,10 @@ public class Player : MonoBehaviour, IDamageable
 
     private void HandleInteractions()
     {
-        float interactionDistance = 1.5f;
-        Vector2 moveDir = moveDirection == -1 ? Vector2.left : Vector2.right;
+        float interactionDistance = 1f;
+        Vector2 moveDir = IsFacingRight ? Vector2.right : Vector2.left;
 
-        RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, moveDir, interactionDistance, interactiveObjectLayer);
+        RaycastHit2D raycastHit = Physics2D.Raycast(attackOrigin.position, moveDir, interactionDistance, interactiveObjectLayer);
         if (raycastHit.collider != null)
         {
             if (raycastHit.collider.TryGetComponent(out IInteractiveObject interactiveObject))
@@ -372,6 +373,11 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
 
+    public void ActivateNeedKeyDialog()
+    {
+        OnNeedKey?.Invoke(this, EventArgs.Empty);
+    }
+
     public void BuyItem(int price)
     {
         OnGoldChanged?.Invoke(this, new OnGoldChangedEventArgs
@@ -422,6 +428,11 @@ public class Player : MonoBehaviour, IDamageable
         return isConstantlyAttacking;
     }
 
+    public bool HasKey() 
+    {
+        return inventory.HasKey();
+    }
+    
     private void WearItem(Item item)
     {
         switch(item.itemSO.itemType)

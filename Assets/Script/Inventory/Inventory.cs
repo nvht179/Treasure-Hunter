@@ -72,4 +72,13 @@ public class Inventory {
     public int GetItemListCount() {
         return itemList.Count;
     }
+
+    public bool HasKey() {
+        foreach (Item item in itemList) {
+            if (item.itemSO.itemType is ItemType.GoldenKey) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
