@@ -583,6 +583,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 251844447}
     m_Modifications:
+    - target: {fileID: 378619713537128475, guid: 8a814107a0d8eff478754712cfadd83e, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 6d850dc282f706f4fb56008db26e9cb2, type: 2}
     - target: {fileID: 1091076549401213530, guid: 8a814107a0d8eff478754712cfadd83e, type: 3}
       propertyPath: m_Name
       value: TutorialButton
@@ -741,7 +745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 6d850dc282f706f4fb56008db26e9cb2, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1537,6 +1541,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BackButton
       objectReference: {fileID: 0}
+    - target: {fileID: 1950414617348389840, guid: c5cf555a801c4c9459d75157e4a9bf1d, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: d0ec41842ee86704eb29120b5207e675, type: 2}
     - target: {fileID: 7164755714735980870, guid: c5cf555a801c4c9459d75157e4a9bf1d, type: 3}
       propertyPath: m_SizeDelta.x
       value: 8

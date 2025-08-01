@@ -361,6 +361,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TutorialButton
       objectReference: {fileID: 0}
+    - target: {fileID: 1950414617348389840, guid: c5cf555a801c4c9459d75157e4a9bf1d, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: d0ec41842ee86704eb29120b5207e675, type: 2}
     - target: {fileID: 7164755714735980870, guid: c5cf555a801c4c9459d75157e4a9bf1d, type: 3}
       propertyPath: m_SizeDelta.x
       value: 5
@@ -559,6 +563,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 796647147}
     m_Modifications:
+    - target: {fileID: 378619713537128475, guid: 8a814107a0d8eff478754712cfadd83e, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 6d850dc282f706f4fb56008db26e9cb2, type: 2}
     - target: {fileID: 1091076549401213530, guid: 8a814107a0d8eff478754712cfadd83e, type: 3}
       propertyPath: m_Name
       value: SettingsButton
@@ -1289,6 +1297,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 796647147}
     m_Modifications:
+    - target: {fileID: 378619713537128475, guid: 8a814107a0d8eff478754712cfadd83e, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 6d850dc282f706f4fb56008db26e9cb2, type: 2}
     - target: {fileID: 1091076549401213530, guid: 8a814107a0d8eff478754712cfadd83e, type: 3}
       propertyPath: m_Name
       value: QuitButton
@@ -2024,6 +2036,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 796647147}
     m_Modifications:
+    - target: {fileID: 378619713537128475, guid: 8a814107a0d8eff478754712cfadd83e, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 6d850dc282f706f4fb56008db26e9cb2, type: 2}
     - target: {fileID: 1091076549401213530, guid: 8a814107a0d8eff478754712cfadd83e, type: 3}
       propertyPath: m_Name
       value: PlayButton
@@ -2594,6 +2610,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CreditsButton
       objectReference: {fileID: 0}
+    - target: {fileID: 1950414617348389840, guid: c5cf555a801c4c9459d75157e4a9bf1d, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: d0ec41842ee86704eb29120b5207e675, type: 2}
     - target: {fileID: 7164755714735980870, guid: c5cf555a801c4c9459d75157e4a9bf1d, type: 3}
       propertyPath: m_SizeDelta.x
       value: 8
