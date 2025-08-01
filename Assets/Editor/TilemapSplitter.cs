@@ -73,7 +73,7 @@ public class TilemapSplitter : MonoBehaviour {
             body.bodyType = RigidbodyType2D.Static;
 
             var compCol = platformGO.AddComponent<CompositeCollider2D>();
-            compCol.geometryType = CompositeCollider2D.GeometryType.Polygons;
+            compCol.geometryType = CompositeCollider2D.GeometryType.Outlines;
             compCol.usedByEffector = true;
 
             var effector = platformGO.AddComponent<PlatformEffector2D>();
