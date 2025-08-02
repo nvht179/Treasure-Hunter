@@ -42,7 +42,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 81a3fe760f71cd3489cda263e655e24e, type: 3}
   - {fileID: 8300000, guid: a43f3747a5e82364faad5a81e5ef1a54, type: 3}
   - {fileID: 8300000, guid: 58d2f9ea3f5601a488d674b7a49dc6f4, type: 3}
-  playerGotHit: []
+  playerGotHit:
+  - {fileID: 8300000, guid: 040e2a40fda9cb54684eda2a4d77d622, type: 3}
   playerDead:
   - {fileID: 8300000, guid: 22f9246037bde2b4ba4cc5e56522e045, type: 3}
   inventoryOpen:

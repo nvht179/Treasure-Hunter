@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: MusicClipRefsSO
   m_EditorClassIdentifier: 
   background:
+  - {fileID: 8300000, guid: 276cf36c4d6069b499b75d4933afebcd, type: 3}
   - {fileID: 8300000, guid: b81294b2b754dc44fbb8405dfc9276a0, type: 3}
   inGame:
+  - {fileID: 8300000, guid: 276cf36c4d6069b499b75d4933afebcd, type: 3}
   - {fileID: 8300000, guid: cc1d7d00d0d20a6468859a48295d9b3a, type: 3}
   - {fileID: 8300000, guid: ce5312114debe034c87f0cd24e34fb60, type: 3}
   - {fileID: 8300000, guid: c05ca0448f9e38b419998f75913f8b7f, type: 3}
