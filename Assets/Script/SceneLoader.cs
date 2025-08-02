@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public static class SceneLoader
 {
+    private class LoadingMonoBehaviour : MonoBehaviour { }
+
     public enum Scene
     {
         MainMenuScene,
@@ -28,6 +30,9 @@ public static class SceneLoader
     private static Scene targetScene = Scene.MainMenuScene;
     private static Scene currentScene = Scene.GameScene;
     private static Scene lastScene = Scene.MainMenuScene;
+
+    private static Action onLoaderCallback;
+    private static AsyncOperation loadingAsyncOperation;
 
     static SceneLoader()
     {
@@ -62,8 +67,29 @@ public static class SceneLoader
         lastScene = SceneLoader.targetScene;
         SceneLoader.targetScene = targetScene;
 
+        onLoaderCallback = () =>
+        {
+            GameObject loadingGameObject = new("Loading Game Object");
+            loadingGameObject.AddComponent<LoadingMonoBehaviour>().StartCoroutine(LoadSceneAsync(targetScene));
+        };
+
         Debug.Log($"Loading scene: {targetScene}");
         SceneManager.LoadScene(Scene.LoadingScene.ToString()); // calling target scene here will immediately skip loading scene -> callback
+    }
+
+    private static IEnumerator LoadSceneAsync(Scene targetScene)
+    {
+        yield return null; // Wait for the next frame to ensure the loading scene is fully loaded
+        loadingAsyncOperation = SceneManager.LoadSceneAsync(targetScene.ToString());
+        loadingAsyncOperation.allowSceneActivation = false;
+        while (!loadingAsyncOperation.isDone)
+        {
+            if (loadingAsyncOperation.progress >= 0.9f)
+            {
+                loadingAsyncOperation.allowSceneActivation = true;
+            }
+            yield return null;
+        }
     }
 
     public static void LoadLastScene()
@@ -80,12 +106,26 @@ public static class SceneLoader
         SceneManager.LoadScene(Scene.LoadingScene.ToString());
     }
 
+    public static float GetLoadingProgress()
+    {
+        if (loadingAsyncOperation != null)
+        {
+            return loadingAsyncOperation.progress;
+        }
+        else
+        {
+            return 1f; // Return 0 if no loading operation is in progress
+        }
+    }
+
     public static void LoaderCallback()
     {
-        SceneManager.LoadScene(targetScene.ToString());
-        currentScene = targetScene;
-
-        Debug.Log($"LoaderCallback: {currentScene}");
+        if (onLoaderCallback != null)
+        {
+            currentScene = targetScene;
+            onLoaderCallback();
+            Debug.Log($"LoaderCallback: {currentScene}");
+        }
     }
 
     public static void ReloadCurrentScene()
