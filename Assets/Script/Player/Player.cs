@@ -53,6 +53,7 @@ public class Player : MonoBehaviour, IDamageable
     public event EventHandler OnAttack;
     public event EventHandler OnAirAttack;
     public event EventHandler OnAttackAlternate;
+    public event EventHandler OnPlayerHit;
 
     public event EventHandler OnGreenPotionFail;
     public event EventHandler OnGreenPotionSuccess;
@@ -390,7 +391,18 @@ public class Player : MonoBehaviour, IDamageable
             MaxHealth = maxHealthPoint
         });
 
-        if (currentHealthPoint <= 0)
+        if (damage < 0) { 
+            
+        }
+        
+        if (currentHealthPoint > 0)
+        {
+            if (damage < 0)
+            {
+                OnPlayerHit?.Invoke(this, EventArgs.Empty);
+            }
+        }
+        else
         {
             OnDead?.Invoke();
         }

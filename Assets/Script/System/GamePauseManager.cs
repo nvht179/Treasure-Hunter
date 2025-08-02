@@ -26,40 +26,57 @@ public class GamePauseManager : PersistentManager<GamePauseManager>
     {
         resumeButton.onClick.AddListener(() =>
         {
-            ResumeGame();
             OnResumeRequested?.Invoke();
         });
         settingsButton.onClick.AddListener(() =>
         {
-            Hide();
-            pauseButton.gameObject.SetActive(false);
+            // no need to set time running again
+            HideAll();
             SettingsMenuUI.Instance.Show(Show);
         });
         mainMenuButton.onClick.AddListener(() =>
         {
-            ResumeGame();
-            pauseButton.gameObject.SetActive(false);
             OnReturnToMainMenuRequested?.Invoke();
         });
         pauseButton.onClick.AddListener(() =>
         {
-            PauseGame();
             OnPauseRequested?.Invoke();
         });
 
-        Hide();
+        GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
+
+        GameManager_OnStateChanged(GameManager.State.None, GameManager.Instance.CurrentState);
+    }
+
+    private void GameManager_OnStateChanged(GameManager.State oldState, GameManager.State newState)
+    {
+        if (newState == GameManager.State.GamePlaying)
+        {
+            Debug.Log("GamePauseManager: Resuming game, hiding pause menu and show pause button.");
+            ResumeGame();
+            Hide();
+        }
+        else if (newState == GameManager.State.Paused)
+        {
+            Debug.Log("GamePauseManager: Pausing game, showing pause menu and hiding pause button.");
+            PauseGame();
+            Show();
+        }
+        else
+        {
+            Debug.Log($"GamePauseManager: Game state changed to {newState}, hiding ALL pause menu.");
+            HideAll();
+        }
     }
 
     public void PauseGame()
     {
         Time.timeScale = 0f;
-        Show();
     }
 
     public void ResumeGame()
     {
         Time.timeScale = 1f;
-        Hide();
     }
 
     private void Show()
@@ -82,5 +99,14 @@ public class GamePauseManager : PersistentManager<GamePauseManager>
         blurBackground.gameObject.SetActive(false);
 
         pauseButton.gameObject.SetActive(true);
+    }
+
+    private void HideAll()
+    {
+        resumeButton.gameObject.SetActive(false);
+        settingsButton.gameObject.SetActive(false);
+        mainMenuButton.gameObject.SetActive(false);
+        blurBackground.gameObject.SetActive(false);
+        pauseButton.gameObject.SetActive(false);
     }
 }

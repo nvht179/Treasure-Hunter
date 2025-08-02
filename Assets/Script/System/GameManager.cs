@@ -114,8 +114,6 @@ public class GameManager : PersistentManager<GameManager>
     {
         if(state == State.Paused)
         {
-            Debug.Log("GameInput_OnPauseAction -> resume");
-            GamePauseManager.Instance.ResumeGame();
             SetState(State.GamePlaying);
         } 
         else
@@ -129,8 +127,6 @@ public class GameManager : PersistentManager<GameManager>
     {
         if (state == State.GamePlaying)
         {
-            Debug.Log("GameInput_OnPauseAction -> pause");
-            GamePauseManager.Instance.PauseGame();
             SetState(State.Paused);
         }
         else
@@ -155,6 +151,11 @@ public class GameManager : PersistentManager<GameManager>
         State oldState = state;
         state = newState;
         OnStateChanged?.Invoke(oldState, newState);
-        Debug.Log($"GameManager: State changed to {state}");
+        // Log the function inside OnStateChanged
+        foreach (var action in OnStateChanged.GetInvocationList())
+        {
+            Debug.Log($"OnStateChanged action: {action.Method.Name}");
+        }
+        Debug.Log($"GameManager: State changed from {oldState} to {state}");
     }
 }
