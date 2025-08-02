@@ -1060,7 +1060,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryUI: {fileID: 3474132415686520502}
   visual: {fileID: 30876029139082472}
-  selectectVisual: {fileID: 6223557050791171109}
+  selectectVisual: {fileID: 8101120209182515467}
 --- !u!1 &5959234468925233938
 GameObject:
   m_ObjectHideFlags: 0
@@ -1458,7 +1458,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 0}
-  m_PlaneDistance: 5
+  m_PlaneDistance: 3
   m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0

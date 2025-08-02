@@ -35,6 +35,7 @@ public class Player : MonoBehaviour, IDamageable
 
     [Header("Inventory")]
     [SerializeField] private InventoryUI inventoryUI;
+    [SerializeField] private ShopUI shopUI;
 
     private const float GroundCheckRadius = 0.05f;
     private const float AirAttackTime = 0.5f;
@@ -126,9 +127,13 @@ public class Player : MonoBehaviour, IDamageable
         GameInput.Instance.OnAttackAction += PlayerOnAttack;
         GameInput.Instance.OnAttackAlternateAction += PlayerOnAttackAlternate;
         GameInput.Instance.OnInteractAction += PlayerOnInteract;
+        shopUI.OnItemBuy += ShopUI_OnItemBuy;
 
         gravityVector = new Vector2(0, -Physics2D.gravity.y);
+    }
 
+    private void ShopUI_OnItemBuy(object sender, ShopUI.OnItemBuyEventArgs e) {
+        BuyItem(e.item.itemSO.buyPrice);
     }
 
     private void OnDestroy()
@@ -392,7 +397,7 @@ public class Player : MonoBehaviour, IDamageable
         
         if (offender != null && offender.transform != null)
         {
-            var knockbackDir = (transform.position - offender.transform.position).normalized;
+            var knockbackDir = ((Vector2)(transform.position - offender.transform.position)).normalized;
             knockbackVelocity = knockbackDir * knockbackForce;
             knockbackTimer = knockbackDuration;
         }

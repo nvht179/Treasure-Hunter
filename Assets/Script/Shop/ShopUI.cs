@@ -33,7 +33,10 @@ public class ShopUI : MonoBehaviour, ISelectItem {
     private int currentPage = 0;
     private Item selectedItem;
 
-    public event EventHandler OnItemBuy;
+    public event EventHandler<OnItemBuyEventArgs> OnItemBuy;
+    public class OnItemBuyEventArgs : EventArgs {
+        public Item item;
+    }
 
     private void Awake() {
         SetupListener();
@@ -79,10 +82,12 @@ public class ShopUI : MonoBehaviour, ISelectItem {
             // Add item to player's inventory
             playerInventory.AddItem(new Item(selectedItem.itemSO, 1));
             shopInventory.RemoveItem(selectedItem);
+
+            OnItemBuy?.Invoke(this, new OnItemBuyEventArgs {
+                item = selectedItem
+            });
             selectedItem = null;
             RefreshInventoryItems();
-
-            OnItemBuy?.Invoke(this, EventArgs.Empty);
         });
 
     }
