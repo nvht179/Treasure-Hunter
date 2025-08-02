@@ -58,8 +58,7 @@ public class Player : MonoBehaviour, IDamageable
     public event EventHandler OnGreenPotionFail;
     public event EventHandler OnGreenPotionSuccess;
     public event EventHandler OnBluePotionUsed;
-    public event EventHandler OnRedPotionUsed;
-    public event EventHandler OnItemDrop;
+    public event EventHandler OnHealthPotionUsed;
     public event EventHandler OnKeyCollected;
 
     public event EventHandler OnHealthChanged; // For refactor
@@ -514,7 +513,7 @@ public class Player : MonoBehaviour, IDamageable
                 return;
         }
 
-        OnItemDrop?.Invoke(this, EventArgs.Empty);
+        //OnItemDrop?.Invoke(this, EventArgs.Empty);
     }
 
     public InventoryUI GetInventoryUI()
@@ -618,6 +617,8 @@ public class Player : MonoBehaviour, IDamageable
             CurrentHealth = currentHealthPoint,
             MaxHealth = maxHealthPoint
         });
+
+        OnHealthPotionUsed?.Invoke(this, EventArgs.Empty);
     }
 
     private void DropBlueDiamond()

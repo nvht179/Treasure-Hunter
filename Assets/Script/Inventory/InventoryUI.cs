@@ -10,7 +10,6 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
     // Sound effects
     public event EventHandler OnInventoryOpen;
     public event EventHandler OnInventoryClose;
-    public event EventHandler OnItemUse;
     public event EventHandler OnItemDrop;
 
     [Header("UI Elements")]
@@ -72,8 +71,6 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
                     selectedItem = null; // TODO
                 }
                 RefreshInventoryItems();
-
-                OnItemUse?.Invoke(this, EventArgs.Empty);
             }
         });
 

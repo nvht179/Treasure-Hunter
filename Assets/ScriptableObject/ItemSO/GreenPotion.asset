@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GreenPotion
   m_EditorClassIdentifier: 
   itemName: Green Potion
-  itemType: 0
+  itemType: 5
   description: 'consumable: let''s go gambling. lose half of your current health
     or restore full health'
   icon: {fileID: 21300000, guid: 550b37465fce1c24a9d9b66dbe2fc534, type: 3}

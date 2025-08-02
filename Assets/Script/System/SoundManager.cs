@@ -49,17 +49,15 @@ public class SoundManager : PersistentManager<SoundManager>
         player.OnAttack += Player_OnAttack;
         player.OnAirAttack += Player_OnAirAttack;
         player.OnAttackAlternate += Player_OnAttackAlternate;
-        player.OnItemDrop += Player_OnItemDrop;
         player.OnGreenPotionSuccess += Player_OnGreenPotionSuccess;
         player.OnGreenPotionFail += Player_OnGreenPotionFail;
         player.OnBluePotionUsed += Player_OnBluePotionUsed;
-        player.OnRedPotionUsed += Player_OnRedPotionUsed;
+        player.OnHealthPotionUsed += Player_OnHealthPotionUsed;
         player.OnKeyCollected += Player_OnKeyCollected;
 
         InventoryUI inventoryUI = player.GetInventoryUI();
         inventoryUI.OnInventoryOpen += Player_OnInventoryOpen;
         inventoryUI.OnInventoryClose += Player_OnInventoryClose;
-        inventoryUI.OnItemUse += Player_OnItemUse;
         inventoryUI.OnItemDrop += Player_OnItemDrop;
     }
 
@@ -77,9 +75,9 @@ public class SoundManager : PersistentManager<SoundManager>
         shopUI.OnItemBuy += Player_OnItemBuy;
     }
 
-    private void Player_OnRedPotionUsed(object sender, System.EventArgs e)
+    private void Player_OnHealthPotionUsed(object sender, System.EventArgs e)
     {
-        Debug.Log("Player_OnRedPotionUsed");
+        Debug.Log("Player_OnHealthPotionUsed");
         PlaySound(audioClipRefsSO.redPotionUsed, ((Player)sender).transform.position);
     }
 
@@ -129,12 +127,6 @@ public class SoundManager : PersistentManager<SoundManager>
     {
         Debug.Log("Player_OnItemDrop");
         PlaySound(audioClipRefsSO.itemDrop, ((InventoryUI)sender).transform.position);
-    }
-
-    private void Player_OnItemUse(object sender, System.EventArgs e)
-    {
-        Debug.Log("Player_OnItemUse");
-        PlaySound(audioClipRefsSO.itemUse, ((InventoryUI)sender).transform.position);
     }
 
     private void Player_OnJumpLand(object sender, System.EventArgs e)
