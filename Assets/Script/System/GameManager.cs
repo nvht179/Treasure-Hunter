@@ -85,7 +85,7 @@ public class GameManager : PersistentManager<GameManager>
         }
 
         Debug.Log("GameManager: Player found in GAME scene, setting up game state.");
-        player.OnDead += HandlePlayerDied;
+        player.OnDead += HandlePlayerDead;
         player.OnWon += HandlePlayerWon;
         SetState(State.GamePlaying);
 
@@ -105,7 +105,7 @@ public class GameManager : PersistentManager<GameManager>
         SetState(State.LevelWon);
     }
 
-    private void HandlePlayerDied()
+    private void HandlePlayerDead(object sender, EventArgs e)
     {
         SetState(State.LevelLost);
     }
@@ -151,11 +151,6 @@ public class GameManager : PersistentManager<GameManager>
         State oldState = state;
         state = newState;
         OnStateChanged?.Invoke(oldState, newState);
-        // Log the function inside OnStateChanged
-        foreach (var action in OnStateChanged.GetInvocationList())
-        {
-            Debug.Log($"OnStateChanged action: {action.Method.Name}");
-        }
         Debug.Log($"GameManager: State changed from {oldState} to {state}");
     }
 }

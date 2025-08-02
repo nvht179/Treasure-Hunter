@@ -54,6 +54,7 @@ public class Player : MonoBehaviour, IDamageable
     public event EventHandler OnAirAttack;
     public event EventHandler OnAttackAlternate;
     public event EventHandler OnPlayerHit;
+    public event EventHandler OnDead;
 
     public event EventHandler OnGreenPotionFail;
     public event EventHandler OnGreenPotionSuccess;
@@ -66,7 +67,6 @@ public class Player : MonoBehaviour, IDamageable
     public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
     public event EventHandler<OnStaminaUsedEventArgs> OnStaminaUsed;
     public event EventHandler OnNeedKey;
-    public event Action OnDead;
     public event Action OnWon;
     public class OnStaminaUsedEventArgs : EventArgs
     {
@@ -392,24 +392,20 @@ public class Player : MonoBehaviour, IDamageable
             CurrentHealth = currentHealthPoint,
             MaxHealth = maxHealthPoint
         });
-
-        if (offenderInfo.Damage < 0) { 
-            
-        }
         
         if (currentHealthPoint > 0)
         {
-            if (offenderInfo.Damage < 0)
+            if (offenderInfo.Damage > 0)
             {
                 OnPlayerHit?.Invoke(this, EventArgs.Empty);
             }
         }
         else
         {
-            OnDead?.Invoke();
+            OnDead?.Invoke(this, EventArgs.Empty);
         }
 
-        var knockbackDir = -offenderInfo.Velocity.normalized;
+        var knockbackDir = offenderInfo.Velocity.normalized;
         knockbackVelocity = knockbackDir * knockbackForce;
         knockbackTimer = knockbackDuration;
     }

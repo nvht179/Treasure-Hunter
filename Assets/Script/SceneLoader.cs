@@ -79,17 +79,13 @@ public static class SceneLoader
 
     private static IEnumerator LoadSceneAsync(Scene targetScene)
     {
-        yield return null; // Wait for the next frame to ensure the loading scene is fully loaded
         loadingAsyncOperation = SceneManager.LoadSceneAsync(targetScene.ToString());
         loadingAsyncOperation.allowSceneActivation = false;
-        while (!loadingAsyncOperation.isDone)
-        {
-            if (loadingAsyncOperation.progress >= 0.9f)
-            {
-                loadingAsyncOperation.allowSceneActivation = true;
-            }
+
+        while (loadingAsyncOperation.progress < 0.9f)
             yield return null;
-        }
+
+        loadingAsyncOperation.allowSceneActivation = true;
     }
 
     public static void LoadLastScene()
@@ -114,7 +110,7 @@ public static class SceneLoader
         }
         else
         {
-            return 1f; // Return 0 if no loading operation is in progress
+            return 0f; // Return 0 if no loading operation is in progress
         }
     }
 

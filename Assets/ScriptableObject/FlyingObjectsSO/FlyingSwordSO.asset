@@ -15,5 +15,6 @@ MonoBehaviour:
   objectName: Flying Sword
   speed: 7
   damage: 5
+  force: 2
   prefab: {fileID: 2380678949769210150, guid: a6ccc38fa56ad8947bc83de05e3355b1, type: 3}
   sprite: {fileID: -1540834004, guid: 3c9beef669444c14c98c8cab7f523c7b, type: 3}

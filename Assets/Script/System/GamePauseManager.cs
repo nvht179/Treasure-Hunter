@@ -66,6 +66,15 @@ public class GamePauseManager : PersistentManager<GamePauseManager>
         {
             Debug.Log($"GamePauseManager: Game state changed to {newState}, hiding ALL pause menu.");
             HideAll();
+            if (newState == GameManager.State.LevelWon || newState == GameManager.State.LevelLost)
+            {
+                // Ensure the game is resumed when the level is won or lost
+                PauseGame();
+            } else
+            {
+                // If the game is not won or lost, ensure the game is resumed
+                ResumeGame();
+            }
         }
     }
 

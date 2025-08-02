@@ -15,5 +15,6 @@ MonoBehaviour:
   objectName: Cannon Ball
   speed: 5
   damage: 5
+  force: 3
   prefab: {fileID: 8831065471543746842, guid: d14a78789a169b64981e467e9fbf42a8, type: 3}
   sprite: {fileID: 21300000, guid: f27f6bbb3a3eeca41bae97de35e4a779, type: 3}

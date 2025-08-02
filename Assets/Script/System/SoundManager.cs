@@ -54,11 +54,25 @@ public class SoundManager : PersistentManager<SoundManager>
         player.OnBluePotionUsed += Player_OnBluePotionUsed;
         player.OnHealthPotionUsed += Player_OnHealthPotionUsed;
         player.OnKeyCollected += Player_OnKeyCollected;
+        player.OnPlayerHit += Player_OnPlayerHit;
+        player.OnDead += Player_OnPlayerDead;
 
         InventoryUI inventoryUI = player.GetInventoryUI();
         inventoryUI.OnInventoryOpen += Player_OnInventoryOpen;
         inventoryUI.OnInventoryClose += Player_OnInventoryClose;
         inventoryUI.OnItemDrop += Player_OnItemDrop;
+    }
+
+    private void Player_OnPlayerDead(object sender, System.EventArgs e)
+    {
+        Debug.Log("Player_OnPlayerDead");
+        PlaySound(audioClipRefsSO.playerDead, ((Player)sender).transform.position);
+    }
+
+    private void Player_OnPlayerHit(object sender, System.EventArgs e)
+    {
+        Debug.Log("Player_OnPlayerHit");
+        PlaySound(audioClipRefsSO.playerGotHit, ((Player)sender).transform.position);
     }
 
     private void Player_OnKeyCollected(object sender, System.EventArgs e)

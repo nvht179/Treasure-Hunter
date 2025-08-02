@@ -15,5 +15,6 @@ MonoBehaviour:
   objectName: Pearl
   speed: 10
   damage: 1
+  force: 1
   prefab: {fileID: 2234119884151101640, guid: 4f099a62b2e5ca2409520542820d06e2, type: 3}
   sprite: {fileID: 21300000, guid: 9c886f382311b044a88fc36b0953954e, type: 3}
