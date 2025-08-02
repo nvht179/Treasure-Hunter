@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Script.Enemy.PinkStar;
 using UnityEngine;
 
 public class FlyingSword : MonoBehaviour
@@ -41,7 +42,13 @@ public class FlyingSword : MonoBehaviour
         if ((collisionLayer & (1 << other.gameObject.layer)) != 0) {
             rb.velocity = Vector2.zero;
             var hitPlayer = other.collider.GetComponent<IDamageable>();
-            hitPlayer?.TakeDamage(this, flyingObjectSO.damage);
+            var offenderInfo = new IDamageable.DamageInfo
+            {
+                Damage = flyingObjectSO.damage,
+                Force = flyingObjectSO.force,
+                Velocity = rb.velocity,
+            };
+            hitPlayer?.TakeDamage(offenderInfo);
             transform.SetParent(other.transform);
             isEmbedded = true;
         }

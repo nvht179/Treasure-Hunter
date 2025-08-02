@@ -18,8 +18,8 @@ public class Seashell : ShooterTrap, IDamageable {
         currentHealthPoint = maxHealthPoint;
     }
 
-    public void TakeDamage(MonoBehaviour offender, float damage) {
-        currentHealthPoint = Mathf.Clamp(currentHealthPoint - damage, 0, maxHealthPoint);
+    public void TakeDamage(IDamageable.DamageInfo offenderInfo) {
+        currentHealthPoint = Mathf.Clamp(currentHealthPoint - offenderInfo.Damage, 0, maxHealthPoint);
         OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs {
             MaxHealth = maxHealthPoint,
             CurrentHealth = currentHealthPoint

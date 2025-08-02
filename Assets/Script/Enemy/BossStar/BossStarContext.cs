@@ -2,27 +2,29 @@ using System;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace Script.Enemy.PinkStar
+namespace Script.Enemy.BossStar
 {
-    public class PinkStarStateManager : MonoBehaviour, IDamageable
+    public class BossStarContext : MonoBehaviour, IDamageable
     {
         [SerializeField] private float maxHealth;
-        [SerializeField] private float moveSpeed;
-        [SerializeField] private float chargeSpeed;
-        [SerializeField] private float visionDistance;
+        [SerializeField] private float pursueSpeed;
+        [SerializeField] private float fleeSpeed;
         [SerializeField] private float attackDamage;
-        [SerializeField] private float chargeTime;
-        [SerializeField] private float rechargeTime;
         [SerializeField] private Player player;
         [SerializeField] private Transform pivot; // used for vision and ground/wall ahead checking
         [SerializeField] private LayerMask groundLayer;
         [SerializeField] private LayerMask playerLayer;
-        [SerializeField] private float knockbackForce;
+        [SerializeField] private float firstStageActiveTime;
+        [SerializeField] private float firstStageRestTime;
+        [SerializeField] private float secondStageRestTime;
+        [SerializeField] private float thirdStageActiveTime;
+        [SerializeField] private float thirdStageRestTime;
 
         private const float GroundCheckDistance = 0.1f;
         private const float GroundAndWallCheckAheadDistance = 0.7f;
         public const float HitRecoverTime = 0.5f; // time to recover from being hit
-        public const float DeadShowTime = 0.5f; // time for playing the DeadGround animation and showing enemy corpse
+        public const float DeadShowTime = 0.5f; // time to for playing the DeadGround animation and showing enemy corpse
+
         public event EventHandler OnDestroyed;
         public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
@@ -43,12 +45,14 @@ namespace Script.Enemy.PinkStar
         private float currentHealth;
         private int moveDirection; // 1 = right, -1 = left
 
-        public float MoveSpeed => moveSpeed;
-        public float ChargeSpeed => chargeSpeed;
+        public float PursueSpeed => pursueSpeed;
+        public float FleeSpeed => fleeSpeed;
         public float AttackDamage => attackDamage;
-        public float ChargeTime => chargeTime;
-        public float RechargeTime => rechargeTime;
-        public float KnockbackForce => knockbackForce;
+        public float FirstStageActiveTime => firstStageActiveTime;
+        public float FirstStageRestTime => firstStageRestTime;
+        public float SecondStageRestTime => secondStageRestTime;
+        public float ThirdStageActiveTime => thirdStageActiveTime;
+        public float ThirdStageRestTime => thirdStageRestTime;
 
         public float CurrentHealth
         {
@@ -62,14 +66,14 @@ namespace Script.Enemy.PinkStar
             set => moveDirection = value < 0 ? -1 : 1;
         }
 
-        private PinkStarBaseState currentState;
-        public PinkStarWanderState WanderState;
-        public PinkStarWaitState WaitState;
-        public PinkStarChargeState ChargeState;
-        public PinkStarRechargeState RechargeState;
-        public PinkStarAttackState AttackState;
-        public PinkStarHitState HitState;
-        public PinkStarDeadState DeadState;
+        private BossStarBaseStage currentState;
+        public BossStarFirstStageActive FirstStageActive;
+        public BossStarFirstStageRest FirstStageRest;
+        public BossStarSecondStageActive SecondStageActive;
+        public BossStarSecondStageRest SecondStageRest;
+        public BossStarThirdStageActive BossStarThirdStageActive;
+        public BossStarThirdStageRest BossStarThirdStageRest;
+        public BossStarDead BossStarDead;
 
         private void Awake()
         {
@@ -77,18 +81,19 @@ namespace Script.Enemy.PinkStar
             Collider2D = GetComponent<Collider2D>();
             MoveDirection = UnityEngine.Random.Range(0, 2) == 0 ? -1 : 1;
             CurrentHealth = maxHealth;
-            WanderState = new PinkStarWanderState(this);
-            WaitState = new PinkStarWaitState(this);
-            ChargeState = new PinkStarChargeState(this);
-            RechargeState = new PinkStarRechargeState(this);
-            AttackState = new PinkStarAttackState(this);
-            HitState = new PinkStarHitState(this);
-            DeadState = new PinkStarDeadState(this);
+            FirstStageActive = new BossStarFirstStageActive(this);
+            FirstStageRest = new BossStarFirstStageRest(this);
+            SecondStageActive = new BossStarSecondStageActive(this);
+            SecondStageRest = new BossStarSecondStageRest(this);
+            BossStarThirdStageActive = new BossStarThirdStageActive(this);
+            BossStarThirdStageRest = new BossStarThirdStageRest(this);
+            BossStarDead = new BossStarDead(this);
+            currentState = FirstStageActive;
         }
 
         private void Start()
         {
-            currentState = WanderState;
+            currentState = FirstStageActive;
             currentState.EnterState();
         }
 
@@ -97,57 +102,10 @@ namespace Script.Enemy.PinkStar
             currentState.UpdateState();
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
-        {
-            currentState.OnCollisionEnter(other);
-        }
-
-        public bool CastVisionRay(Vector2 direction)
-        {
-            var wallHit = Physics2D.Raycast(pivot.position, direction, visionDistance, groundLayer);
-            var maxDistance = wallHit.collider != null ? wallHit.distance : visionDistance;
-
-            var playerHit = Physics2D.Raycast(pivot.position, direction, maxDistance, playerLayer);
-
-            return playerHit.collider != null;
-        }
-
-        public void SwitchState(PinkStarBaseState nextState)
+        public void SwitchState(BossStarBaseStage nextState)
         {
             currentState = nextState;
             currentState.EnterState();
-        }
-
-        public bool IsGroundAhead()
-        {
-            var groundAheadCheckPosition = new Vector2(
-                pivot.position.x + MoveDirection * GroundAndWallCheckAheadDistance,
-                pivot.position.y);
-
-            var hit = Physics2D.Raycast(groundAheadCheckPosition, Vector2.down, GroundCheckDistance, groundLayer);
-            return hit.collider != null;
-        }
-
-        public bool IsWallAhead()
-        {
-            var dir = MoveDirection == 1 ? Vector2.right : Vector2.left;
-            var hit = Physics2D.Raycast(pivot.position, dir, GroundAndWallCheckAheadDistance, groundLayer);
-            return hit.collider != null;
-        }
-
-        public bool IsGrounded()
-        {
-            var hit = Physics2D.Raycast(transform.position, Vector2.down, GroundCheckDistance,
-                groundLayer);
-            return hit.collider != null;
-        }
-
-        public bool IsPlayerDetected()
-        {
-            var playerDetectedRight = CastVisionRay(Vector2.right);
-            var playerDetectedLeft = CastVisionRay(Vector2.left);
-
-            return playerDetectedLeft || playerDetectedRight;
         }
 
         public Vector2 GetVelocity()
@@ -155,9 +113,9 @@ namespace Script.Enemy.PinkStar
             return Rb.velocity;
         }
 
-        public PinkStarState GetCurrentState()
+        public BossStarBaseStage GetCurrentState()
         {
-            return currentState.GetCurrentState();
+            return currentState;
         }
 
         // check if there is ground from pink star to player but does not check if there is low height blocking wall
@@ -198,7 +156,7 @@ namespace Script.Enemy.PinkStar
 
         public void TakeDamage(IDamageable.DamageInfo offenderInfo)
         {
-            currentState.TakeDamage(offenderInfo);
+            currentState.TakeDamage(offenderInfo.Damage);
             OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
             {
                 CurrentHealth = CurrentHealth,

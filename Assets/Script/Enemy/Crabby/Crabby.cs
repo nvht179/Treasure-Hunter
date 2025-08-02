@@ -133,7 +133,12 @@ public class Crabby : MonoBehaviour, IDamageable
             if (playerCollider != null)
             {
                 var damageable = playerCollider.GetComponent<IDamageable>();
-                damageable?.TakeDamage(this, attackDamage);
+                var offenderInfo = new IDamageable.DamageInfo
+                {
+                    Damage = attackDamage
+                    // ignore other fields because player attack does not knockback enemies
+                };
+                damageable?.TakeDamage(offenderInfo);
             }
         }
 
@@ -142,9 +147,9 @@ public class Crabby : MonoBehaviour, IDamageable
         hasAttacked = true;
     }
 
-    public void TakeDamage(MonoBehaviour offender, float damage)
+    public void TakeDamage(IDamageable.DamageInfo offender)
     {
-        currentHealth = math.clamp(currentHealth - damage, 0, maxHealth);
+        currentHealth = math.clamp(currentHealth - offender.Damage, 0, maxHealth);
         OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
         {
             CurrentHealth = currentHealth,

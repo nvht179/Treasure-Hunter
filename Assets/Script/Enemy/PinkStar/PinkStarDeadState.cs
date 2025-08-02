@@ -27,7 +27,7 @@ namespace Script.Enemy.PinkStar
             }
         }
 
-        public override void TakeDamage(float damage)
+        public override void TakeDamage(IDamageable.DamageInfo offenderInfo)
         {
             // do nothing
         }

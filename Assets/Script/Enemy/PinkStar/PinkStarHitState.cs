@@ -39,11 +39,11 @@ namespace Script.Enemy.PinkStar
             }
         }
 
-        public override void TakeDamage(float damage)
+        public override void TakeDamage(IDamageable.DamageInfo offenderInfo)
         {
             if (!isDeadHit)
             {
-                base.TakeDamage(damage);
+                base.TakeDamage(offenderInfo);
                 // if pink star take damage during hit state, re-enter the hit state
                 PinkStar.SwitchState(PinkStar.HitState);
             }

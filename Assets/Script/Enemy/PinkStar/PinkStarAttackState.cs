@@ -27,15 +27,22 @@ namespace Script.Enemy.PinkStar
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                other.gameObject.GetComponent<Player>().TakeDamage(PinkStar, PinkStar.AttackDamage);
+                var offenderInfo = new IDamageable.DamageInfo
+                {
+                    Damage = PinkStar.AttackDamage,
+                    Force = PinkStar.KnockbackForce,
+                    Velocity = Rb.velocity,
+                    // KnockbackTime as default
+                };
+                other.gameObject.GetComponent<Player>().TakeDamage(offenderInfo);
             }
             
             PinkStar.SwitchState(PinkStar.RechargeState);
         }
 
-        public override void TakeDamage(float damage)
+        public override void TakeDamage(IDamageable.DamageInfo offender)
         {
-            base.TakeDamage(damage);
+            base.TakeDamage(offender);
             PinkStar.SwitchState(PinkStar.HitState);
         }
     }

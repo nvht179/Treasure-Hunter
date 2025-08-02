@@ -270,7 +270,6 @@ public class Player : MonoBehaviour, IDamageable
 
     private void FixedUpdate()
     {
-        var currentVelocity = rb.velocity;
         
         if (knockbackTimer > 0)
         {
@@ -288,7 +287,7 @@ public class Player : MonoBehaviour, IDamageable
         }
 
         // vertical movement
-        var velocityY = currentVelocity.y;
+        var velocityY = rb.velocity.y;
 
         if (velocityY != 0)
         {
@@ -321,7 +320,7 @@ public class Player : MonoBehaviour, IDamageable
                     Debug.Log("Player is attacking on the ground");
                 }
 
-                    var enemiesInRange = new Collider2D[10];
+                var enemiesInRange = new Collider2D[10];
                 _ = Physics2D.OverlapCircleNonAlloc(attackOrigin.position, attackRadius, enemiesInRange, enemyLayer);
                 foreach (var enemy in enemiesInRange)
                 {
@@ -329,7 +328,11 @@ public class Player : MonoBehaviour, IDamageable
                     if (enemy != null)
                     {
                         var damageable = enemy.GetComponent<IDamageable>();
-                        damageable?.TakeDamage(this, playerDamage);
+                        var offenderInfo = new IDamageable.DamageInfo
+                        {
+                            Damage = playerDamage
+                        };
+                        damageable?.TakeDamage(offenderInfo);
                     }
                 }
 
@@ -381,22 +384,22 @@ public class Player : MonoBehaviour, IDamageable
     //     transform.position += moveDistance * moveDirX;
     // }
 
-    public void TakeDamage(MonoBehaviour offender, float damage)
+    public void TakeDamage(IDamageable.DamageInfo offenderInfo)
     {
-        currentHealthPoint = Mathf.Clamp(currentHealthPoint - damage, 0, maxHealthPoint);
+        currentHealthPoint = Mathf.Clamp(currentHealthPoint - offenderInfo.Damage, 0, maxHealthPoint);
         OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
         {
             CurrentHealth = currentHealthPoint,
             MaxHealth = maxHealthPoint
         });
 
-        if (damage < 0) { 
+        if (offenderInfo.Damage < 0) { 
             
         }
         
         if (currentHealthPoint > 0)
         {
-            if (damage < 0)
+            if (offenderInfo.Damage < 0)
             {
                 OnPlayerHit?.Invoke(this, EventArgs.Empty);
             }
@@ -405,13 +408,10 @@ public class Player : MonoBehaviour, IDamageable
         {
             OnDead?.Invoke();
         }
-        
-        if (offender != null && offender.transform != null)
-        {
-            var knockbackDir = ((Vector2)(transform.position - offender.transform.position)).normalized;
-            knockbackVelocity = knockbackDir * knockbackForce;
-            knockbackTimer = knockbackDuration;
-        }
+
+        var knockbackDir = -offenderInfo.Velocity.normalized;
+        knockbackVelocity = knockbackDir * knockbackForce;
+        knockbackTimer = knockbackDuration;
     }
 
     public void ActivateNeedKeyDialog()

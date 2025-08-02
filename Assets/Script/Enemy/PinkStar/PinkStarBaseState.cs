@@ -26,9 +26,9 @@ namespace Script.Enemy.PinkStar
         {
         }
 
-        public virtual void TakeDamage(float damage)
+        public virtual void TakeDamage(IDamageable.DamageInfo offenderInfo)
         {
-            PinkStar.CurrentHealth -= damage;
+            PinkStar.CurrentHealth -= offenderInfo.Damage;
         }
     }
 }
