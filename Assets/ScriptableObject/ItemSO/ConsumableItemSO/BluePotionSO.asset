@@ -19,6 +19,7 @@ MonoBehaviour:
   itemType: 0
   icon: {fileID: -895140096, guid: d132f4da4fe74654b8e9f7fbb4eb9454, type: 3}
   prefab: {fileID: 7052094983749829013, guid: b7bd6f60bae210b4688ad5dacb28217f, type: 3}
+  collectEffectPrefab: {fileID: 7992529899703622214, guid: 34b21386f8862aa42822cbcbaeb27d58, type: 3}
   scaleInUI: 20
   stackable: 1
   maxStack: 9

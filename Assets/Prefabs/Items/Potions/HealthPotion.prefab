@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 604865765933136489}
   - component: {fileID: 7669114138647828635}
   - component: {fileID: 318411090561984590}
+  - component: {fileID: 7501119270325336001}
   m_Layer: 0
   m_Name: HealthPotion
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -148,3 +149,16 @@ CapsuleCollider2D:
   m_Offset: {x: 0.00493294, y: 0}
   m_Size: {x: 0.6707549, y: 1}
   m_Direction: 0
+--- !u!114 &7501119270325336001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906021916870984523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 294ea0865fe0f094fa64d36ec0679639, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemSO: {fileID: 0}

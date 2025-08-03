@@ -397,22 +397,34 @@ public class Player : MonoBehaviour, IDamageable
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<GoldCoinWorld>(out var goldCoin))
+        if (collision.TryGetComponent<ItemWorld>(out var itemWorld))
         {
-            OnGoldChanged?.Invoke(this, new OnGoldChangedEventArgs
+            ItemSO itemSO = itemWorld.GetItem().itemSO;
+            if(itemSO is ResourceItemSO resourceItemSO)
             {
-                currentGold = money,
-                changeAmount = goldCoin.GetItem().quantity
-            });
-
-            money += goldCoin.GetItem().quantity;
+                HandleResourceCollected(itemWorld, resourceItemSO);
+                if (itemSO.itemType == ItemType.GoldenKey)
+                {
+                    inventory.AddItem(itemWorld.GetItem());
+                    OnKeyCollected?.Invoke(this, EventArgs.Empty);
+                }
+            }
+            else
+            {
+                inventory.AddItem(itemWorld.GetItem());
+            }
         }
+    }
 
-        if (collision.TryGetComponent<KeyWorld>(out var keyWorld))
+    private void HandleResourceCollected(ItemWorld resourceItemWorld, ResourceItemSO resourceItemSO)
+    {
+        OnGoldChanged?.Invoke(this, new OnGoldChangedEventArgs
         {
-            inventory.AddItem(keyWorld.GetItem());
-            OnKeyCollected?.Invoke(this, EventArgs.Empty);
-        }
+            currentGold = money,
+            changeAmount = resourceItemSO.value * resourceItemWorld.GetItem().quantity
+        });
+
+        money += resourceItemSO.value * resourceItemWorld.GetItem().quantity;
     }
 
     private void OnDrawGizmos()

@@ -13,6 +13,7 @@ public class ItemSO : ScriptableObject {
 
     public Sprite icon;
     public Transform prefab;
+    public Transform collectEffectPrefab;
     public float scaleInUI = 20;
 
     public bool stackable;
@@ -22,6 +23,7 @@ public class ItemSO : ScriptableObject {
 }
 
 public enum ItemType {
-    Consumable,
     GoldenKey,
+    Resources,
+    Consumable,
 }
