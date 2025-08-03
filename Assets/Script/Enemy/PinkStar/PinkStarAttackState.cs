@@ -36,7 +36,8 @@ namespace Script.Enemy.PinkStar
                 };
                 other.gameObject.GetComponent<Player>().TakeDamage(offenderInfo);
             }
-            
+
+            Rb.velocity = new Vector2(0, Rb.velocity.y);
             PinkStar.SwitchState(PinkStar.RechargeState);
         }
 
