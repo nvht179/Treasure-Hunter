@@ -12,4 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c3c17bb62a3b114083b3f5880be8c30, type: 3}
   m_Name: _ShopItemList
   m_EditorClassIdentifier: 
-  items: []
+  items:
+  - {fileID: 11400000, guid: a50542db1e43c284ab128aa02d16a543, type: 2}
+  - {fileID: 11400000, guid: cabe3b7e6e98e134da4636aa1148db3d, type: 2}
+  - {fileID: 11400000, guid: 38043e6bc471722448dbf883b02d5d5b, type: 2}
+  - {fileID: 11400000, guid: 489919f55c15f1144ab6ea84649aec13, type: 2}
+  - {fileID: 11400000, guid: c855bb1aec8c2624e97a1bd9e536c7d6, type: 2}
+  - {fileID: 11400000, guid: d972c1396b968dc4c83663dd48274204, type: 2}
+  - {fileID: 11400000, guid: 2fb0352e6449d484fbd0ac0ab6dc0789, type: 2}
+  - {fileID: 11400000, guid: 4ae31c0d17454df41a114777e4b1f14f, type: 2}

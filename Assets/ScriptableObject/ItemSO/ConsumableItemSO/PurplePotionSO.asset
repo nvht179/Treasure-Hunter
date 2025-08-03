@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18cfeeee43b851e469a380c357bffa98, type: 3}
   m_Name: PurplePotionSO
   m_EditorClassIdentifier: 
-  itemName: PurplePotionSO
-  description: 
+  itemName: Purple Potion
+  description: 'Consumable: Increase 20% critical chance in 20 seconds'
   droppable: 1
   consumable: 1
   itemType: 1
@@ -22,6 +22,8 @@ MonoBehaviour:
   collectEffectPrefab: {fileID: 7992529899703622214, guid: 34b21386f8862aa42822cbcbaeb27d58, type: 3}
   scaleInUI: 20
   stackable: 1
-  maxStack: 9
-  buyPrice: 5
+  maxStack: 5
+  buyPrice: 30
   usesPerItem: 1
+  criticalChanceIncrease: 0.2
+  duration: 20

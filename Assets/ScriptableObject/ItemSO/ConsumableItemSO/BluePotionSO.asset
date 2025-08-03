@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1aa0b345cd10b674a97a9afb50e2fabf, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a036f1c81da4704d85412bdbcd0bc26, type: 3}
   m_Name: BluePotionSO
   m_EditorClassIdentifier: 
   itemName: Blue Potion
-  description: 
+  description: 'Consumable: Increase 1stamina restored each second in 5 seconds'
   droppable: 1
   consumable: 1
-  itemType: 1
+  itemType: 0
   icon: {fileID: -895140096, guid: d132f4da4fe74654b8e9f7fbb4eb9454, type: 3}
   prefab: {fileID: 7052094983749829013, guid: b7bd6f60bae210b4688ad5dacb28217f, type: 3}
   collectEffectPrefab: {fileID: 7992529899703622214, guid: 34b21386f8862aa42822cbcbaeb27d58, type: 3}
@@ -25,3 +25,5 @@ MonoBehaviour:
   maxStack: 9
   buyPrice: 10
   usesPerItem: 1
+  rate: 1
+  duration: 5

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d64000ab543603240b75eb552bba1a5b, type: 3}
   m_Name: OrangePotionSO
   m_EditorClassIdentifier: 
-  itemName: OrangePotionSO
-  description: 
+  itemName: Orange Potion
+  description: Increase your critical damage by 1.1% permanently
   droppable: 1
   consumable: 1
   itemType: 1
@@ -23,5 +23,6 @@ MonoBehaviour:
   scaleInUI: 20
   stackable: 1
   maxStack: 9
-  buyPrice: 5
+  buyPrice: 30
   usesPerItem: 1
+  criticalDamageMultiplier: 1.1

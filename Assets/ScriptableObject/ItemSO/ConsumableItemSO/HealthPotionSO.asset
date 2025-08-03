@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HealthPotionSO
   m_EditorClassIdentifier: 
   itemName: Health Potion
-  description: 'Consumable: Restores 10HP'
+  description: 'Consumable: Restores 20HP'
   droppable: 1
   consumable: 1
   itemType: 1
@@ -25,4 +25,4 @@ MonoBehaviour:
   maxStack: 9
   buyPrice: 10
   usesPerItem: 1
-  healAmount: 10
+  healAmount: 20

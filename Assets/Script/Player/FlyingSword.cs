@@ -63,4 +63,9 @@ public class FlyingSword : MonoBehaviour
     {
         return rb.velocity;
     }
+
+    public void SetDamage(float damage)
+    {
+        flyingObjectSO.damage = damage;
+    }
 }

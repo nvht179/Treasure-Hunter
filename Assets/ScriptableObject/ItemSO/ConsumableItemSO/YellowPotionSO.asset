@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16538b51bd0222149bdc0f5781bafcd1, type: 3}
   m_Name: YellowPotionSO
   m_EditorClassIdentifier: 
-  itemName: YellowPotionSO
-  description: 
+  itemName: Yellow Potion
+  description: 'Consumable: Boost your move speed little for 20 seconds (cannot stack)'
   droppable: 1
   consumable: 1
   itemType: 1
@@ -23,5 +23,7 @@ MonoBehaviour:
   scaleInUI: 20
   stackable: 1
   maxStack: 9
-  buyPrice: 5
+  buyPrice: 20
   usesPerItem: 1
+  speedBoost: 0.4
+  duration: 20

@@ -5,7 +5,7 @@ public class GreenPotionSO : ConsumableItemSO
 {
     private void OnValidate()
     {
-        description = "consumable: let's go gambling. lose half of your current health or restore full health";
+        description = "Consumable: let's go gambling. lose half of your current health or restore full health";
         droppable = true;
         consumable = true;
     }

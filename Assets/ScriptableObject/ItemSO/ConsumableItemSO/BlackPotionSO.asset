@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aa0b345cd10b674a97a9afb50e2fabf, type: 3}
   m_Name: BlackPotionSO
   m_EditorClassIdentifier: 
-  itemName: BlackPotion
-  description: 
+  itemName: Black Potion
+  description: 'Consumable: Earn more 1.5 gold multiplier in 5 seconds but you will
+    receive double damage.'
   droppable: 1
   consumable: 1
   itemType: 1
@@ -21,7 +22,9 @@ MonoBehaviour:
   prefab: {fileID: 4662524407656088003, guid: 1f8288c86b3db6e478843c158c45499e, type: 3}
   collectEffectPrefab: {fileID: 7992529899703622214, guid: 34b21386f8862aa42822cbcbaeb27d58, type: 3}
   scaleInUI: 20
-  stackable: 1
-  maxStack: 9
-  buyPrice: 5
+  stackable: 0
+  maxStack: 1
+  buyPrice: 50
   usesPerItem: 1
+  goldMultiplier: 1.5
+  duration: 5

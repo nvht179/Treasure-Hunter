@@ -7,18 +7,18 @@ using UnityEngine.EventSystems;
 public class Player : MonoBehaviour, IDamageable
 {
     [Header("Player Stats")]
-    [SerializeField] private int playerDamage;
+    [SerializeField] private float basePlayerDamage = 5f;
+    [SerializeField] private float baseCritChance = 0.1f; // 15% crit chance
+    [SerializeField] private float baseCritMultiplier = 2f; // 2x damage on crit
     [SerializeField] private float baseHealth = 100f;
     [SerializeField] private float baseHealthRestoreRate = 0.1f;
     [SerializeField] private float baseStamina = 100f;
     [SerializeField] private float baseStaminaRestoreRate = 0.5f;
+    [SerializeField] private float baseMoveSpeed = 5f;
 
     [Header("Jump System")]
     [SerializeField] private float jumpPower;
     [SerializeField] private float jumpDegrader;
-
-    [Header("Movement")]
-    [SerializeField] private float moveSpeed = 5f;
 
     [Header("References")]
     [SerializeField] private FlyingObjectSO flyingSwordSO;
@@ -115,6 +115,12 @@ public class Player : MonoBehaviour, IDamageable
     // Attributes
     public HealthSystem HealthSystem { get; private set; }
     public StaminaSystem StaminaSystem { get; private set; }
+    public PlayerDamageBuffSystem PlayerDamageBuffSystem { get; private set; }
+    public MoveSpeedSystem MoveSpeedSystem { get; private set; }
+
+    private bool isReceiveDoubleDamage = false;
+    private float receiveGoldMultiplier = 1f;
+    private Coroutine tempEffectCoroutine;
 
     private void Awake()
     {
@@ -131,6 +137,8 @@ public class Player : MonoBehaviour, IDamageable
 
         HealthSystem = new HealthSystem(baseHealth, baseHealthRestoreRate);
         StaminaSystem = new StaminaSystem(baseStamina, baseStaminaRestoreRate);
+        PlayerDamageBuffSystem = new PlayerDamageBuffSystem(baseCritChance, baseCritMultiplier);
+        MoveSpeedSystem = new MoveSpeedSystem(baseMoveSpeed);
     }
 
     private void HealthSystem_OnDeath()
@@ -205,6 +213,7 @@ public class Player : MonoBehaviour, IDamageable
             if (flyingSwordTransform.TryGetComponent<FlyingSword>(out var flyingSword))
             {
                 flyingSword.Direction = IsFacingRight ? 1 : -1;
+                flyingSword.SetDamage(PlayerDamageBuffSystem.CalculateOutgoingDamage(basePlayerDamage, out bool isCrit));
             }
 
             attackAlternateCooldownTimer = attackAlternateCooldownTime;
@@ -308,7 +317,7 @@ public class Player : MonoBehaviour, IDamageable
         }
 
         // horizontal movement
-        var velocityX = moveVector.x == 0 ? 0 : moveSpeed * moveDirection;
+        var velocityX = moveVector.x == 0 ? 0 : MoveSpeedSystem.GetCurrentSpeed() * moveDirection;
 
         if (airAttackTimer > 0)
         {
@@ -359,7 +368,7 @@ public class Player : MonoBehaviour, IDamageable
                         var damageable = enemy.GetComponent<IDamageable>();
                         var offenderInfo = new IDamageable.DamageInfo
                         {
-                            Damage = playerDamage
+                            Damage = PlayerDamageBuffSystem.CalculateOutgoingDamage(basePlayerDamage, out bool isCrit),
                         };
                         damageable?.TakeDamage(offenderInfo);
                     }
@@ -409,7 +418,7 @@ public class Player : MonoBehaviour, IDamageable
             ChangeAmount = resourceItemSO.value * resourceItemWorld.GetItem().quantity
         });
 
-        money += resourceItemSO.value * resourceItemWorld.GetItem().quantity;
+        money += (int)(resourceItemSO.value * resourceItemWorld.GetItem().quantity * receiveGoldMultiplier);
     }
 
     private void OnDrawGizmos()
@@ -419,6 +428,10 @@ public class Player : MonoBehaviour, IDamageable
 
     public void TakeDamage(IDamageable.DamageInfo offenderInfo)
     {
+        if(isReceiveDoubleDamage)
+        {
+            HealthSystem.TakeDamage(offenderInfo.Damage);
+        }
         HealthSystem.TakeDamage(offenderInfo.Damage);
 
         var knockbackDir = offenderInfo.Velocity.normalized;
@@ -514,4 +527,27 @@ public class Player : MonoBehaviour, IDamageable
             passive.RemoveEffect(this);
         }
     }
+
+    public void ApplyBlackPotionEffect(float goldMultiplier, float duration, bool doubleDamage = true)
+    {
+        if (tempEffectCoroutine != null)
+        {
+            StopCoroutine(tempEffectCoroutine);
+        }
+
+        tempEffectCoroutine = StartCoroutine(BlackPotionEffectCoroutine(goldMultiplier, duration, doubleDamage));
+    }
+
+    private IEnumerator BlackPotionEffectCoroutine(float goldMultiplier, float duration, bool doubleDamage)
+    {
+        isReceiveDoubleDamage = doubleDamage;
+        receiveGoldMultiplier = goldMultiplier;
+
+        yield return new WaitForSeconds(duration);
+
+        isReceiveDoubleDamage = false;
+        receiveGoldMultiplier = 1f;
+        tempEffectCoroutine = null;
+    }
+
 }
