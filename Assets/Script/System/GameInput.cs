@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -161,13 +162,8 @@ public class GameInput : PersistentManager<GameInput>
         }
     }
 
-    public void RebindBinding(Binding binding, Action onActionRebound)
+    public void GetBindingAction(Binding binding, out InputAction inputAction, out int bindingIndex)
     {
-        playerInputActions.Player.Disable();
-
-        InputAction inputAction;
-        int bindingIndex;
-
         switch (binding)
         {
             default:
@@ -204,20 +200,74 @@ public class GameInput : PersistentManager<GameInput>
                 bindingIndex = 0;
                 break;
         }
+    }
 
-        inputAction.PerformInteractiveRebinding(bindingIndex)
-            .OnComplete(callback =>
+    public void RebindBinding(Binding binding, Action<bool> onRebindFinished)
+    {
+        playerInputActions.Player.Disable();
+        GetBindingAction(binding, out InputAction inputAction, out int bindingIndex);
+        StartRebindCoroutine(inputAction, bindingIndex, onRebindFinished);
+    }
+
+    public void StartRebindCoroutine(InputAction action, int bindingIndex, Action<bool> onRebindFinished)
+    {
+        StartCoroutine(RebindCoroutine(action, bindingIndex, onRebindFinished));
+    }
+
+    private IEnumerator RebindCoroutine(InputAction action, int bindingIndex, Action<bool> onRebindFinished)
+    {
+        var backupJson = playerInputActions.SaveBindingOverridesAsJson();
+        var excluded = playerInputActions.asset
+            .bindings
+            .Where(b => !b.isComposite && !b.isPartOfComposite)
+            .Select(b => b.effectivePath)
+            .ToHashSet();
+
+        bool success = false;
+        bool done = false;
+
+        action.PerformInteractiveRebinding(bindingIndex)
+            .WithControlsExcluding(string.Join(",", excluded))
+            .OnComplete(op =>
             {
-                callback.Dispose();
-                playerInputActions.Player.Enable();
-                onActionRebound();
+                op.Dispose();
+                var newPath = action.bindings[bindingIndex].effectivePath;
 
-                PlayerPrefs.SetString(PLAYER_PREFS_BINDINGS, playerInputActions.SaveBindingOverridesAsJson());
-                PlayerPrefs.Save();
+                if (IsDuplicate(newPath, action))
+                {
+                    playerInputActions.LoadBindingOverridesFromJson(backupJson);
+                    Debug.Log($"Duplicate binding '{newPath}' detected. Rebinding canceled.");
+                    success = false;
+                }
+                else
+                {
+                    SaveOverrides();
+                    success = true;
+                }
 
-                OnBindingRebind?.Invoke(this, EventArgs.Empty);
+                done = true;  // wake up the coroutine
             })
             .Start();
+
+        // Wait until either success or failure has been set
+        yield return new WaitUntil(() => done);
+
+        onRebindFinished(success);
+    }
+
+
+    private bool IsDuplicate(string path, InputAction skipAction)
+    {
+        return playerInputActions.asset
+            .bindings
+            .Where(b => !b.isPartOfComposite)
+            .Any(b => b.effectivePath == path && b.action != skipAction.name);
+    }
+
+    private void SaveOverrides()
+    {
+        PlayerPrefs.SetString(PLAYER_PREFS_BINDINGS, playerInputActions.SaveBindingOverridesAsJson());
+        PlayerPrefs.Save();
     }
 
 }

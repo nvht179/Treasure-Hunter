@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2381c33911eb2ac41ac67038116bd13b, type: 3}
+  m_Script: {fileID: 11500000, guid: b359a0a3527a7f4438d5e956a14f18a5, type: 3}
   m_Name: MusicClipRefsSO
   m_EditorClassIdentifier: 
   background:
@@ -18,5 +18,5 @@ MonoBehaviour:
   inGame:
   - {fileID: 8300000, guid: 276cf36c4d6069b499b75d4933afebcd, type: 3}
   - {fileID: 8300000, guid: cc1d7d00d0d20a6468859a48295d9b3a, type: 3}
-  - {fileID: 8300000, guid: ce5312114debe034c87f0cd24e34fb60, type: 3}
   - {fileID: 8300000, guid: c05ca0448f9e38b419998f75913f8b7f, type: 3}
+  - {fileID: 8300000, guid: ce5312114debe034c87f0cd24e34fb60, type: 3}
