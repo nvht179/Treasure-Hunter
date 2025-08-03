@@ -11,11 +11,11 @@ public class HealthBarVisual : MonoBehaviour
 
     public void Start()
     {
-        player.OnDamageTaken += PlayerOnDamageTaken;
+        player.HealthSystem.OnHealthChanged += HealthSystemOnHealthChanged;
         barImage.fillAmount = 1;
     }
 
-    private void PlayerOnDamageTaken(object sender, IDamageable.OnDamageTakenEventArgs e)
+    private void HealthSystemOnHealthChanged(object sender, HealthSystem.OnHealthChangedEventArgs e)
     {
         var healthNormalized = e.CurrentHealth / e.MaxHealth;
         barImage.fillAmount = healthNormalized;

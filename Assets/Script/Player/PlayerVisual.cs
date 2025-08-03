@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerVisual : MonoBehaviour
@@ -31,10 +28,10 @@ public class PlayerVisual : MonoBehaviour
 
     private void Start()
     {
-        player.OnDamageTaken += PlayerOnDamageTaken;
+        player.HealthSystem.OnDamageReceived += HealthSystemOnDamageReceived;
     }
 
-    private void PlayerOnDamageTaken(object sender, IDamageable.OnDamageTakenEventArgs e)
+    private void HealthSystemOnDamageReceived(object sender, EventArgs e)
     {
         animator.SetTrigger(Hit);
     }

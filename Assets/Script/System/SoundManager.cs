@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class SoundManager : PersistentManager<SoundManager>
 {
@@ -54,7 +56,7 @@ public class SoundManager : PersistentManager<SoundManager>
         player.OnBluePotionUsed += Player_OnBluePotionUsed;
         player.OnHealthPotionUsed += Player_OnHealthPotionUsed;
         player.OnKeyCollected += Player_OnKeyCollected;
-        player.OnPlayerHit += Player_OnPlayerHit;
+        player.HealthSystem.OnDamageReceived += HealthSystemOnDamageReceived;
         player.OnDead += Player_OnPlayerDead;
 
         InventoryUI inventoryUI = player.GetInventoryUI();
@@ -63,16 +65,16 @@ public class SoundManager : PersistentManager<SoundManager>
         inventoryUI.OnItemDrop += Player_OnItemDrop;
     }
 
+    private void HealthSystemOnDamageReceived(object sender, EventArgs e)
+    {
+        Debug.Log("PlayerOnDamageTaken");
+        PlaySound(audioClipRefsSO.playerGotHit, ((Player)sender).transform.position);
+    }
+
     private void Player_OnPlayerDead(object sender, System.EventArgs e)
     {
         Debug.Log("Player_OnPlayerDead");
         PlaySound(audioClipRefsSO.playerDead, ((Player)sender).transform.position);
-    }
-
-    private void Player_OnPlayerHit(object sender, System.EventArgs e)
-    {
-        Debug.Log("Player_OnPlayerHit");
-        PlaySound(audioClipRefsSO.playerGotHit, ((Player)sender).transform.position);
     }
 
     private void Player_OnKeyCollected(object sender, System.EventArgs e)

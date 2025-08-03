@@ -14,11 +14,11 @@ public class GreenPotionSO : ConsumableItemSO
     {
         if (Random.value < 0.5f)
         {
-            player.GetHealthSystem().LosePercentCurrentHealth(0.5f);
+            player.HealthSystem.LosePercentCurrentHealth(0.5f);
         }
         else
         {
-            player.GetHealthSystem().Heal(player.GetHealthSystem().GetMaxHealth());
+            player.HealthSystem.Heal(player.HealthSystem.GetMaxHealth());
         }
     }
 }

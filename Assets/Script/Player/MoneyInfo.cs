@@ -13,7 +13,7 @@ public class MoneyInfo : MonoBehaviour {
     }
 
     private void Player_OnGoldChanged(object sender, Player.OnGoldChangedEventArgs e) {
-        int money = e.currentGold + e.changeAmount;
+        int money = e.CurrentGold + e.ChangeAmount;
         moneyText.text = money.ToString();
     }
 }

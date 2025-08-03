@@ -14,6 +14,6 @@ public class HealthPotionSO : ConsumableItemSO
 
     public override void Consume(Player player)
     {
-        player.GetHealthSystem().Heal(healAmount);
+        player.HealthSystem.Heal(healAmount);
     }
 }

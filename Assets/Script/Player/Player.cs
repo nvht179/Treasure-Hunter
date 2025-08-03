@@ -57,7 +57,6 @@ public class Player : MonoBehaviour, IDamageable
     public event EventHandler OnAttack;
     public event EventHandler OnAirAttack;
     public event EventHandler OnAttackAlternate;
-    public event EventHandler OnPlayerHit;
     public event EventHandler OnDead;
 
     public event EventHandler OnGreenPotionFail;
@@ -80,8 +79,8 @@ public class Player : MonoBehaviour, IDamageable
     public event EventHandler<OnGoldChangedEventArgs> OnGoldChanged;
     public class OnGoldChangedEventArgs : EventArgs
     {
-        public int currentGold;
-        public int changeAmount;
+        public int CurrentGold;
+        public int ChangeAmount;
     }
 
     // Move and Jump
@@ -114,8 +113,8 @@ public class Player : MonoBehaviour, IDamageable
     private float footstepTimer;
 
     // Attributes
-    private HealthSystem healthSystem;
-    private StaminaSystem staminaSystem;
+    public HealthSystem HealthSystem { get; private set; }
+    public StaminaSystem StaminaSystem { get; private set; }
 
     private void Awake()
     {
@@ -130,32 +129,13 @@ public class Player : MonoBehaviour, IDamageable
         inventoryUI.SetInventory(inventory);
         money = 200; // TODO: Initial money for testing purposes
 
-        healthSystem = new HealthSystem(baseHealth, baseHealthRestoreRate);
-        healthSystem.OnHealthChanged += HealthSystem_OnHelthChanged;
-        healthSystem.OnReceiveDamage += HealthSystem_OnReceiveDamage;
-        healthSystem.OnDeath += HealthSystem_OnDeath;
-
-        staminaSystem = new StaminaSystem(baseStamina, baseStaminaRestoreRate);
-        staminaSystem.OnStaminaChanged += StaminaSystem_OnStaminaChanged;
+        HealthSystem = new HealthSystem(baseHealth, baseHealthRestoreRate);
+        StaminaSystem = new StaminaSystem(baseStamina, baseStaminaRestoreRate);
     }
 
     private void HealthSystem_OnDeath()
     {
         OnDead?.Invoke(this, EventArgs.Empty);
-    }
-
-    private void HealthSystem_OnReceiveDamage()
-    {
-        OnPlayerHit?.Invoke(this, EventArgs.Empty);
-    }
-
-    private void HealthSystem_OnHelthChanged(float currentHealth, float maxHealth)
-    {
-        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
-        {
-            MaxHealth = maxHealth,
-            CurrentHealth = currentHealth
-        });
     }
 
     private void StaminaSystem_OnStaminaChanged(float currentStamina, float maxStamina)
@@ -173,6 +153,11 @@ public class Player : MonoBehaviour, IDamageable
         GameInput.Instance.OnAttackAction += PlayerOnAttack;
         GameInput.Instance.OnAttackAlternateAction += PlayerOnAttackAlternate;
         GameInput.Instance.OnInteractAction += PlayerOnInteract;
+
+        HealthSystem.OnDeath += HealthSystem_OnDeath;
+
+        StaminaSystem.OnStaminaChanged += StaminaSystem_OnStaminaChanged;
+
         shopUI.OnItemBuy += ShopUI_OnItemBuy;
 
         gravityVector = new Vector2(0, -Physics2D.gravity.y);
@@ -201,7 +186,7 @@ public class Player : MonoBehaviour, IDamageable
         if (isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
-            OnJump.Invoke(this, EventArgs.Empty);
+            OnJump?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -213,7 +198,7 @@ public class Player : MonoBehaviour, IDamageable
 
     private void PlayerOnAttackAlternate(object sender, EventArgs e)
     {
-        if (attackAlternateCooldownTimer < 0 && staminaSystem.CanUse(attackAlternateStaminaCost))
+        if (attackAlternateCooldownTimer < 0 && StaminaSystem.CanUse(attackAlternateStaminaCost))
         {
             var flyingSwordTransform = Instantiate(flyingSwordSO.prefab, attackOrigin.position, attackOrigin.rotation);
             flyingSwordTransform.SetParent(transform);
@@ -223,7 +208,7 @@ public class Player : MonoBehaviour, IDamageable
             }
 
             attackAlternateCooldownTimer = attackAlternateCooldownTime;
-            staminaSystem.Use(attackAlternateStaminaCost);
+            StaminaSystem.Use(attackAlternateStaminaCost);
 
             OnAttackAlternate?.Invoke(this, EventArgs.Empty);
         }
@@ -234,8 +219,8 @@ public class Player : MonoBehaviour, IDamageable
         HandleUpdateState();
         HandleInteractions();
 
-        healthSystem.Regenerate();
-        staminaSystem.Regenerate();
+        HealthSystem.Regenerate();
+        StaminaSystem.Regenerate();
     }
 
     private void HandleUpdateState()
@@ -420,8 +405,8 @@ public class Player : MonoBehaviour, IDamageable
     {
         OnGoldChanged?.Invoke(this, new OnGoldChangedEventArgs
         {
-            currentGold = money,
-            changeAmount = resourceItemSO.value * resourceItemWorld.GetItem().quantity
+            CurrentGold = money,
+            ChangeAmount = resourceItemSO.value * resourceItemWorld.GetItem().quantity
         });
 
         money += resourceItemSO.value * resourceItemWorld.GetItem().quantity;
@@ -434,7 +419,7 @@ public class Player : MonoBehaviour, IDamageable
 
     public void TakeDamage(IDamageable.DamageInfo offenderInfo)
     {
-        healthSystem.TakeDamage(offenderInfo.Damage);
+        HealthSystem.TakeDamage(offenderInfo.Damage);
 
         var knockbackDir = offenderInfo.Velocity.normalized;
         knockbackVelocity = knockbackDir * knockbackForce;
@@ -450,8 +435,8 @@ public class Player : MonoBehaviour, IDamageable
     {
         OnGoldChanged?.Invoke(this, new OnGoldChangedEventArgs
         {
-            currentGold = money,
-            changeAmount = -price
+            CurrentGold = money,
+            ChangeAmount = -price
         });
         money -= price;
     }
@@ -529,15 +514,4 @@ public class Player : MonoBehaviour, IDamageable
             passive.RemoveEffect(this);
         }
     }
-
-    public HealthSystem GetHealthSystem()
-    {
-        return healthSystem;
-    }
-
-    public StaminaSystem GetStaminaSystem()
-    {
-        return staminaSystem;
-    }
-
 }
