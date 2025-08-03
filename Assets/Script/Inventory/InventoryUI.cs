@@ -156,7 +156,7 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
             if (item.itemSO != null && item.itemSO.prefab != null) {
                 Transform itemPrefab = Instantiate(item.itemSO.prefab, button.transform);
                 itemPrefab.localPosition = new Vector3(0, 0, -1);
-                itemPrefab.localScale = new Vector3(40, 40, 1);
+                itemPrefab.localScale = new Vector3(item.itemSO.scaleInUI, item.itemSO.scaleInUI, 1);
             }
 
             // Button click logic for selection

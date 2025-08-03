@@ -30,7 +30,13 @@ public class ItemWorld : MonoBehaviour {
     }
 
 
+    [SerializeField] private ItemSO itemSO;
     protected Item item;
+
+    private void Awake() {
+        item = new Item(itemSO, 1);
+    }
+
 
     protected virtual void OnTriggerEnter2D(Collider2D collision) {
         if (collision.TryGetComponent<Player>(out Player player)) {

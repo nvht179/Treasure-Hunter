@@ -6,6 +6,13 @@ using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour, IDamageable
 {
+    [Header("Player Stats")]
+    [SerializeField] private int playerDamage;
+    [SerializeField] private float baseHealth = 100f;
+    [SerializeField] private float baseHealthRestoreRate = 0.1f;
+    [SerializeField] private float baseStamina = 100f;
+    [SerializeField] private float baseStaminaRestoreRate = 0.5f;
+
     [Header("Jump System")]
     [SerializeField] private float jumpPower;
     [SerializeField] private float jumpDegrader;
@@ -14,22 +21,19 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private float moveSpeed = 5f;
 
     [Header("References")]
-    [SerializeField] private Transform attackOrigin;
-    [SerializeField] private float attackRadius;
-    [SerializeField] private Transform playerPivot;
+    [SerializeField] private FlyingObjectSO flyingSwordSO;
     [SerializeField] private PlayerVisual playerVisual;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private LayerMask interactiveObjectLayer;
-    [SerializeField] private FlyingObjectSO flyingSwordSO;
 
     [Header("Attack")]
-    [SerializeField] private int playerDamage;
+    [SerializeField] private Transform attackOrigin;
+    [SerializeField] private Transform playerPivot;
+    [SerializeField] private float attackRadius;
     [SerializeField] private float attackCooldownTime;
     [SerializeField] private float attackAlternateCooldownTime;
     [SerializeField] private float attackAlternateStaminaCost;
-    [SerializeField] private float maxHealthPoint;
-    [SerializeField] private float maxStamina;
     [SerializeField] private float knockbackForce;
     [SerializeField] private float knockbackDuration;
 
@@ -80,10 +84,15 @@ public class Player : MonoBehaviour, IDamageable
         public int changeAmount;
     }
 
+    // Move and Jump
     private float gravityScale;
-    private float currentHealthPoint;
-    private float currentStamina;
     private bool isGrounded;
+    private Vector3 moveVector;
+    private int moveDirection;
+    private Vector2 gravityVector;
+    public bool IsFacingRight { get; set; }
+
+    // Attack
     private bool isConstantlyAttacking;
     private bool isAttacking;
     private bool isDamaged;
@@ -91,19 +100,22 @@ public class Player : MonoBehaviour, IDamageable
     private float attackCooldownTimer;
     private float attackAlternateCooldownTimer;
     private float airAttackTimer;
-    private Vector3 moveVector;
-    private int moveDirection;
-    private Vector2 gravityVector;
+    
+    // Hit
     private Vector2 knockbackVelocity;
     private float knockbackTimer;
-    public bool IsFacingRight { get; set; }
+    
     private Rigidbody2D rb;
 
     private Inventory inventory;
     private IInteractiveObject selectedObject;
-    [SerializeField] private int money; // TODO: remove later (Error: no update coin)
+    [SerializeField] private int money; // TODO: remove SerializeField later
     [SerializeField] private float footstepInterval = 0.4f;
     private float footstepTimer;
+
+    // Attributes
+    private HealthSystem healthSystem;
+    private StaminaSystem staminaSystem;
 
     private void Awake()
     {
@@ -111,14 +123,48 @@ public class Player : MonoBehaviour, IDamageable
         IsFacingRight = true;
         isConstantlyAttacking = false;
         hasAirAttacked = false;
-        currentHealthPoint = maxHealthPoint;
-        currentStamina = maxStamina;
         gravityScale = rb.gravityScale;
         attackAlternateCooldownTimer = attackAlternateCooldownTime;
 
-        inventory = new Inventory(UseItem, WearItem, DropItem);
+        inventory = new Inventory(UseItem, EquipItem, UnEquipItem);
         inventoryUI.SetInventory(inventory);
-        money = 200;
+        money = 200; // TODO: Initial money for testing purposes
+
+        healthSystem = new HealthSystem(baseHealth, baseHealthRestoreRate);
+        healthSystem.OnHealthChanged += HealthSystem_OnHelthChanged;
+        healthSystem.OnReceiveDamage += HealthSystem_OnReceiveDamage;
+        healthSystem.OnDeath += HealthSystem_OnDeath;
+
+        staminaSystem = new StaminaSystem(baseStamina, baseStaminaRestoreRate);
+        staminaSystem.OnStaminaChanged += StaminaSystem_OnStaminaChanged;
+    }
+
+    private void HealthSystem_OnDeath()
+    {
+        OnDead?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void HealthSystem_OnReceiveDamage()
+    {
+        OnPlayerHit?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void HealthSystem_OnHelthChanged(float currentHealth, float maxHealth)
+    {
+        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+        {
+            MaxHealth = maxHealth,
+            CurrentHealth = currentHealth
+        });
+    }
+
+    private void StaminaSystem_OnStaminaChanged(float currentStamina, float maxStamina)
+    {
+        OnStaminaUsed?.Invoke(this, new OnStaminaUsedEventArgs
+        {
+            CurrentStamina = currentStamina,
+            MaxStamina = maxStamina
+        });
     }
 
     private void Start()
@@ -167,7 +213,7 @@ public class Player : MonoBehaviour, IDamageable
 
     private void PlayerOnAttackAlternate(object sender, EventArgs e)
     {
-        if (attackAlternateCooldownTimer < 0 && currentStamina > 0)
+        if (attackAlternateCooldownTimer < 0 && staminaSystem.CanUse(attackAlternateStaminaCost))
         {
             var flyingSwordTransform = Instantiate(flyingSwordSO.prefab, attackOrigin.position, attackOrigin.rotation);
             flyingSwordTransform.SetParent(transform);
@@ -177,12 +223,7 @@ public class Player : MonoBehaviour, IDamageable
             }
 
             attackAlternateCooldownTimer = attackAlternateCooldownTime;
-            currentStamina = Mathf.Clamp(currentStamina - attackAlternateStaminaCost, 0, maxStamina);
-            OnStaminaUsed?.Invoke(this, new OnStaminaUsedEventArgs
-            {
-                CurrentStamina = currentStamina,
-                MaxStamina = maxStamina
-            });
+            staminaSystem.Use(attackAlternateStaminaCost);
 
             OnAttackAlternate?.Invoke(this, EventArgs.Empty);
         }
@@ -192,32 +233,9 @@ public class Player : MonoBehaviour, IDamageable
     {
         HandleUpdateState();
         HandleInteractions();
-    }
 
-    private void HandleInteractions()
-    {
-        float interactionDistance = 1f;
-        Vector2 moveDir = IsFacingRight ? Vector2.right : Vector2.left;
-
-        RaycastHit2D raycastHit = Physics2D.Raycast(attackOrigin.position, moveDir, interactionDistance, interactiveObjectLayer);
-        if (raycastHit.collider != null)
-        {
-            if (raycastHit.collider.TryGetComponent(out IInteractiveObject interactiveObject))
-            {
-                if (interactiveObject != selectedObject)
-                {
-                    SetSelectedObject(interactiveObject);
-                }
-            }
-            else
-            {
-                SetSelectedObject(null);
-            }
-        }
-        else
-        {
-            SetSelectedObject(null);
-        }
+        healthSystem.Regenerate();
+        staminaSystem.Regenerate();
     }
 
     private void HandleUpdateState()
@@ -256,6 +274,32 @@ public class Player : MonoBehaviour, IDamageable
         else
         {
             footstepTimer = 0f; // reset when not moving
+        }
+    }
+
+    private void HandleInteractions()
+    {
+        float interactionDistance = 1f;
+        Vector2 moveDir = IsFacingRight ? Vector2.right : Vector2.left;
+
+        RaycastHit2D raycastHit = Physics2D.Raycast(attackOrigin.position, moveDir, interactionDistance, interactiveObjectLayer);
+        if (raycastHit.collider != null)
+        {
+            if (raycastHit.collider.TryGetComponent(out IInteractiveObject interactiveObject))
+            {
+                if (interactiveObject != selectedObject)
+                {
+                    SetSelectedObject(interactiveObject);
+                }
+            }
+            else
+            {
+                SetSelectedObject(null);
+            }
+        }
+        else
+        {
+            SetSelectedObject(null);
         }
     }
 
@@ -346,6 +390,11 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
 
+    private IEnumerator DelayedResetGravityScale()
+    {
+        yield return new WaitForSeconds(0.5f);
+        rb.gravityScale = gravityScale;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<GoldCoinWorld>(out var goldCoin))
@@ -366,44 +415,14 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
 
-    private IEnumerator DelayedResetGravityScale()
-    {
-        yield return new WaitForSeconds(0.5f);
-        rb.gravityScale = gravityScale;
-    }
-
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(attackOrigin.position, attackRadius);
     }
 
-    // private void HandleRunning()
-    // {
-    //     var moveDistance = moveSpeed * Time.deltaTime;
-    //     var moveDirX = new Vector3(moveVector.x, 0, 0);
-    //     transform.position += moveDistance * moveDirX;
-    // }
-
     public void TakeDamage(IDamageable.DamageInfo offenderInfo)
     {
-        currentHealthPoint = Mathf.Clamp(currentHealthPoint - offenderInfo.Damage, 0, maxHealthPoint);
-        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
-        {
-            CurrentHealth = currentHealthPoint,
-            MaxHealth = maxHealthPoint
-        });
-        
-        if (currentHealthPoint > 0)
-        {
-            if (offenderInfo.Damage > 0)
-            {
-                OnPlayerHit?.Invoke(this, EventArgs.Empty);
-            }
-        }
-        else
-        {
-            OnDead?.Invoke(this, EventArgs.Empty);
-        }
+        healthSystem.TakeDamage(offenderInfo.Damage);
 
         var knockbackDir = offenderInfo.Velocity.normalized;
         knockbackVelocity = knockbackDir * knockbackForce;
@@ -469,48 +488,6 @@ public class Player : MonoBehaviour, IDamageable
     {
         return inventory.HasKey();
     }
-    
-    private void WearItem(Item item)
-    {
-        switch(item.itemSO.itemType)
-        {
-            case ItemType.BlueDiamond:
-                BlueDiamond();
-                break;
-            case ItemType.GoldenSkull:
-                GoldenSkull();
-                break;
-            case ItemType.GreenDiamond:
-                GreenDiamond();
-                break;
-            case ItemType.RedDiamond:
-                RedDiamond();
-                break;
-        }
-    }
-
-    private void DropItem(Item item)
-    {
-        switch(item.itemSO.itemType)
-        {
-            case ItemType.BlueDiamond:
-                DropBlueDiamond();
-                break;
-            case ItemType.GoldenSkull:
-                DropGoldenSkull();
-                break;
-            case ItemType.GreenDiamond:
-                DropGreenDiamond();
-                break;
-            case ItemType.RedDiamond:
-                DropRedDiamond();
-                break;
-            default:
-                return;
-        }
-
-        //OnItemDrop?.Invoke(this, EventArgs.Empty);
-    }
 
     public InventoryUI GetInventoryUI()
     {
@@ -519,147 +496,36 @@ public class Player : MonoBehaviour, IDamageable
 
     private void UseItem(Item item)
     {
-        switch(item.itemSO.itemType)
+        if(item.itemSO is IConsumable consumable)
         {
-            case ItemType.BluePotion:
-                BluePotion();
-                break;
-            case ItemType.GreenPotion:
-                GreenPotion();
-                break;
-            case ItemType.HealthPotion:
-                HealthPotion();
-                break;
+            consumable.Consume(this);
         }
     }
 
-    private void BlueDiamond()
+    private void EquipItem(Item item)
     {
-        maxStamina += 10;
-        currentStamina += 10;
-        OnStaminaUsed?.Invoke(this, new OnStaminaUsedEventArgs
+        if (item.itemSO is IPassiveEffect passive)
         {
-            CurrentStamina = currentStamina,
-            MaxStamina = maxStamina
-        });
-    }
-
-    private void BluePotion()
-    {
-        // TODO: Restore stamina rate in 5s
-        OnBluePotionUsed?.Invoke(this, EventArgs.Empty);
-    }
-
-    private void GoldenSkull()
-    {
-        maxHealthPoint += 50;
-        playerDamage += 5;
-        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
-        {
-            CurrentHealth = currentHealthPoint,
-            MaxHealth = maxHealthPoint
-        });
-    }
-
-    private void GreenPotion()
-    {
-        int chance = UnityEngine.Random.Range(0, 100);
-        if(chance < 50)
-        {
-            currentHealthPoint /= 2;
-            OnGreenPotionFail?.Invoke(this, EventArgs.Empty);
+            passive.ApplyEffect(this);
         }
-        else
+    }
+
+    private void UnEquipItem(Item item)
+    {
+        if (item.itemSO is IPassiveEffect passive)
         {
-            currentHealthPoint = maxHealthPoint;
-            OnGreenPotionSuccess?.Invoke(this, EventArgs.Empty);
+            passive.RemoveEffect(this);
         }
-
-        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
-        {
-            CurrentHealth = currentHealthPoint,
-            MaxHealth = maxHealthPoint
-        });
     }
 
-    private void GreenDiamond()
+    public HealthSystem GetHealthSystem()
     {
-        currentHealthPoint = 1;
-        maxHealthPoint = 1;
-        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
-        {
-            CurrentHealth = currentHealthPoint,
-            MaxHealth = maxHealthPoint
-        });
-        playerDamage = 99999;
+        return healthSystem;
     }
 
-    private void RedDiamond()
+    public StaminaSystem GetStaminaSystem()
     {
-        maxHealthPoint += 10;
-        currentHealthPoint += 10;
-        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
-        {
-            CurrentHealth = currentHealthPoint,
-            MaxHealth = maxHealthPoint
-        });
+        return staminaSystem;
     }
 
-    private void HealthPotion()
-    {
-        currentHealthPoint = Mathf.Clamp(currentHealthPoint + 10, 0, maxHealthPoint);
-        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
-        {
-            CurrentHealth = currentHealthPoint,
-            MaxHealth = maxHealthPoint
-        });
-
-        OnHealthPotionUsed?.Invoke(this, EventArgs.Empty);
-    }
-
-    private void DropBlueDiamond()
-    {
-        maxStamina -= 10;
-        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
-        OnStaminaUsed?.Invoke(this, new OnStaminaUsedEventArgs
-        {
-            CurrentStamina = currentStamina,
-            MaxStamina = maxStamina
-        });
-    }
-
-    private void DropGoldenSkull()
-    {
-        maxHealthPoint -= 50;
-        playerDamage -= 5;
-        currentHealthPoint = Mathf.Clamp(currentHealthPoint, 0, maxHealthPoint);
-        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
-        {
-            CurrentHealth = currentHealthPoint,
-            MaxHealth = maxHealthPoint
-        });
-    }
-
-    private void DropGreenDiamond()
-    {
-        currentHealthPoint = 100;
-        maxHealthPoint = 100;
-        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
-        {
-            CurrentHealth = currentHealthPoint,
-            MaxHealth = maxHealthPoint
-        });
-        playerDamage = 5;
-    }
-
-    private void DropRedDiamond()
-    {
-        maxHealthPoint -= 10;
-        currentHealthPoint = Mathf.Clamp(currentHealthPoint, 0, maxHealthPoint);
-        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
-        {
-            CurrentHealth = currentHealthPoint,
-            MaxHealth = maxHealthPoint
-        });
-    }
 }

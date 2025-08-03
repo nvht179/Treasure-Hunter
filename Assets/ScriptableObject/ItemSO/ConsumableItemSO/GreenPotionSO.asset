@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b2dc5e8ae038254fb75e6848a915505, type: 3}
+  m_Name: GreenPotionSO
+  m_EditorClassIdentifier: 
+  itemName: Green Potion
+  description: 'consumable: let''s go gambling. lose half of your current health
+    or restore full health'
+  droppable: 1
+  consumable: 1
+  itemType: 0
+  icon: {fileID: 371372449, guid: d132f4da4fe74654b8e9f7fbb4eb9454, type: 3}
+  prefab: {fileID: 7865212147318672746, guid: 3da495aae167fe744a4ada6f40020d50, type: 3}
+  scaleInUI: 20
+  stackable: 1
+  maxStack: 9
+  buyPrice: 10
+  usesPerItem: 1

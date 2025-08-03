@@ -31,6 +31,7 @@ public class DescriptionBoard : MonoBehaviour {
         }
         Transform itemPrefab = Instantiate(e.item.itemSO.prefab, itemVisualTemplate);
         itemPrefab.localPosition = new Vector3(0, 0, -1);
+        itemPrefab.localScale = new Vector3(e.item.itemSO.scaleInUI, e.item.itemSO.scaleInUI, 1);
 
         // name and description
         itemNameText.text = e.item.itemSO.itemName;

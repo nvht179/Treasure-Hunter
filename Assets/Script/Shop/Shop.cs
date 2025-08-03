@@ -21,9 +21,10 @@ public class Shop : MonoBehaviour, IInteractiveObject {
         shopInventory = new Inventory();
         foreach (ItemSO itemSO in shopItemListSO.items) {
             int appearChance = UnityEngine.Random.Range(0, 100);
-            if(appearChance < 50) {
-                continue; // 50% chance to not appear
-            }
+            // TODO: appear all items now
+            //if(appearChance < 50) {
+            //    continue; // 50% chance to not appear
+            //}
             if (itemSO.stackable) {
                 int randomStackSize = UnityEngine.Random.Range(1, itemSO.maxStack + 1);
                 shopInventory.AddItem(new Item(itemSO, randomStackSize));

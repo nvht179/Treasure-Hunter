@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // ItemData.cs
-[CreateAssetMenu(menuName = "Inventory/Item")]
+[CreateAssetMenu(menuName = "Items/ItemSO")]
 public class ItemSO : ScriptableObject {
     public string itemName;
-    public ItemType itemType;
     public string description;
-    public Sprite icon;
-    public Transform prefab;
-
     public bool droppable;
     public bool consumable;
+    public ItemType itemType;
+
+    public Sprite icon;
+    public Transform prefab;
+    public float scaleInUI = 20;
 
     public bool stackable;
     public int maxStack;
@@ -21,15 +22,6 @@ public class ItemSO : ScriptableObject {
 }
 
 public enum ItemType {
-    BlueDiamond,
-    BluePotion,
-    GoldCoin,
-    GoldenSkull,
-    GreenDiamond,
-    GreenPotion,
-    HealthPotion,
-    RedDiamond,
-    SilverCoin,
-
+    Consumable,
     GoldenKey,
 }
