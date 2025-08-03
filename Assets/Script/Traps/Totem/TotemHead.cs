@@ -16,7 +16,7 @@ public class TotemHead : ShooterTrap, IDamageable {
     private new void Awake()
     {
         base.Awake();
-        fireDelay = 0.15f;
+        FireDelay = 0.15f;
         currentHealthPoint = maxHealthPoint;
     }
 

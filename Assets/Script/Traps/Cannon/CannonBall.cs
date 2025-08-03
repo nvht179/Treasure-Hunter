@@ -8,7 +8,7 @@ public class CannonBall : FlyingObject {
     public event EventHandler OnCannonBallCollided;
 
     private void Awake() {
-        destroyDelay = 0.3f;
+        DestroyDelay = 0.3f;
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {

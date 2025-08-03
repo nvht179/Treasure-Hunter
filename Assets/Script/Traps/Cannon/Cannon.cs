@@ -7,6 +7,6 @@ using static ShooterTrap;
 public class Cannon : ShooterTrap {
     private new void Awake() {
         base.Awake();
-        fireDelay = 0.05f;
+        FireDelay = 0.05f;
     }
 }

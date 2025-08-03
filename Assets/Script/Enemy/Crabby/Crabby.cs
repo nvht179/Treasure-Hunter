@@ -3,11 +3,11 @@ using Script.Enemy;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class Crabby : MonoBehaviour, IDamageable
+
+public class Crabby : AbstractEnemy, IDamageable
 {
     [SerializeField] private float moveSpeed;
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private Player player;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private Transform attackOrigin;
     [SerializeField] private float visionDistance;
@@ -20,7 +20,6 @@ public class Crabby : MonoBehaviour, IDamageable
     [SerializeField] private float hitTime;
     [SerializeField] private float deadHitTime;
     [SerializeField] private float rechargeTime;
-    [SerializeField] private float maxHealth;
 
     public event EventHandler OnAttack;
     public event EventHandler OnDestroyed;
@@ -48,7 +47,6 @@ public class Crabby : MonoBehaviour, IDamageable
     private float rechargeTimer;
     private float hitTimer;
     private float deadHitTimer;
-    private float currentHealth;
     private bool hasAttacked;
     private bool isRecharging;
 
@@ -63,7 +61,7 @@ public class Crabby : MonoBehaviour, IDamageable
         chargeTimer = chargeTime;
         rechargeTimer = rechargeTime;
         state = CrabbyState.Wandering;
-        currentHealth = maxHealth;
+        CurrentHealth = MaxHealth;
         isRecharging = false;
     }
 
@@ -149,14 +147,14 @@ public class Crabby : MonoBehaviour, IDamageable
 
     public void TakeDamage(IDamageable.DamageInfo offender)
     {
-        currentHealth = math.clamp(currentHealth - offender.Damage, 0, maxHealth);
+        CurrentHealth = math.clamp(CurrentHealth - offender.Damage, 0, MaxHealth);
         OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
         {
-            CurrentHealth = currentHealth,
-            MaxHealth = maxHealth
+            CurrentHealth = CurrentHealth,
+            MaxHealth = MaxHealth
         });
 
-        if (currentHealth == 0)
+        if (CurrentHealth == 0)
         {
             state = CrabbyState.DeadHit;
             deadHitTimer = deadHitTime;
@@ -253,7 +251,7 @@ public class Crabby : MonoBehaviour, IDamageable
                 state = CrabbyState.Wandering;
             }
         }
-        
+    
         if (state == CrabbyState.DeadHit)
         {
             if (deadHitTimer <= 0)
@@ -279,7 +277,7 @@ public class Crabby : MonoBehaviour, IDamageable
     private bool HasContinuousPathToPlayer()
     {
         var startPos = transform.position;
-        var playerPos = player.GetPosition();
+        var playerPos = Player.GetPosition();
 
         // determine direction to player
         var directionToPlayer = playerPos.x > startPos.x ? 1f : -1f;
@@ -308,7 +306,7 @@ public class Crabby : MonoBehaviour, IDamageable
 
     private void PursuePlayer()
     {
-        var directionToPlayer = player.GetPosition().x > transform.position.x ? 1 : -1;
+        var directionToPlayer = Player.GetPosition().x > transform.position.x ? 1 : -1;
 
         rb.velocity = new Vector2(moveSpeed * directionToPlayer, rb.velocity.y);
     }
@@ -334,7 +332,7 @@ public class Crabby : MonoBehaviour, IDamageable
         rb.velocity = new Vector2(0, rb.velocity.y);
         hitTimer -= Time.fixedDeltaTime;
     }
-    
+
     private void DeadHit()
     {
         rb.velocity = new Vector2(0, rb.velocity.y);
@@ -357,7 +355,7 @@ public class Crabby : MonoBehaviour, IDamageable
 
     private bool IsNearPlayer()
     {
-        var playerPos = player.GetPosition();
+        var playerPos = Player.GetPosition();
         var crabbyPos = transform.position;
         // Check if the player is within a certain distance (e.g., 1 unit)
         return Mathf.Abs(playerPos.x - crabbyPos.x) < nearPlayerThreshold &&
@@ -385,7 +383,7 @@ public class Crabby : MonoBehaviour, IDamageable
     {
         if (state == CrabbyState.Pursuing)
         {
-            return player.GetPosition().x > transform.position.x ? Vector3.right : Vector3.left;
+            return Player.GetPosition().x > transform.position.x ? Vector3.right : Vector3.left;
         }
 
         return moveDirection == 1 ? Vector3.right : Vector3.left;

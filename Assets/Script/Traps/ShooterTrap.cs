@@ -17,9 +17,9 @@ public class ShooterTrap : MonoBehaviour {
     [SerializeField] private float fireRate;
     [SerializeField] public FireDirection fireDirection;
 
-    private float nextFireTime = 0f;
-    protected float fireDelay;
-    protected bool stopShooting = false;
+    private float nextFireTime;
+    private bool stopShooting;
+    protected float FireDelay;
 
     protected virtual void Awake() {
         nextFireTime = UnityEngine.Random.Range(0f, fireRate);
@@ -39,7 +39,7 @@ public class ShooterTrap : MonoBehaviour {
     }
 
     private IEnumerator DelayedFire() {
-        yield return new WaitForSeconds(fireDelay);
+        yield return new WaitForSeconds(FireDelay);
 
         Transform flyingObjectTransform = Instantiate(flyingObjectSO.prefab, firePoint.position, firePoint.rotation);
         flyingObjectTransform.SetParent(transform);
@@ -57,7 +57,7 @@ public class ShooterTrap : MonoBehaviour {
         fireDirection = direction;
     }
 
-    public void StopShooting() {
+    protected void StopShooting() {
         stopShooting = true;
     }
 

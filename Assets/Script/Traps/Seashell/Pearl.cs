@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pearl : FlyingObject {
     private void Awake() {
-        destroyDelay = 0f;
+        DestroyDelay = 0f;
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {

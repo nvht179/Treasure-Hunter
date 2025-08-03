@@ -4,16 +4,14 @@ using UnityEngine;
 
 namespace Script.Enemy.PinkStar
 {
-    public class PinkStarStateManager : MonoBehaviour, IDamageable
+    public class PinkStarStateManager : AbstractEnemy, IDamageable
     {
-        [SerializeField] private float maxHealth;
         [SerializeField] private float moveSpeed;
         [SerializeField] private float chargeSpeed;
         [SerializeField] private float visionDistance;
         [SerializeField] private float attackDamage;
         [SerializeField] private float chargeTime;
         [SerializeField] private float rechargeTime;
-        [SerializeField] private Player player;
         [SerializeField] private Transform pivot; // used for vision and ground/wall ahead checking
         [SerializeField] private LayerMask groundLayer;
         [SerializeField] private LayerMask playerLayer;
@@ -40,7 +38,6 @@ namespace Script.Enemy.PinkStar
 
         public Rigidbody2D Rb { get; private set; }
         public Collider2D Collider2D { get; private set; }
-        private float currentHealth;
         private int moveDirection; // 1 = right, -1 = left
 
         public float MoveSpeed => moveSpeed;
@@ -49,12 +46,6 @@ namespace Script.Enemy.PinkStar
         public float ChargeTime => chargeTime;
         public float RechargeTime => rechargeTime;
         public float KnockbackForce => knockbackForce;
-
-        public float CurrentHealth
-        {
-            get => currentHealth;
-            set => currentHealth = Mathf.Clamp(value, 0, maxHealth);
-        }
 
         public int MoveDirection
         {
@@ -76,7 +67,7 @@ namespace Script.Enemy.PinkStar
             Rb = GetComponent<Rigidbody2D>();
             Collider2D = GetComponent<Collider2D>();
             MoveDirection = UnityEngine.Random.Range(0, 2) == 0 ? -1 : 1;
-            CurrentHealth = maxHealth;
+            CurrentHealth = MaxHealth;
             WanderState = new PinkStarWanderState(this);
             WaitState = new PinkStarWaitState(this);
             ChargeState = new PinkStarChargeState(this);
@@ -164,7 +155,7 @@ namespace Script.Enemy.PinkStar
         public bool HasContinuousPathToPlayer()
         {
             var startPos = pivot.position;
-            var playerPos = player.GetPosition();
+            var playerPos = Player.GetPosition();
 
             // determine direction to player
             var directionToPlayer = playerPos.x > startPos.x ? 1f : -1f;
@@ -191,18 +182,13 @@ namespace Script.Enemy.PinkStar
             return true;
         }
 
-        public void SelfDestroy()
-        {
-            Destroy(gameObject);
-        }
-
         public void TakeDamage(IDamageable.DamageInfo offenderInfo)
         {
             currentState.TakeDamage(offenderInfo);
             OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
             {
                 CurrentHealth = CurrentHealth,
-                MaxHealth = maxHealth
+                MaxHealth = MaxHealth
             });
         }
     }

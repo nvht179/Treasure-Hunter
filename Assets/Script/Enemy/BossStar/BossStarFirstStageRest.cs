@@ -1,26 +1,32 @@
-using System;
+using UnityEngine;
 
 namespace Script.Enemy.BossStar
 {
-    public class BossStarFirstStageRest: BossStarBaseStage
+    public class BossStarFirstStageRest : BossStarBaseStage
     {
+        private float restTimer;
+
         public BossStarFirstStageRest(BossStarContext context) : base(context)
         {
         }
 
         public override void EnterState()
         {
-            throw new NotImplementedException();
+            restTimer = BossStar.FirstStageRestTime;
         }
 
         public override void UpdateState()
         {
-            throw new NotImplementedException();
-        }
+            restTimer -= Time.deltaTime;
 
-        public override void TakeDamage(float damage)
-        {
-            base.TakeDamage(damage);
+            if (BossStar.CurrentHealth < BossStar.MaxHealth * BossStarContext.SecondStageMaxHealthRatio)
+            {
+                BossStar.SwitchState(BossStar.SecondStageActive);
+            }
+            else if (restTimer < 0)
+            {
+                BossStar.SwitchState(BossStar.FirstStageActive);
+            }
         }
     }
 }

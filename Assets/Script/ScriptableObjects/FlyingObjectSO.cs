@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu()]
+[CreateAssetMenu]
 public class FlyingObjectSO : ScriptableObject {
     public string objectName;
     public float speed;

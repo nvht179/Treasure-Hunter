@@ -377,7 +377,7 @@ Transform:
   m_GameObject: {fileID: 4136976963165220008}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.4, z: 0}
+  m_LocalPosition: {x: 0, y: 0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -772,7 +772,7 @@ GameObject:
   - component: {fileID: 6014555149247026926}
   - component: {fileID: 5004221980728460124}
   - component: {fileID: 3345808011872971629}
-  - component: {fileID: 3010368794383402286}
+  - component: {fileID: 3285894999384705216}
   m_Layer: 8
   m_Name: BossStar
   m_TagString: Untagged
@@ -790,8 +790,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1, y: -2, z: -2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 337215847263318016}
   - {fileID: 5433814789420289379}
@@ -814,7 +814,7 @@ Rigidbody2D:
   m_Mass: 10
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -855,13 +855,13 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.4}
   m_Size: {x: 0.7, y: 0.7}
   m_Direction: 1
---- !u!114 &3010368794383402286
+--- !u!114 &3285894999384705216
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -870,16 +870,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 8358746183751154280}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc60236eed97a2b4da39c51b580c2888, type: 3}
+  m_Script: {fileID: 11500000, guid: 8cdbdb9d8b6747a48a5c58c339bc9f5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
-  moveSpeed: 3
-  chargeSpeed: 15
-  visionDistance: 10
-  attackDamage: 10
-  chargeTime: 2
-  rechargeTime: 2
+  maxHealth: 1000
+  pursueSpeed: 1
+  fleeSpeed: 50
+  attackDamage: 0
+  knockbackForce: 50
+  attackRadius: 0.7
   player: {fileID: 0}
   pivot: {fileID: 5433814789420289379}
   groundLayer:
@@ -888,3 +887,30 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
+  firstStageActiveTime: 7
+  firstStageRestTime: 3
+  secondStageRestTime: 10
+  thirdStageActiveTime: 20
+  thirdStageRestTime: 15
+  enemySpawnPositions:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  fleePositions:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  centralPosition: {fileID: 0}
+  bulletTypes:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  enemyTypes: []

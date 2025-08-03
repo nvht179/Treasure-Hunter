@@ -6,7 +6,7 @@ using UnityEngine;
 public class WoodSpike : FlyingObject {
 
     private void Awake() {
-        destroyDelay = 0f;
+        DestroyDelay = 0f;
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {

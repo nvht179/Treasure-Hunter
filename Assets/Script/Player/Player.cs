@@ -389,6 +389,7 @@ public class Player : MonoBehaviour, IDamageable
         yield return new WaitForSeconds(0.5f);
         rb.gravityScale = gravityScale;
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<ItemWorld>(out var itemWorld))
