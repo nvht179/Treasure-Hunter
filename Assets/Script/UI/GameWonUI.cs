@@ -13,9 +13,6 @@ public class GameWonUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI timeTakenText;
 
-    // Sound effect
-    private event EventHandler OnGameWon;
-
     private void Awake()
     {
         homeButton.onClick.AddListener(() =>
@@ -27,6 +24,7 @@ public class GameWonUI : MonoBehaviour
         nextLevelButton.onClick.AddListener(() =>
         {
             Hide();
+            Debug.Log("GameWonUI -> Next Level Button Clicked");
             //SceneLoader.ReloadCurrentScene();
         });
 
@@ -57,7 +55,6 @@ public class GameWonUI : MonoBehaviour
         if (newState == GameManager.State.LevelWon)
         {
             Show();
-            OnGameWon?.Invoke(this, EventArgs.Empty);
         }
         else
         {

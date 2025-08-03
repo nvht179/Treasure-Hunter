@@ -61,6 +61,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cfc5235b0f1f3ea4da0eb59fd5c1e486, type: 3}
   - {fileID: 8300000, guid: 97bb087faa96d19499da8b93eb8de0d4, type: 3}
   - {fileID: 8300000, guid: d642b80336ce6774589ca20c18ea063e, type: 3}
+  doorOpenClose: {fileID: 8300000, guid: 9e32d8c7a47d49b478af76b93a82fa3f, type: 3}
   itemUse: []
   itemDrop:
   - {fileID: 8300000, guid: beb61ba4ff7cdb045bee310f2b6ab345, type: 3}

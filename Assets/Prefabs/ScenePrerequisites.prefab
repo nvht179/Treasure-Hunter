@@ -1846,6 +1846,10 @@ PrefabInstance:
       propertyPath: m_RenderMode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4323743047414395031, guid: 3b35af2ec5d27f54c8b31a6ee1053b72, type: 3}
+      propertyPath: m_PlaneDistance
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7527496175612203022, guid: 3b35af2ec5d27f54c8b31a6ee1053b72, type: 3}
       propertyPath: m_Pivot.x
       value: 0

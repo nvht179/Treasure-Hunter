@@ -75,6 +75,7 @@ public class MusicManager : PersistentManager<MusicManager>
         AudioClip newClip = GetRandomClip(musicClipRefsSO.background);
         if (newClip == null) return;
 
+        gameMusicSource.Stop();
         StopAllCoroutines();
         StartCoroutine(SwitchMusic(gameMusicSource, backgroundMusicSource, newClip));
         Debug.Log("Playing background music: " + newClip.name);
@@ -85,6 +86,7 @@ public class MusicManager : PersistentManager<MusicManager>
         AudioClip newClip = GetRandomClip(musicClipRefsSO.inGame);
         if (newClip == null) return;
 
+        backgroundMusicSource.Stop();
         StopAllCoroutines();
         StartCoroutine(SwitchMusic(backgroundMusicSource, gameMusicSource, newClip));
         Debug.Log("Playing game music: " + newClip.name);

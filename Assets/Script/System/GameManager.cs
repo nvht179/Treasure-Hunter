@@ -92,11 +92,23 @@ public class GameManager : PersistentManager<GameManager>
         GameInput.Instance.EnableActionMap(GameInput.ActionMap.Player);
 
         SoundManager.Instance.AttachPlayerSound(player);
+
         var shop = FindObjectOfType<Shop>();
         var shopUI = FindObjectOfType<ShopUI>();
         if (shop != null && shopUI != null)
         {
             SoundManager.Instance.AttachShopSound(shop, shopUI);
+        }
+
+        var door = FindObjectOfType<Door>();
+        if (door != null)
+        {
+            SoundManager.Instance.AttachDoorSound(door);
+            door.OnDoorInteracted += (_, __) =>
+            {
+                Debug.Log("Door interacted with, player won.");
+                SetState(State.LevelWon);
+            };
         }
     }
 
