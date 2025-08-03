@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18cfeeee43b851e469a380c357bffa98, type: 3}
   m_Name: PurplePotionSO
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: PurplePotionSO
   description: 
-  droppable: 0
-  consumable: 0
-  itemType: 0
-  icon: {fileID: 0}
-  prefab: {fileID: 0}
-  collectEffectPrefab: {fileID: 0}
+  droppable: 1
+  consumable: 1
+  itemType: 1
+  icon: {fileID: -305203237, guid: d132f4da4fe74654b8e9f7fbb4eb9454, type: 3}
+  prefab: {fileID: 3985040091833676845, guid: 1def4852cb8edf9429e446364ae3e11d, type: 3}
+  collectEffectPrefab: {fileID: 7992529899703622214, guid: 34b21386f8862aa42822cbcbaeb27d58, type: 3}
   scaleInUI: 20
-  stackable: 0
-  maxStack: 0
-  buyPrice: 0
+  stackable: 1
+  maxStack: 9
+  buyPrice: 5
   usesPerItem: 1

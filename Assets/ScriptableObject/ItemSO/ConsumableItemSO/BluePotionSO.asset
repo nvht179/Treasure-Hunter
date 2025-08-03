@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: BluePotionSO
   m_EditorClassIdentifier: 
   itemName: Blue Potion
-  description: Boosts stamina by 5 for 5 seconds.
+  description: 
   droppable: 1
   consumable: 1
-  itemType: 0
+  itemType: 1
   icon: {fileID: -895140096, guid: d132f4da4fe74654b8e9f7fbb4eb9454, type: 3}
   prefab: {fileID: 7052094983749829013, guid: b7bd6f60bae210b4688ad5dacb28217f, type: 3}
   collectEffectPrefab: {fileID: 7992529899703622214, guid: 34b21386f8862aa42822cbcbaeb27d58, type: 3}
@@ -25,5 +25,3 @@ MonoBehaviour:
   maxStack: 9
   buyPrice: 10
   usesPerItem: 1
-  staminaBoost: 5
-  boostDuration: 5

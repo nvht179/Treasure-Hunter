@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aa0b345cd10b674a97a9afb50e2fabf, type: 3}
   m_Name: BlackPotionSO
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: BlackPotion
   description: 
-  droppable: 0
-  consumable: 0
-  itemType: 0
-  icon: {fileID: 0}
-  prefab: {fileID: 0}
-  collectEffectPrefab: {fileID: 0}
+  droppable: 1
+  consumable: 1
+  itemType: 1
+  icon: {fileID: 322060622, guid: d132f4da4fe74654b8e9f7fbb4eb9454, type: 3}
+  prefab: {fileID: 4662524407656088003, guid: 1f8288c86b3db6e478843c158c45499e, type: 3}
+  collectEffectPrefab: {fileID: 7992529899703622214, guid: 34b21386f8862aa42822cbcbaeb27d58, type: 3}
   scaleInUI: 20
-  stackable: 0
-  maxStack: 0
-  buyPrice: 0
+  stackable: 1
+  maxStack: 9
+  buyPrice: 5
   usesPerItem: 1
