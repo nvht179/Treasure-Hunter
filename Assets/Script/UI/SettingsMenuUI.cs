@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class SettingsMenuUI : PersistentManager<SettingsMenuUI>
 {
-
     public enum Category
     {
         Audio,
@@ -187,10 +186,39 @@ public class SettingsMenuUI : PersistentManager<SettingsMenuUI>
             Debug.LogError("GameInput.Instance is null. Cannot rebind binding.");
             return;
         }
-        GameInput.Instance.RebindBinding(binding, () =>
+
+        GameInput.Instance.RebindBinding(binding, success =>
         {
             HidePressToRebindKey();
             UpdateVisual();
+
+            // Build a single-OK button
+            var okButton = new DialogButton
+            {
+                Label = "",
+                ButtonType = DialogButtonType.Accept,
+                Callback = () => { Debug.Log("Dialog button works."); }
+            };
+
+            if (success)
+            {
+                DialogManager.Instance.ShowDialog(new DialogData
+                {
+                    Title = "Rebind Succeeded!",
+                    Message = "Your new key has been saved.",
+                    Buttons = new List<DialogButton> { okButton },
+                });
+            }
+            else
+            {
+                DialogManager.Instance.ShowDialog(new DialogData
+                {
+                    Title = "Rebind Failed!",
+                    Message = "That key is already in use. Please try again.",
+                    Buttons = new List<DialogButton> { okButton },
+                });
+            }
         });
     }
+
 }

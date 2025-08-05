@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04ef5a77dd02f1645868330fe5e35aa5, type: 3}
+  m_Name: DialogButtonTypeMappingSO
+  m_EditorClassIdentifier: 
+  entries:
+  - type: 0
+    buttonPrefab: {fileID: 715785979586613855, guid: c5cf555a801c4c9459d75157e4a9bf1d, type: 3}
+    iconSprite: {fileID: 21300000, guid: 4306ce8271d5aa749b4a51704357c7fe, type: 3}
+  - type: 1
+    buttonPrefab: {fileID: 715785979586613855, guid: c5cf555a801c4c9459d75157e4a9bf1d, type: 3}
+    iconSprite: {fileID: 21300000, guid: 58f407a74870ae74a8494dfc7a3858f2, type: 3}

@@ -12,6 +12,7 @@ public class SoundManager : PersistentManager<SoundManager>
 
 
     [SerializeField] private AudioClipRefsSO audioClipRefsSO;
+    private Player player; // default position to play sound effects
 
 
     private float volume = 1f;
@@ -32,12 +33,12 @@ public class SoundManager : PersistentManager<SoundManager>
     {
         if (newState == GameManager.State.LevelWon)
         {
-            PlaySound(audioClipRefsSO.won, Vector3.zero);
+            PlaySound(audioClipRefsSO.won, player.transform.position);
             Debug.Log("SoundManager: Game won sound played.");
         }
         else if (newState == GameManager.State.LevelLost)
         {
-            PlaySound(audioClipRefsSO.lost, Vector3.zero);
+            PlaySound(audioClipRefsSO.lost, player.transform.position);
             Debug.Log("SoundManager: Game lost sound played.");
         }
     }
@@ -45,6 +46,7 @@ public class SoundManager : PersistentManager<SoundManager>
     public void AttachPlayerSound(Player player)
     {
         if (player == null) return;
+        this.player = player;
         player.OnMoveHorizontal += Player_OnMoveHorizontal;
         player.OnJump += Player_OnJump;
         player.OnJumpLand += Player_OnJumpLand; // not yet implemented in Player.cs: when to invoke?
@@ -63,6 +65,16 @@ public class SoundManager : PersistentManager<SoundManager>
         inventoryUI.OnInventoryOpen += Player_OnInventoryOpen;
         inventoryUI.OnInventoryClose += Player_OnInventoryClose;
         inventoryUI.OnItemDrop += Player_OnItemDrop;
+    }
+    public void AttachDoorSound(Door door)
+    {
+        door.OnDoorInteracted += Door_OnDoorInteracted;
+    }
+
+    private void Door_OnDoorInteracted(object sender, System.EventArgs e)
+    {
+        Debug.Log("Door_OnDoorInteracted");
+        PlaySound(audioClipRefsSO.doorOpenClose, ((Door)sender).transform.position);
     }
 
     private void HealthSystemOnDamageReceived(object sender, EventArgs e)

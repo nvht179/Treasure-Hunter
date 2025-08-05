@@ -9,31 +9,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89375c28172bb0e49bd9e83ae7395d30, type: 3}
+  m_Script: {fileID: 11500000, guid: 3cd6f73d8a1e8e24087f5dfa51e06deb, type: 3}
   m_Name: AudioClipRefsSO
   m_EditorClassIdentifier: 
   move:
   - {fileID: 8300000, guid: b282dd962ce4d6a40b4bba13615fefa1, type: 3}
-  - {fileID: 8300000, guid: 9ae17ad51a4ffa442bd0fb170701a912, type: 3}
   - {fileID: 8300000, guid: 3b664ed50cd189148a1b301867e18760, type: 3}
+  - {fileID: 8300000, guid: 9ae17ad51a4ffa442bd0fb170701a912, type: 3}
   jump:
   - {fileID: 8300000, guid: 0a77537a65a7c4345a13749acf475af6, type: 3}
-  - {fileID: 8300000, guid: 3dc61217ddf643b46bb47e81b78cd0fd, type: 3}
   - {fileID: 8300000, guid: db60e6163492af3498692b7e5bab1c81, type: 3}
+  - {fileID: 8300000, guid: 3dc61217ddf643b46bb47e81b78cd0fd, type: 3}
   jumpLand:
   - {fileID: 8300000, guid: cb2961190b415f84ab965e405578d849, type: 3}
   - {fileID: 8300000, guid: 921f0626d2503514d9cd68eda3833898, type: 3}
   attack:
-  - {fileID: 8300000, guid: 7d2ff259fa748d049b78ca6ef6f39bc1, type: 3}
-  - {fileID: 8300000, guid: 99aaf96826af73049b243f67a9f67e36, type: 3}
-  - {fileID: 8300000, guid: 504a49fd3382a5c47b7e9e32ad50b3d8, type: 3}
+  - {fileID: 8300000, guid: 6933977ed894cf54598a8be3895828e5, type: 3}
+  - {fileID: 8300000, guid: ade4b5efa0d27314691b9c099ed8ceb0, type: 3}
+  - {fileID: 8300000, guid: 9bb96f99eadccfb439fbc8b92dd27479, type: 3}
   airAttack:
-  - {fileID: 8300000, guid: 32beb9304d9b6064ab011fde430102b5, type: 3}
-  - {fileID: 8300000, guid: 7d2ff259fa748d049b78ca6ef6f39bc1, type: 3}
-  - {fileID: 8300000, guid: 504a49fd3382a5c47b7e9e32ad50b3d8, type: 3}
-  - {fileID: 8300000, guid: 99aaf96826af73049b243f67a9f67e36, type: 3}
+  - {fileID: 8300000, guid: e4100212c8ed0864081d13e6398adf73, type: 3}
+  - {fileID: 8300000, guid: 0690941b2b4db6642bd140a143173220, type: 3}
   throwKnife:
-  - {fileID: 8300000, guid: 25beb6990e842254aa1ed13e52826f0b, type: 3}
+  - {fileID: 8300000, guid: 3e3993acae00c6a458bc677cfb8155cf, type: 3}
   swordHit:
   - {fileID: 8300000, guid: ab0d0de93e00ed74a966fd8ef3561b56, type: 3}
   - {fileID: 8300000, guid: 02f7f136263b02a48b365df0308b08a6, type: 3}
@@ -47,9 +45,9 @@ MonoBehaviour:
   playerDead:
   - {fileID: 8300000, guid: 22f9246037bde2b4ba4cc5e56522e045, type: 3}
   inventoryOpen:
+  - {fileID: 8300000, guid: 60af916814b378e4fb89d1afb0ab1c41, type: 3}
   - {fileID: 8300000, guid: b4c137af8d1a5bf49b0817c9a9d6e9b4, type: 3}
   - {fileID: 8300000, guid: e9467ea6965f4b344b14f76754a2d0a9, type: 3}
-  - {fileID: 8300000, guid: 60af916814b378e4fb89d1afb0ab1c41, type: 3}
   inventoryClose:
   - {fileID: 8300000, guid: b4c137af8d1a5bf49b0817c9a9d6e9b4, type: 3}
   - {fileID: 8300000, guid: e9467ea6965f4b344b14f76754a2d0a9, type: 3}
@@ -63,6 +61,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cfc5235b0f1f3ea4da0eb59fd5c1e486, type: 3}
   - {fileID: 8300000, guid: 97bb087faa96d19499da8b93eb8de0d4, type: 3}
   - {fileID: 8300000, guid: d642b80336ce6774589ca20c18ea063e, type: 3}
+  doorOpenClose: {fileID: 8300000, guid: 9e32d8c7a47d49b478af76b93a82fa3f, type: 3}
   itemUse: []
   itemDrop:
   - {fileID: 8300000, guid: beb61ba4ff7cdb045bee310f2b6ab345, type: 3}
