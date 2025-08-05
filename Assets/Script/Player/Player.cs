@@ -115,7 +115,7 @@ public class Player : MonoBehaviour, IDamageable
     // Attributes
     public HealthSystem HealthSystem { get; private set; }
     public StaminaSystem StaminaSystem { get; private set; }
-    public PlayerDamageBuffSystem PlayerDamageBuffSystem { get; private set; }
+    public DamageSystem DamageSystem { get; private set; }
     public MoveSpeedSystem MoveSpeedSystem { get; private set; }
 
     private bool isReceiveDoubleDamage = false;
@@ -137,7 +137,7 @@ public class Player : MonoBehaviour, IDamageable
 
         HealthSystem = new HealthSystem(baseHealth, baseHealthRestoreRate);
         StaminaSystem = new StaminaSystem(baseStamina, baseStaminaRestoreRate);
-        PlayerDamageBuffSystem = new PlayerDamageBuffSystem(baseCritChance, baseCritMultiplier);
+        DamageSystem = new DamageSystem(basePlayerDamage, baseCritChance, baseCritMultiplier);
         MoveSpeedSystem = new MoveSpeedSystem(baseMoveSpeed);
     }
 
@@ -213,7 +213,7 @@ public class Player : MonoBehaviour, IDamageable
             if (flyingSwordTransform.TryGetComponent<FlyingSword>(out var flyingSword))
             {
                 flyingSword.Direction = IsFacingRight ? 1 : -1;
-                flyingSword.SetDamage(PlayerDamageBuffSystem.CalculateOutgoingDamage(basePlayerDamage, out bool isCrit));
+                flyingSword.SetDamage(DamageSystem.CalculateOutgoingDamage(basePlayerDamage, out bool isCrit));
             }
 
             attackAlternateCooldownTimer = attackAlternateCooldownTime;
@@ -230,6 +230,7 @@ public class Player : MonoBehaviour, IDamageable
 
         HealthSystem.Regenerate();
         StaminaSystem.Regenerate();
+        DamageSystem.Tick();
     }
 
     private void HandleUpdateState()
@@ -368,7 +369,7 @@ public class Player : MonoBehaviour, IDamageable
                         var damageable = enemy.GetComponent<IDamageable>();
                         var offenderInfo = new IDamageable.DamageInfo
                         {
-                            Damage = PlayerDamageBuffSystem.CalculateOutgoingDamage(basePlayerDamage, out bool isCrit),
+                            Damage = DamageSystem.CalculateOutgoingDamage(basePlayerDamage, out bool isCrit),
                         };
                         damageable?.TakeDamage(offenderInfo);
                     }

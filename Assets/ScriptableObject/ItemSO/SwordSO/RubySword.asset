@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a90ada63389036b4a981388cd1030901, type: 3}
-  m_Name: OldSword
+  m_Name: RubySword
   m_EditorClassIdentifier: 
-  itemName: Old Sword
-  description: 'Passive: Provides 1 damage'
+  itemName: Ruby Sword
+  description: 'Passive: Provides 6 damage, and 15% critical chance'
   droppable: 1
   consumable: 0
-  itemType: 0
-  icon: {fileID: 644748556, guid: db2b8f86654df4747bbec33c751ea5a4, type: 3}
-  prefab: {fileID: 1524279640492518164, guid: c064e72846308ab4bb0e989cec25aaa2, type: 3}
-  collectEffectPrefab: {fileID: 0}
+  itemType: 3
+  icon: {fileID: -1772750852, guid: db2b8f86654df4747bbec33c751ea5a4, type: 3}
+  prefab: {fileID: 8315294705720869128, guid: b2d24878b87d0574cbecb41b22c58282, type: 3}
+  collectEffectPrefab: {fileID: 7934267159419852871, guid: c29719f94173dde4d8e680bcf2db5323, type: 3}
   scaleInUI: 20
   stackable: 0
   maxStack: 1
-  buyPrice: 20
-  damageAmount: 1
+  buyPrice: 70
+  damageAmount: 6
+  criticalChance: 0.15

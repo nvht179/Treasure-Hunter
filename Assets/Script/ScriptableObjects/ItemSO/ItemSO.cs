@@ -26,4 +26,5 @@ public enum ItemType {
     GoldenKey,
     Resources,
     Consumable,
+    PassiveItem,
 }

@@ -14,6 +14,6 @@ public class OrangePotionSO : ConsumableItemSO
 
     public override void Consume(Player player)
     {
-        player.PlayerDamageBuffSystem.AddCritMultiplier(criticalDamageMultiplier);
+        player.DamageSystem.AddCritMultiplierBuff(criticalDamageMultiplier);
     }
 }
