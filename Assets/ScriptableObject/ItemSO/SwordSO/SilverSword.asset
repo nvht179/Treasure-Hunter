@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SilverSword
   m_EditorClassIdentifier: 
   itemName: Silver Sword
-  description: 'Passive: Provides 4 damage'
+  description: 'Passive: Provides 5 damage, and 5% critical chance'
   droppable: 1
   consumable: 0
   itemType: 3
@@ -24,4 +24,5 @@ MonoBehaviour:
   stackable: 0
   maxStack: 1
   buyPrice: 50
-  damageAmount: 4
+  damageAmount: 5
+  criticalChance: 0.05

@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: DiamondSword
   m_EditorClassIdentifier: 
   itemName: Ruby Sword
-  description: 'Passive: Provides 7 damage, and 20% critical chance'
+  description: 'Passive: Provides 30 damage, and 50% critical chance'
   droppable: 1
   consumable: 0
   itemType: 3
-  icon: {fileID: -1277424689, guid: db2b8f86654df4747bbec33c751ea5a4, type: 3}
-  prefab: {fileID: 6908396659879252736, guid: 943bb4fda13e8ad40933681bd41aebb0, type: 3}
+  icon: {fileID: -707297419, guid: db2b8f86654df4747bbec33c751ea5a4, type: 3}
+  prefab: {fileID: 4699191003130711957, guid: 22eb9bddd65d8804f9ff7f18d252ce5a, type: 3}
   collectEffectPrefab: {fileID: 7934267159419852871, guid: c29719f94173dde4d8e680bcf2db5323, type: 3}
   scaleInUI: 20
   stackable: 0
   maxStack: 1
-  buyPrice: 85
-  damageAmount: 7
-  criticalChance: 0.2
+  buyPrice: 200
+  damageAmount: 30
+  criticalChance: 0.5

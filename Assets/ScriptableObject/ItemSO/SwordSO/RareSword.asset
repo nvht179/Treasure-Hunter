@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RareSword
   m_EditorClassIdentifier: 
   itemName: Rare Sword
-  description: 'Passive: Provides 5 damage, and 10% critical chance'
+  description: 'Passive: Provides 7 damage, and 10% critical chance'
   droppable: 1
   consumable: 0
   itemType: 3
@@ -24,5 +24,5 @@ MonoBehaviour:
   stackable: 0
   maxStack: 1
   buyPrice: 60
-  damageAmount: 5
+  damageAmount: 7
   criticalChance: 0.1

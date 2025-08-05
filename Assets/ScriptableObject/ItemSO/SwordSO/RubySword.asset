@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RubySword
   m_EditorClassIdentifier: 
   itemName: Ruby Sword
-  description: 'Passive: Provides 6 damage, and 15% critical chance'
+  description: 'Passive: Provides 10 damage, and 15% critical chance'
   droppable: 1
   consumable: 0
   itemType: 3
@@ -23,6 +23,6 @@ MonoBehaviour:
   scaleInUI: 20
   stackable: 0
   maxStack: 1
-  buyPrice: 70
-  damageAmount: 6
+  buyPrice: 80
+  damageAmount: 10
   criticalChance: 0.15
