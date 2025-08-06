@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6e5da51c422f34a895184e406a2833, type: 3}
+  m_Name: RubyHat
+  m_EditorClassIdentifier: 
+  itemName: Ruby Hat
+  description: 'Passive: Provides 60% health regeneration'
+  droppable: 1
+  consumable: 0
+  itemType: 3
+  icon: {fileID: 254496372, guid: 123d6a7c5b2c46a4b9d4e5d70150022f, type: 3}
+  prefab: {fileID: 2674185863944809024, guid: 783dea3faa420f4408fe5541588237ed, type: 3}
+  collectEffectPrefab: {fileID: 7934267159419852871, guid: c29719f94173dde4d8e680bcf2db5323, type: 3}
+  scaleInUI: 20
+  stackable: 0
+  maxStack: 1
+  buyPrice: 55
+  healthRegenerationAmount: 0.6
