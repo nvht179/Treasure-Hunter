@@ -4,21 +4,25 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Items/Passive Items/Shield")]
 public class Shield : PassiveItemSO
 {
-    private Guid id;
+    private Guid maxHealthBuffId;
+    private Guid damageReductionBuffId;
     public float maxHealthAdded = 10;
+    public float damageReduction = 0.1f; // 10% damage reduction
     private void OnValidate()
     {
-        description = "Passive: Provides " + maxHealthAdded.ToString() + " max health.";
+        description = "Passive: Provides " + maxHealthAdded.ToString() + " max health and receive " + (damageReduction*100).ToString() + "% damage reduction.";
         droppable = true;
         consumable = false;
     }
     public override void ApplyEffect(Player player)
     {
-        id = player.HealthSystem.AddMaxHealthBuff(maxHealthAdded);
+        maxHealthBuffId = player.HealthSystem.AddMaxHealthBuff(maxHealthAdded);
+        damageReductionBuffId = player.DamageReceivedSystem.AddDamageReceivedBuff(1 - damageReduction);
     }
 
     public override void RemoveEffect(Player player)
     {
-        player.HealthSystem.RemoveMaxHealthBuff(id);
+        player.HealthSystem.RemoveMaxHealthBuff(maxHealthBuffId);
+        player.DamageReceivedSystem.RemoveDamageReceivedBuff(damageReductionBuffId);
     }
 }

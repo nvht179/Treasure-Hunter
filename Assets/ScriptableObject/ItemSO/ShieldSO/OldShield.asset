@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: OldShield
   m_EditorClassIdentifier: 
   itemName: Old Shield
-  description: 'Passive: Provides 10 max health.'
+  description: 'Passive: Provides 10 max health and receive 1% damage reduction.'
   droppable: 1
   consumable: 0
   itemType: 3
@@ -25,3 +25,4 @@ MonoBehaviour:
   maxStack: 1
   buyPrice: 10
   maxHealthAdded: 10
+  damageReduction: 0.01

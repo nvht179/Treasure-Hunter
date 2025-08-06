@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UncommonShield
   m_EditorClassIdentifier: 
   itemName: Uncommon Shield
-  description: 'Passive: Provides 30 max health.'
+  description: 'Passive: Provides 30 max health and receive 2% damage reduction.'
   droppable: 1
   consumable: 0
   itemType: 3
@@ -25,3 +25,4 @@ MonoBehaviour:
   maxStack: 1
   buyPrice: 30
   maxHealthAdded: 30
+  damageReduction: 0.02

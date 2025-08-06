@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LavaShield
   m_EditorClassIdentifier: 
   itemName: Lava Shield
-  description: 'Passive: Provides 70 max health.'
+  description: 'Passive: Provides 70 max health and receive 15% damage reduction.'
   droppable: 1
   consumable: 0
   itemType: 3
@@ -25,3 +25,4 @@ MonoBehaviour:
   maxStack: 1
   buyPrice: 70
   maxHealthAdded: 70
+  damageReduction: 0.15

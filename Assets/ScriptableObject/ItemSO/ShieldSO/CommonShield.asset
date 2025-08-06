@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CommonShield
   m_EditorClassIdentifier: 
   itemName: Common Shield
-  description: 'Passive: Provides 20 max health.'
+  description: 'Passive: Provides 20 max health and receive 5% damage reduction.'
   droppable: 1
   consumable: 0
   itemType: 3
@@ -25,3 +25,4 @@ MonoBehaviour:
   maxStack: 1
   buyPrice: 20
   maxHealthAdded: 20
+  damageReduction: 0.05

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DiamondShield
   m_EditorClassIdentifier: 
   itemName: Diamond Shield
-  description: 'Passive: Provides 100 max health.'
+  description: 'Passive: Provides 100 max health and receive 20% damage reduction.'
   droppable: 1
   consumable: 0
   itemType: 3
@@ -25,3 +25,4 @@ MonoBehaviour:
   maxStack: 1
   buyPrice: 80
   maxHealthAdded: 100
+  damageReduction: 0.2
