@@ -20,14 +20,6 @@ public class DamageSystem
     private float baseCritChance;    // 0..1
     private float baseCritMultiplier; // >= 1 (e.g. 2 = 200% damage on crit)
 
-    public event EventHandler<OnDamageChangedEventArgs> OnDamageChanged;
-
-    public class OnDamageChangedEventArgs : EventArgs
-    {
-        public float BaseAttackDamage;
-        public float TotalAdditiveDamage;
-        public float EffectiveAttackDamage;
-    }
 
     public DamageSystem(float baseAttackDamage, float baseCritChance, float baseCritMultiplier)
     {
@@ -47,7 +39,6 @@ public class DamageSystem
             ExpireTime = duration > 0f ? Time.time + duration : float.PositiveInfinity
         };
         buffs.Add(buff);
-        RaiseDamageChanged();
         return buff.Id;
     }
 
@@ -80,20 +71,17 @@ public class DamageSystem
     public bool RemoveBuff(Guid id)
     {
         var removed = buffs.RemoveAll(b => b.Id == id) > 0;
-        if (removed) RaiseDamageChanged();
         return removed;
     }
 
     public void RemoveAllTemporaryBuffs()
     {
         int removed = buffs.RemoveAll(b => !float.IsPositiveInfinity(b.ExpireTime));
-        if (removed > 0) RaiseDamageChanged();
     }
 
     public void ClearAllBuffs()
     {
         buffs.Clear();
-        RaiseDamageChanged();
     }
 
     // --- Base setters/getters ---
@@ -101,7 +89,6 @@ public class DamageSystem
     public void SetBaseAttackDamage(float value)
     {
         baseAttackDamage = Mathf.Max(0f, value);
-        RaiseDamageChanged();
     }
 
     public float GetBaseAttackDamage() => baseAttackDamage;
@@ -127,7 +114,6 @@ public class DamageSystem
     {
         float now = Time.time;
         int removed = buffs.RemoveAll(b => now >= b.ExpireTime);
-        if (removed > 0) RaiseDamageChanged();
     }
 
     public float GetTotalAdditiveDamage()
@@ -197,15 +183,5 @@ public class DamageSystem
             Tick();
             lastTickTime = Time.time;
         }
-    }
-
-    private void RaiseDamageChanged()
-    {
-        OnDamageChanged?.Invoke(this, new OnDamageChangedEventArgs
-        {
-            BaseAttackDamage = baseAttackDamage,
-            TotalAdditiveDamage = GetTotalAdditiveDamage(),
-            EffectiveAttackDamage = GetEffectiveAttackDamage()
-        });
     }
 }

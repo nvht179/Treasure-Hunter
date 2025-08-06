@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Items/Consumables/Yellow Potion SO")]
 public class YellowPotionSO : ConsumableItemSO
 {
-    public float speedBoost = 0.2f;
+    public float speedBoost = 0.2f; // 20% speed boost
     public float duration = 20f;
 
     private void OnValidate()
@@ -15,6 +15,6 @@ public class YellowPotionSO : ConsumableItemSO
 
     public override void Consume(Player player)
     {
-        player.MoveSpeedSystem.AddTemporarySpeed(speedBoost, duration);
+        player.MoveSpeedSystem.AddMoveSpeedMultiplier(speedBoost, duration);
     }
 }

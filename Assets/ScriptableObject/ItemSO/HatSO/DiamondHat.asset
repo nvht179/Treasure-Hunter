@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: DiamondHat
   m_EditorClassIdentifier: 
   itemName: Lava Hat
-  description: 'Passive: Provides 70% health regeneration'
+  description: 'Passive: Provides 100% health regeneration'
   droppable: 1
   consumable: 0
   itemType: 3
-  icon: {fileID: 178442100, guid: 123d6a7c5b2c46a4b9d4e5d70150022f, type: 3}
-  prefab: {fileID: 5790448192332177265, guid: 380cd4724c9226a489ef7b73014e264b, type: 3}
+  icon: {fileID: -403184639, guid: 123d6a7c5b2c46a4b9d4e5d70150022f, type: 3}
+  prefab: {fileID: 6676171319508939380, guid: 344df202b450258429a3a4083909afdf, type: 3}
   collectEffectPrefab: {fileID: 7934267159419852871, guid: c29719f94173dde4d8e680bcf2db5323, type: 3}
   scaleInUI: 20
   stackable: 0
   maxStack: 1
-  buyPrice: 60
-  healthRegenerationAmount: 0.7
+  buyPrice: 70
+  healthRegenerationAmount: 1

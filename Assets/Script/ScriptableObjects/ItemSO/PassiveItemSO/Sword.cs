@@ -4,7 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Items/Passive Items/Sword")]
 public class Sword : PassiveItemSO
 {
-    private Guid id;
+    private Guid damageBonusId;
+    private Guid criticalBonusId;
 
     public float damageAmount = 1;
     public float criticalChance = 0.05f;
@@ -17,11 +18,13 @@ public class Sword : PassiveItemSO
     }
     public override void ApplyEffect(Player player)
     {
-        id = player.DamageSystem.AddAdditiveDamageBuff(damageAmount);
+        damageBonusId = player.DamageSystem.AddAdditiveDamageBuff(damageAmount);
+        criticalBonusId = player.DamageSystem.AddCritChanceBuff(criticalChance);
     }
 
     public override void RemoveEffect(Player player)
     {
-        player.DamageSystem.RemoveBuff(id);
+        player.DamageSystem.RemoveBuff(damageBonusId);
+        player.DamageSystem.RemoveBuff(criticalBonusId);
     }
 }

@@ -9,19 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc6e5da51c422f34a895184e406a2833, type: 3}
-  m_Name: LavaHat
+  m_Script: {fileID: 11500000, guid: 43b3e9dca82661f49bcb33ebe995eafc, type: 3}
+  m_Name: DiamondBoots
   m_EditorClassIdentifier: 
-  itemName: Lava Hat
-  description: 'Passive: Provides 80% health regeneration'
+  itemName: Ruby Boots
+  description: 'Passive: Provides 1 stamina restore per second and move 12% faster'
   droppable: 1
   consumable: 0
   itemType: 3
-  icon: {fileID: 178442100, guid: 123d6a7c5b2c46a4b9d4e5d70150022f, type: 3}
-  prefab: {fileID: 5790448192332177265, guid: 380cd4724c9226a489ef7b73014e264b, type: 3}
+  icon: {fileID: 1223976191, guid: 123d6a7c5b2c46a4b9d4e5d70150022f, type: 3}
+  prefab: {fileID: 2142697761538974267, guid: 043070495ceca2b4f972b3e60fa12d0e, type: 3}
   collectEffectPrefab: {fileID: 7934267159419852871, guid: c29719f94173dde4d8e680bcf2db5323, type: 3}
   scaleInUI: 20
   stackable: 0
   maxStack: 1
-  buyPrice: 60
-  healthRegenerationAmount: 0.8
+  buyPrice: 50
+  staminaRegenerationAmount: 1
+  moveSpeedAmount: 0.12

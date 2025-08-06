@@ -1,54 +1,86 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MoveSpeedSystem
 {
     private class SpeedBuff
     {
-        public float Additional;
-        public float ExpireTime;
+        public Guid Id;
+        public float Multiplier;   // e.g. 0.1 means +10% speed
+        public float ExpireTime;   // Time.time + duration; PositiveInfinity = permanent
+        public bool IsPermanent => float.IsPositiveInfinity(ExpireTime);
     }
 
-    private SpeedBuff activeBuff;
-
+    private readonly List<SpeedBuff> buffs = new();
     private float baseSpeed;
-    private float additiveBonus = 0f;
 
     public MoveSpeedSystem(float initialBaseSpeed)
     {
-        baseSpeed = initialBaseSpeed;
+        baseSpeed = Mathf.Max(0f, initialBaseSpeed);
     }
 
     public void SetBaseSpeed(float speed)
     {
-        baseSpeed = Mathf.Max(0, speed);
+        baseSpeed = Mathf.Max(0f, speed);
     }
 
-    public void AddPermanentSpeedBonus(float amount)
-    {
-        additiveBonus += amount;
-    }
+    public float GetBaseSpeed() => baseSpeed;
 
-    public void AddTemporarySpeed(float addition, float duration)
+    public Guid AddMoveSpeedMultiplier(float multiplier, float duration = 0f)
     {
-        activeBuff = new SpeedBuff
+        var buff = new SpeedBuff
         {
-            Additional = addition,
-            ExpireTime = Time.time + duration
+            Id = Guid.NewGuid(),
+            Multiplier = multiplier,
+            ExpireTime = duration > 0f ? Time.time + duration : float.PositiveInfinity
         };
+        buffs.Add(buff);
+        return buff.Id;
+    }
+
+    public bool RemoveBuff(Guid id)
+    {
+        return buffs.RemoveAll(b => b.Id == id) > 0;
+    }
+
+    public void RemoveAllTemporaryBuffs()
+    {
+        buffs.RemoveAll(b => !b.IsPermanent);
+    }
+
+    public void ClearAllBuffs()
+    {
+        buffs.Clear();
     }
 
     public float GetCurrentSpeed()
     {
-        if (activeBuff != null && Time.time >= activeBuff.ExpireTime)
+        TickIfNeeded();
+
+        float totalMultiplier = 1f;
+        foreach (var buff in buffs)
         {
-            activeBuff = null;
+            totalMultiplier *= (1f + buff.Multiplier);
         }
 
-        float buffAmount = activeBuff != null ? activeBuff.Additional : 0f;
-        float totalMultiplier = 1f + buffAmount;
-
-        return (baseSpeed + additiveBonus) * totalMultiplier;
+        return baseSpeed * totalMultiplier;
     }
 
-    public float GetBaseSpeed() => baseSpeed;
+    // Expire old buffs once per frame
+    public void Tick()
+    {
+        float now = Time.time;
+        buffs.RemoveAll(b => !b.IsPermanent && now >= b.ExpireTime);
+    }
+
+    private float lastTickTime = -1f;
+    private void TickIfNeeded()
+    {
+        if (!Mathf.Approximately(lastTickTime, Time.time))
+        {
+            Tick();
+            lastTickTime = Time.time;
+        }
+    }
 }
