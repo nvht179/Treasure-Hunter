@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Items/Consumables/Black Potion SO")]
 public class BlackPotionSO : ConsumableItemSO
 {
-    public float goldMultiplier = 1.5f;
+    public float goldMultiplier = 0.5f; // 50% more gold
     public float duration = 60f;
 
     private void OnValidate()
@@ -15,6 +15,7 @@ public class BlackPotionSO : ConsumableItemSO
 
     public override void Consume(Player player)
     {
-        player.ApplyBlackPotionEffect(goldMultiplier, duration);
+        player.DamageReceivedSystem.AddDamageReceivedBuff(2.0f, duration);
+        player.GoldBonusSystem.AddGoldBonus(goldMultiplier, duration);
     }
 }

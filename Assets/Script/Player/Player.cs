@@ -115,12 +115,10 @@ public class Player : MonoBehaviour, IDamageable
     // Attributes
     public HealthSystem HealthSystem { get; private set; }
     public StaminaSystem StaminaSystem { get; private set; }
-    public DamageSystem DamageSystem { get; private set; }
     public MoveSpeedSystem MoveSpeedSystem { get; private set; }
-
-    private bool isReceiveDoubleDamage = false;
-    private float receiveGoldMultiplier = 1f;
-    private Coroutine tempEffectCoroutine;
+    public GoldBonusSystem GoldBonusSystem { get; private set; }
+    public DamageSystem DamageSystem { get; private set; }
+    public DamageReceivedSystem DamageReceivedSystem { get; private set; }
 
     private void Awake()
     {
@@ -137,8 +135,10 @@ public class Player : MonoBehaviour, IDamageable
 
         HealthSystem = new HealthSystem(baseHealth, baseHealthRestoreRate);
         StaminaSystem = new StaminaSystem(baseStamina, baseStaminaRestoreRate);
-        DamageSystem = new DamageSystem(basePlayerDamage, baseCritChance, baseCritMultiplier);
         MoveSpeedSystem = new MoveSpeedSystem(baseMoveSpeed);
+        GoldBonusSystem = new GoldBonusSystem();
+        DamageSystem = new DamageSystem(basePlayerDamage, baseCritChance, baseCritMultiplier);
+        DamageReceivedSystem = new DamageReceivedSystem();
     }
 
     private void HealthSystem_OnDeath()
@@ -231,6 +231,7 @@ public class Player : MonoBehaviour, IDamageable
         HealthSystem.Regenerate();
         StaminaSystem.Regenerate();
         DamageSystem.Tick();
+        DamageReceivedSystem.Tick();
     }
 
     private void HandleUpdateState()
@@ -414,13 +415,14 @@ public class Player : MonoBehaviour, IDamageable
 
     private void HandleResourceCollected(ItemWorld resourceItemWorld, ResourceItemSO resourceItemSO)
     {
+        int collectedAmount = GoldBonusSystem.ApplyGoldBonus(resourceItemSO.value * resourceItemWorld.GetItem().quantity);
         OnGoldChanged?.Invoke(this, new OnGoldChangedEventArgs
         {
             CurrentGold = money,
-            ChangeAmount = resourceItemSO.value * resourceItemWorld.GetItem().quantity
+            ChangeAmount = collectedAmount
         });
 
-        money += (int)(resourceItemSO.value * resourceItemWorld.GetItem().quantity * receiveGoldMultiplier);
+        money += collectedAmount;
     }
 
     private void OnDrawGizmos()
@@ -430,10 +432,7 @@ public class Player : MonoBehaviour, IDamageable
 
     public void TakeDamage(IDamageable.DamageInfo offenderInfo)
     {
-        if(isReceiveDoubleDamage)
-        {
-            HealthSystem.TakeDamage(offenderInfo.Damage);
-        }
+        offenderInfo.Damage = DamageReceivedSystem.CalculateReceivedDamage(offenderInfo.Damage);
         HealthSystem.TakeDamage(offenderInfo.Damage);
 
         var knockbackDir = offenderInfo.Velocity.normalized;
@@ -528,28 +527,6 @@ public class Player : MonoBehaviour, IDamageable
         {
             passive.RemoveEffect(this);
         }
-    }
-
-    public void ApplyBlackPotionEffect(float goldMultiplier, float duration, bool doubleDamage = true)
-    {
-        if (tempEffectCoroutine != null)
-        {
-            StopCoroutine(tempEffectCoroutine);
-        }
-
-        tempEffectCoroutine = StartCoroutine(BlackPotionEffectCoroutine(goldMultiplier, duration, doubleDamage));
-    }
-
-    private IEnumerator BlackPotionEffectCoroutine(float goldMultiplier, float duration, bool doubleDamage)
-    {
-        isReceiveDoubleDamage = doubleDamage;
-        receiveGoldMultiplier = goldMultiplier;
-
-        yield return new WaitForSeconds(duration);
-
-        isReceiveDoubleDamage = false;
-        receiveGoldMultiplier = 1f;
-        tempEffectCoroutine = null;
     }
 
 }
