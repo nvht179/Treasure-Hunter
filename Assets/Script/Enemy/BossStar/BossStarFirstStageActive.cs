@@ -30,7 +30,7 @@ namespace Script.Enemy.BossStar
 
             if (BossStar.CurrentHealth < BossStar.MaxHealth * BossStarContext.SecondStageMaxHealthRatio)
             {
-                BossStar.SwitchState(BossStar.SecondStageActive);
+                BossStar.SwitchState(BossStar.SecondStageTransition);
             }
             else if (firstStageActiveTimer < 0)
             {

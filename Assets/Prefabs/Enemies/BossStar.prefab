@@ -889,7 +889,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 1000
   wanderSpeed: 7
-  fleeSpeed: 50
+  fleeSpeed: 5
   attackDamage: 0
   knockbackForce: 50
   attackRadius: 0.7
@@ -906,6 +906,7 @@ MonoBehaviour:
   secondStageRestTime: 10
   thirdStageActiveTime: 20
   thirdStageRestTime: 15
+  invincibleDuration: 0
   secondStageEnemyLimit: 5
   enemySpawnPositions:
   - {fileID: 0}

@@ -25,7 +25,7 @@ namespace Script.Enemy.BossStar
             restTimer -= Time.deltaTime;
             if (BossStar.CurrentHealth < BossStar.MaxHealth * BossStarContext.ThirdStageMaxHealthRatio)
             {
-                BossStar.SwitchState(BossStar.ThirdStageActive);
+                BossStar.SwitchState(BossStar.ThirdStageTransition);
                 return;
             }
 

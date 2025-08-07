@@ -34,14 +34,6 @@ namespace Script.Enemy.BossStar
                 BossStar.SwitchState(BossStar.ThirdStageRest);
             }
 
-            if (BossStar.transform.position != BossStar.CentralTransform.position)
-            {
-                BossStar.transform.position = Vector3.MoveTowards(
-                    BossStar.transform.position,
-                    BossStar.CentralTransform.position,
-                    BossStar.FleeSpeed * Time.deltaTime);
-            }
-
             var shootPattern = Random.Range(0, 3);
             var repeat = Random.Range(1, BossStarContext.MaxConsecutive + 1);
             switch (shootPattern)

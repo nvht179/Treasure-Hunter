@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Script.ScriptableObjects;
 using UnityEngine;
 
@@ -23,6 +22,7 @@ namespace Script.Enemy.BossStar
         [SerializeField] private float secondStageRestTime;
         [SerializeField] private float thirdStageActiveTime;
         [SerializeField] private float thirdStageRestTime;
+        [SerializeField] private float invincibleDuration;
         [SerializeField] private int secondStageEnemyLimit;
         [SerializeField] private Transform[] enemySpawnPositions;
         [SerializeField] private Transform[] fleePositions;
@@ -80,6 +80,7 @@ namespace Script.Enemy.BossStar
         public float ThirdStageActiveTime => thirdStageActiveTime;
         public float ThirdStageRestTime => thirdStageRestTime;
         public float SecondStageEnemyLimit => secondStageEnemyLimit;
+        public float InvincibleDuration => invincibleDuration;
         public FlyingObjectSO[] BulletTypes => bulletTypes;
         public EnemySO[] EnemyTypes => enemyTypes;
         public Transform[] EnemySpawnPositions => enemySpawnPositions;
@@ -111,6 +112,8 @@ namespace Script.Enemy.BossStar
         public BossStarSecondStageRest SecondStageRest;
         public BossStarThirdStageActive ThirdStageActive;
         public BossStarThirdStageRest ThirdStageRest;
+        public BossStarSecondStageTransition SecondStageTransition;
+        public BossStarThirdStageTransition ThirdStageTransition;
         public BossStarDead Dead;
 
         private void Awake()
@@ -125,6 +128,8 @@ namespace Script.Enemy.BossStar
             SecondStageRest = new BossStarSecondStageRest(this);
             ThirdStageActive = new BossStarThirdStageActive(this);
             ThirdStageRest = new BossStarThirdStageRest(this);
+            SecondStageTransition = new BossStarSecondStageTransition(this);
+            ThirdStageTransition = new BossStarThirdStageTransition(this);
             Dead = new BossStarDead(this);
             SprayFiringDirections = new List<Vector3>();
             AliveEnemies = new HashSet<AbstractEnemy>();

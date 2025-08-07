@@ -52,7 +52,7 @@ namespace Script.Enemy.BossStar
         {
             if (BossStar.CurrentHealth < BossStar.MaxHealth * BossStarContext.ThirdStageMaxHealthRatio)
             {
-                BossStar.SwitchState(BossStar.ThirdStageActive);
+                BossStar.SwitchState(BossStar.ThirdStageTransition);
             }
             else
             {
