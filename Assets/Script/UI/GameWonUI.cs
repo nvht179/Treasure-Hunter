@@ -12,6 +12,7 @@ public class GameWonUI : MonoBehaviour
     [SerializeField] private Button exitButton;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI timeTakenText;
+    [SerializeField] private List<Image> diamondImages;
 
     private void Awake()
     {
@@ -66,6 +67,12 @@ public class GameWonUI : MonoBehaviour
     {
         scoreText.text = $"Score: {GameManager.Instance.GetScore()}";
         timeTakenText.text = $"Time: {GameManager.Instance.GetTimeTaken()}";
+        int numberOfDiamonds = GameManager.Instance.GetNumberOfDiamonds();
+
+        for (int i = 0; i < Math.Min(numberOfDiamonds,3); ++i)
+        {
+            diamondImages[i].color = Color.white;
+        }
         gameObject.SetActive(true);
     }
 

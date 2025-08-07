@@ -28,6 +28,7 @@ public class SettingsMenuUI : PersistentManager<SettingsMenuUI>
     private Category activeCategory;
 
     [SerializeField] private Button backButton;
+    [SerializeField] private Button resetButton;
 
     [SerializeField] private Slider musicVolumeSlider;
     [SerializeField] private Slider sfxVolumeSlider;
@@ -75,17 +76,54 @@ public class SettingsMenuUI : PersistentManager<SettingsMenuUI>
             onBackButtonAction();
         });
 
+        resetButton.onClick.AddListener(() =>
+        {
+            bool resetSuccessfully = false;
+            DialogManager.Instance.ShowDialog(new() {
+                Title = "Reset all preferences!",
+                Message = "Are you sure? This action cannot be undone!",
+                Buttons = new List<DialogButton> { 
+                    new() {
+                        Label = "",
+                        ButtonType = DialogButtonType.Accept,
+                        Callback = () => {
+                            DataManager.Instance.ResetUserPreferences();
+                            resetSuccessfully = true;
+                        }
+                    },
+                    new() {
+                        Label = "",
+                        ButtonType = DialogButtonType.Decline,
+                        Callback = () => {
+                            Debug.Log("Decline resetting preferences!");
+                        }
+                    }
+                },
+            });
+
+            if (resetSuccessfully)
+            {
+                UpdateVisual();
+                DialogManager.Instance.ShowDialog(new()
+                {
+                    Title = "Reset successfully!",
+                    Message = "",
+                    Buttons = {}
+                });
+            }
+        });
+
         musicVolumeSlider.onValueChanged.AddListener(sliderValue =>
         {
             float volume = sliderValue / 100f;
-            MusicManager.Instance.SetVolume(volume);
+            DataManager.Instance.UpdateMusicVolume(volume);
             musicVolumeText.text = Mathf.RoundToInt(sliderValue).ToString();
         });
 
         sfxVolumeSlider.onValueChanged.AddListener(sliderValue =>
         {
             float volume = sliderValue / 100f;
-            SoundManager.Instance.SetVolume(volume);
+            DataManager.Instance.UpdateSfxVolume(volume);
             sfxVolumeText.text = Mathf.RoundToInt(sliderValue).ToString();
         });
 

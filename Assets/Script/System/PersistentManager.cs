@@ -8,7 +8,6 @@ public abstract class PersistentManager<T> : MonoBehaviour where T : MonoBehavio
 
     protected virtual void Awake()
     {
-        Debug.Log($"PersistentManager<{typeof(T).Name}> Awake called");
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -17,5 +16,6 @@ public abstract class PersistentManager<T> : MonoBehaviour where T : MonoBehavio
 
         Instance = this as T;
         //DontDestroyOnLoad(gameObject);
+        Debug.Log($"PersistentManager<{typeof(T).Name}> Awake called");
     }
 }

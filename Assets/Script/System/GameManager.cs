@@ -20,7 +20,7 @@ public class GameManager : PersistentManager<GameManager>
         LevelLost
     }
 
-    [SerializeField] private State state;
+    [SerializeField] private State state = State.None;
     public State CurrentState => state;
     
     // Game session data (not persisted)
@@ -35,7 +35,7 @@ public class GameManager : PersistentManager<GameManager>
         SceneLoader.OnGameSceneLoaded += HandleGameSceneLoaded;
         SceneLoader.OnNonGameSceneLoaded += HandleNonGameSceneLoaded;
 
-        state = State.None;
+        SetState(State.WaitingToStart);
     }
 
     private void Start()
@@ -54,6 +54,14 @@ public class GameManager : PersistentManager<GameManager>
         {
             if (state == State.Paused)
             {
+                SetState(State.GamePlaying);
+            }
+        };
+        GamePauseManager.Instance.OnRestartRequested += () =>
+        {
+            if (state == State.Paused)
+            {
+                SetState(State.WaitingToStart);
                 SetState(State.GamePlaying);
             }
         };
@@ -192,5 +200,11 @@ public class GameManager : PersistentManager<GameManager>
         state = newState;
         OnStateChanged?.Invoke(oldState, newState);
         Debug.Log($"GameManager: State changed from {oldState} to {state}");
+    }
+
+    public int GetNumberOfDiamonds()
+    {
+        // TODO: show how many diamonds player got
+        return 0;
     }
 }

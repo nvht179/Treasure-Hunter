@@ -7,9 +7,6 @@ using UnityEngine.InputSystem;
 
 public class GameInput : PersistentManager<GameInput>
 {
-
-    private const string PLAYER_PREFS_BINDINGS = "InputBindings";
-
     public enum ActionMap
     {
         Player,
@@ -46,21 +43,21 @@ public class GameInput : PersistentManager<GameInput>
         base.Awake();
 
         playerInputActions = new PlayerInputActions();
+    }
 
-        // Try to load bindings from DataManager first, fallback to PlayerPrefs
-        string bindingsJson = "";
-        if (DataManager.Instance != null && DataManager.Instance.UserPreferences != null)
-        {
-            bindingsJson = DataManager.Instance.UserPreferences.inputBindingsJson;
-        }
-        else if (PlayerPrefs.HasKey(PLAYER_PREFS_BINDINGS))
-        {
-            bindingsJson = PlayerPrefs.GetString(PLAYER_PREFS_BINDINGS);
-        }
+    private void Start()
+    {
+        // Try to load bindings from DataManager
+        string bindingsJson = DataManager.Instance.UserPreferences.inputBindingsJson;
 
         if (!string.IsNullOrEmpty(bindingsJson))
         {
+            Debug.Log("Game Input: Binding json found!");
             playerInputActions.LoadBindingOverridesFromJson(bindingsJson);
+        }
+        else
+        {
+            Debug.Log("Game Input: No binding json found!");
         }
 
         playerInputActions.Player.Attack.performed += AttackOnPerformed;
@@ -70,11 +67,27 @@ public class GameInput : PersistentManager<GameInput>
         playerInputActions.Player.Pause.performed += PauseOnPerformed;
         playerInputActions.Player.Inventory.performed += InventoryOnPerformed;
         playerInputActions.UI.Resume.performed += ResumeOnPerformed;
+
+        GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
+        
+        // Listen for user preferences changes to handle binding resets
+        DataManager.Instance.OnUserPreferencesChanged += OnUserPreferencesChanged;
     }
 
-    private void Start()
+    private void OnUserPreferencesChanged(UserPreferencesData userPreferences)
     {
-        GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
+        // If input bindings are cleared (reset), reload default bindings
+        if (string.IsNullOrEmpty(userPreferences.inputBindingsJson))
+        {
+            Debug.Log("Game Input: Resetting to default bindings");
+            playerInputActions.RemoveAllBindingOverrides();
+        }
+        else
+        {
+            // Load the new bindings
+            Debug.Log("Game Input: Loading updated bindings");
+            playerInputActions.LoadBindingOverridesFromJson(userPreferences.inputBindingsJson);
+        }
     }
 
     private void GameManager_OnStateChanged(GameManager.State oldState, GameManager.State newState)
@@ -119,7 +132,7 @@ public class GameInput : PersistentManager<GameInput>
         OnAttackAction?.Invoke(this, EventArgs.Empty);
     }
     
-        private void AttackAlternateOnPerformed(InputAction.CallbackContext obj)
+    private void AttackAlternateOnPerformed(InputAction.CallbackContext obj)
     {
         OnAttackAlternateAction?.Invoke(this, EventArgs.Empty);
     }
@@ -139,13 +152,6 @@ public class GameInput : PersistentManager<GameInput>
         currentInputActionMap.Enable();
 
         Debug.Log("Enabled action map: " + actionMap.ToString());
-    }
-
-    public void DisableActionMap(ActionMap actionMap)
-    {
-        var asset = playerInputActions.asset;
-        var map = asset.FindActionMap(actionMap.ToString(), throwIfNotFound: true);
-        map.Disable();
     }
 
     public string GetBindingText(Binding binding)
@@ -173,7 +179,7 @@ public class GameInput : PersistentManager<GameInput>
         }
     }
 
-    public void GetBindingAction(Binding binding, out InputAction inputAction, out int bindingIndex)
+    private void GetBindingAction(Binding binding, out InputAction inputAction, out int bindingIndex)
     {
         switch (binding)
         {
@@ -220,7 +226,7 @@ public class GameInput : PersistentManager<GameInput>
         StartRebindCoroutine(inputAction, bindingIndex, onRebindFinished);
     }
 
-    public void StartRebindCoroutine(InputAction action, int bindingIndex, Action<bool> onRebindFinished)
+    private void StartRebindCoroutine(InputAction action, int bindingIndex, Action<bool> onRebindFinished)
     {
         StartCoroutine(RebindCoroutine(action, bindingIndex, onRebindFinished));
     }
@@ -279,16 +285,15 @@ public class GameInput : PersistentManager<GameInput>
     private void SaveOverrides()
     {
         string bindingsJson = playerInputActions.SaveBindingOverridesAsJson();
-        
-        // Save to DataManager if available, otherwise use PlayerPrefs
+        DataManager.Instance.UpdateInputBindings(bindingsJson);
+    }
+
+    private void OnDestroy()
+    {
+        // Clean up event subscriptions
         if (DataManager.Instance != null)
         {
-            DataManager.Instance.UpdateInputBindings(bindingsJson);
-        }
-        else
-        {
-            PlayerPrefs.SetString(PLAYER_PREFS_BINDINGS, bindingsJson);
-            PlayerPrefs.Save();
+            DataManager.Instance.OnUserPreferencesChanged -= OnUserPreferencesChanged;
         }
     }
 

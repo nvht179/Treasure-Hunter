@@ -5,7 +5,7 @@ using UnityEngine;
 public class UserPreferencesData
 {
     [Header("Audio Settings")]
-    public float musicVolume = 0.3f;
+    public float musicVolume = 0.1f;
     public float sfxVolume = 1.0f;
     
     [Header("Input Bindings")]
@@ -18,7 +18,7 @@ public class UserPreferencesData
     // Constructor with default values
     public UserPreferencesData()
     {
-        musicVolume = 0.3f;
+        musicVolume = 0.1f;
         sfxVolume = 1.0f;
         inputBindingsJson = "";
         showTutorial = true;

@@ -9,6 +9,7 @@ public class GamePauseManager : PersistentManager<GamePauseManager>
 
     public event Action OnPauseRequested;
     public event Action OnResumeRequested;
+    public event Action OnRestartRequested;
     public event Action OnReturnToMainMenuRequested;
 
     [SerializeField] private Button resumeButton;
@@ -31,7 +32,9 @@ public class GamePauseManager : PersistentManager<GamePauseManager>
         });
         restartButton.onClick.AddListener(() =>
         {
+            HideAll();
             SceneLoader.ReloadCurrentScene();
+            OnRestartRequested?.Invoke();
         });
         settingsButton.onClick.AddListener(() =>
         {

@@ -15,15 +15,26 @@ public class MusicManager : PersistentManager<MusicManager>
     {
         base.Awake();
 
-        volume = DataManager.Instance.UserPreferences.musicVolume;
-
         backgroundMusicSource = gameObject.AddComponent<AudioSource>();
         gameMusicSource = gameObject.AddComponent<AudioSource>();
 
         SetupMusicSource(backgroundMusicSource);
         SetupMusicSource(gameMusicSource);
+    }
+
+    private void Start()
+    {
+        volume = DataManager.Instance.UserPreferences.musicVolume;
 
         GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
+        DataManager.Instance.OnUserPreferencesChanged += DataManager_OnUserPreferencesChanged;
+
+        GameManager_OnStateChanged(GameManager.State.None, GameManager.Instance.CurrentState);
+    }
+
+    private void DataManager_OnUserPreferencesChanged(UserPreferencesData data)
+    {
+        SetVolume(data.musicVolume);
     }
 
     private void SetupMusicSource(AudioSource source)
@@ -69,7 +80,10 @@ public class MusicManager : PersistentManager<MusicManager>
     private void PlayBackgroundMusic()
     {
         AudioClip newClip = GetRandomClip(musicClipRefsSO.background);
-        if (newClip == null) return;
+        if (newClip == null)
+        {
+            Debug.Log("No music found!");
+        }
 
         gameMusicSource.Stop();
         StopAllCoroutines();
@@ -144,16 +158,10 @@ public class MusicManager : PersistentManager<MusicManager>
 
     public void SetVolume(float newVolume)
     {
-        Debug.Log("Volume changed.");
         volume = newVolume;
         backgroundMusicSource.volume = volume;
         gameMusicSource.volume = volume;
-
-        // Save to DataManager if available
-        if (DataManager.Instance != null)
-        {
-            DataManager.Instance.UpdateMusicVolume(volume);
-        }
+        Debug.Log($"Music volume changed to {newVolume}");
     }
 
     public float GetVolume()

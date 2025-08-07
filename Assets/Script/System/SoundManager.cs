@@ -6,9 +6,6 @@ using Random = UnityEngine.Random;
 
 public class SoundManager : PersistentManager<SoundManager>
 {
-    private const string PLAYER_PREFS_SOUND_EFFECTS_VOLUME = "SoundEffectsVolume";
-
-
     [SerializeField] private AudioClipRefsSO audioClipRefsSO;
     private Player player; // default position to play sound effects
 
@@ -19,21 +16,21 @@ public class SoundManager : PersistentManager<SoundManager>
     protected override void Awake()
     {
         base.Awake();
-        
-        // Try to get volume from DataManager first, fallback to PlayerPrefs
-        if (DataManager.Instance != null && DataManager.Instance.UserPreferences != null)
-        {
-            volume = DataManager.Instance.UserPreferences.sfxVolume;
-        }
-        else
-        {
-            volume = PlayerPrefs.GetFloat(PLAYER_PREFS_SOUND_EFFECTS_VOLUME, 1f);
-        }
     }
 
     private void Start()
     {
+        volume = DataManager.Instance.UserPreferences.sfxVolume;
+
         GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
+        DataManager.Instance.OnUserPreferencesChanged += DataManager_OnUserPreferencesChanged;
+
+        GameManager_OnStateChanged(GameManager.State.None, GameManager.Instance.CurrentState);
+    }
+
+    private void DataManager_OnUserPreferencesChanged(UserPreferencesData obj)
+    {
+        SetVolume(volume);
     }
 
     private void GameManager_OnStateChanged(GameManager.State oldState, GameManager.State newState)
@@ -227,20 +224,10 @@ public class SoundManager : PersistentManager<SoundManager>
         AudioSource.PlayClipAtPoint(audioClip, position, volumeMultiplier * volume);
     }
 
-    public void SetVolume(float volume)
+    public void SetVolume(float newVolume)
     {
-        this.volume = volume;
-
-        // Save to DataManager if available, otherwise use PlayerPrefs
-        if (DataManager.Instance != null)
-        {
-            DataManager.Instance.UpdateSfxVolume(volume);
-        }
-        else
-        {
-            PlayerPrefs.SetFloat(PLAYER_PREFS_SOUND_EFFECTS_VOLUME, volume);
-            PlayerPrefs.Save();
-        }
+        volume = newVolume;
+        Debug.Log($"Sound volume changed to {newVolume}");
     }
 
     public float GetVolume()

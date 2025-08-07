@@ -47,15 +47,14 @@ public class DataManager : PersistentManager<DataManager>
             enableAutoSave = config.enableAutoSave;
             autoSaveInterval = config.autoSaveInterval;
         }
-        
+
         InitializeData();
         LoadGameData();
     }
     
     private void Start()
     {
-        // Initialize level data if not exists
-        InitializeLevelData();
+        InitializeLevelData(); // Initialize level data if not exists
 
         // Auto-save setup
         autoSaveTimer = autoSaveInterval;
@@ -109,7 +108,7 @@ public class DataManager : PersistentManager<DataManager>
     {
         if (currentSaveData == null)
         {
-            currentSaveData = new SaveGameData();
+            currentSaveData = new();
             hasUnsavedChanges = true;
         }
     }
@@ -616,21 +615,6 @@ public class DataManager : PersistentManager<DataManager>
         return true;
     }
     
-    public int GetCurrentPageIndex()
-    {
-        if (levelPageConfig == null)
-            return 0;
-        
-        // Find the highest unlocked page
-        for (int i = levelPageConfig.levelPages.Count - 1; i >= 0; i--)
-        {
-            if (IsPageUnlocked(i))
-                return i;
-        }
-        
-        return 0;
-    }
-
     public int GetNumberOfPages()
     {
         return levelPageConfig.levelPages.Count;
@@ -723,6 +707,16 @@ public class DataManager : PersistentManager<DataManager>
         {
             Debug.LogError($"DataManager: Failed to delete save data - {e.Message}");
         }
+    }
+
+    public void ResetUserPreferences()
+    {
+        currentSaveData.userPreferences = new();
+        
+        hasUnsavedChanges = true;
+        OnUserPreferencesChanged?.Invoke(currentSaveData.userPreferences);
+        
+        Debug.Log("DataManager: User preferences reset to defaults");
     }
     
     public void ForceImmediateSave()
