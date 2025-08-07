@@ -18,20 +18,20 @@ public class GameWonUI : MonoBehaviour
         homeButton.onClick.AddListener(() =>
         {
             Hide();
-            SceneLoader.Load(SceneLoader.Scene.MainMenuScene);
+            SceneLoader.Load(Scene.MainMenuScene);
         });
 
         nextLevelButton.onClick.AddListener(() =>
         {
             Hide();
             Debug.Log("GameWonUI -> Next Level Button Clicked");
-            //SceneLoader.ReloadCurrentScene();
+            SceneLoader.Load(DataManager.Instance.GetNextLevelID());
         });
 
         exitButton.onClick.AddListener(() =>
         {
             Hide();
-            SceneLoader.Load(SceneLoader.Scene.ChooseLevelScene);
+            SceneLoader.Load(Scene.ChooseLevelScene);
         });
     }
 

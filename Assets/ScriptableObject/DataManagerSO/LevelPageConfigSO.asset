@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bae9174cf83030548a4222e9382bff5d, type: 3}
+  m_Name: LevelPageConfigSO
+  m_EditorClassIdentifier: 
+  levelPages:
+  - pageName: 1
+    pageNumber: 1
+    normalLevels:
+    - levelId: 6
+      displayName: Pirate Ship Scene
+      levelNumber: 1
+      totalCollectibles: 0
+      unlockedByDefault: 1
+      prerequisiteLevels: []
+    - levelId: 5
+      displayName: Palm Tree Island Scene
+      levelNumber: 2
+      totalCollectibles: 10
+      unlockedByDefault: 1
+      prerequisiteLevels: []
+    bossLevel:
+      levelId: 7
+      displayName: Boss Scene
+      levelNumber: 0
+      totalCollectibles: 10
+      unlockedByDefault: 1
+      prerequisiteLevels: []
+  - pageName: 2
+    pageNumber: 2
+    normalLevels:
+    - levelId: 5
+      displayName: Palm Tree Island Scene
+      levelNumber: 1
+      totalCollectibles: 10
+      unlockedByDefault: 1
+      prerequisiteLevels: []
+    - levelId: 6
+      displayName: Pirate Ship Scene
+      levelNumber: 2
+      totalCollectibles: 0
+      unlockedByDefault: 1
+      prerequisiteLevels: []
+    - levelId: 8
+      displayName: Tron Scene
+      levelNumber: 3
+      totalCollectibles: 0
+      unlockedByDefault: 1
+      prerequisiteLevels: []
+    bossLevel:
+      levelId: 7
+      displayName: Boss Scene
+      levelNumber: 0
+      totalCollectibles: 10
+      unlockedByDefault: 0
+      prerequisiteLevels: []
+  autoUnlockFirstLevel: 1
+  linearProgression: 1
+  unlockAllLevel: 1

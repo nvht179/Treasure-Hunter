@@ -17,7 +17,7 @@ public class MainMenuUI : MonoBehaviour
     {
         playButton.onClick.AddListener(() =>
         {
-            SceneLoader.Load(SceneLoader.Scene.ChooseLevelScene);
+            SceneLoader.Load(Scene.ChooseLevelScene);
         });
 
         settingsButton.onClick.AddListener(() =>
@@ -33,12 +33,12 @@ public class MainMenuUI : MonoBehaviour
 
         tutorialButton.onClick.AddListener(() =>
         {
-            SceneLoader.Load(SceneLoader.Scene.GameScene);
+            SceneLoader.Load(Scene.GameScene);
         });
 
         creditsButton.onClick.AddListener(() =>
         {
-            SceneLoader.Load(SceneLoader.Scene.CreditsScene);
+            SceneLoader.Load(Scene.CreditsScene);
         });
     }
 }

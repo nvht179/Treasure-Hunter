@@ -1,11 +1,8 @@
 using System.Collections;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class MusicManager : PersistentManager<MusicManager>
 {
-    private const string PLAYER_PREFS_MUSIC_VOLUME = "MusicVolume";
-
     [SerializeField] private MusicClipRefsSO musicClipRefsSO;
 
     private AudioSource backgroundMusicSource;
@@ -18,14 +15,13 @@ public class MusicManager : PersistentManager<MusicManager>
     {
         base.Awake();
 
-        volume = PlayerPrefs.GetFloat(PLAYER_PREFS_MUSIC_VOLUME, 0.3f);
+        volume = DataManager.Instance.UserPreferences.musicVolume;
 
         backgroundMusicSource = gameObject.AddComponent<AudioSource>();
         gameMusicSource = gameObject.AddComponent<AudioSource>();
 
         SetupMusicSource(backgroundMusicSource);
         SetupMusicSource(gameMusicSource);
-
 
         GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
     }
@@ -148,13 +144,16 @@ public class MusicManager : PersistentManager<MusicManager>
 
     public void SetVolume(float newVolume)
     {
+        Debug.Log("Volume changed.");
         volume = newVolume;
-
         backgroundMusicSource.volume = volume;
         gameMusicSource.volume = volume;
 
-        PlayerPrefs.SetFloat(PLAYER_PREFS_MUSIC_VOLUME, volume);
-        PlayerPrefs.Save();
+        // Save to DataManager if available
+        if (DataManager.Instance != null)
+        {
+            DataManager.Instance.UpdateMusicVolume(volume);
+        }
     }
 
     public float GetVolume()

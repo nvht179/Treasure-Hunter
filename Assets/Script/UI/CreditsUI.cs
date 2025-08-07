@@ -9,7 +9,7 @@ public class CreditsUI : MonoBehaviour
 
     private void Awake() {
         backButton.onClick.AddListener(() => {
-            SceneLoader.Load(SceneLoader.Scene.MainMenuScene);
+            SceneLoader.Load(Scene.MainMenuScene);
         });
     }
 }

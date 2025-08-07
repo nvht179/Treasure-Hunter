@@ -6,8 +6,6 @@ using Random = UnityEngine.Random;
 
 public class SoundManager : PersistentManager<SoundManager>
 {
-
-
     private const string PLAYER_PREFS_SOUND_EFFECTS_VOLUME = "SoundEffectsVolume";
 
 
@@ -21,7 +19,16 @@ public class SoundManager : PersistentManager<SoundManager>
     protected override void Awake()
     {
         base.Awake();
-        volume = PlayerPrefs.GetFloat(PLAYER_PREFS_SOUND_EFFECTS_VOLUME, 1f);
+        
+        // Try to get volume from DataManager first, fallback to PlayerPrefs
+        if (DataManager.Instance != null && DataManager.Instance.UserPreferences != null)
+        {
+            volume = DataManager.Instance.UserPreferences.sfxVolume;
+        }
+        else
+        {
+            volume = PlayerPrefs.GetFloat(PLAYER_PREFS_SOUND_EFFECTS_VOLUME, 1f);
+        }
     }
 
     private void Start()
@@ -224,8 +231,16 @@ public class SoundManager : PersistentManager<SoundManager>
     {
         this.volume = volume;
 
-        PlayerPrefs.SetFloat(PLAYER_PREFS_SOUND_EFFECTS_VOLUME, volume);
-        PlayerPrefs.Save();
+        // Save to DataManager if available, otherwise use PlayerPrefs
+        if (DataManager.Instance != null)
+        {
+            DataManager.Instance.UpdateSfxVolume(volume);
+        }
+        else
+        {
+            PlayerPrefs.SetFloat(PLAYER_PREFS_SOUND_EFFECTS_VOLUME, volume);
+            PlayerPrefs.Save();
+        }
     }
 
     public float GetVolume()

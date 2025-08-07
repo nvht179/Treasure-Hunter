@@ -4,22 +4,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum Scene
+{
+    None,
+    MainMenuScene,
+    LoadingScene,
+    ChooseLevelScene,
+    GameScene,
+    PalmTreeIslandScene,
+    PirateShipScene,
+    BossScene,
+    TutorialScene,
+    CreditsScene,
+}
+
 public static class SceneLoader
 {
     private class LoadingMonoBehaviour : MonoBehaviour { }
-
-    public enum Scene
-    {
-        MainMenuScene,
-        LoadingScene,
-        ChooseLevelScene,
-        GameScene,
-        PalmTreeIslandScene,
-        PirateShipScene,
-        BossScene,
-        TutorialScene,
-        CreditsScene,
-    }
 
     public const Scene firstNormalLevelScene = Scene.PalmTreeIslandScene;
     public const Scene firstBossLevelScene = Scene.BossScene;

@@ -18,7 +18,7 @@ public class GameLostUI : MonoBehaviour
         homeButton.onClick.AddListener(() =>
         {
             Hide();
-            SceneLoader.Load(SceneLoader.Scene.MainMenuScene);
+            SceneLoader.Load(Scene.MainMenuScene);
         });
 
         restartButton.onClick.AddListener(() =>
@@ -30,7 +30,7 @@ public class GameLostUI : MonoBehaviour
         exitButton.onClick.AddListener(() =>
         {
             Hide();
-            SceneLoader.Load(SceneLoader.Scene.ChooseLevelScene);
+            SceneLoader.Load(Scene.ChooseLevelScene);
         });
     }
 

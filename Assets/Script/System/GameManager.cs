@@ -22,6 +22,11 @@ public class GameManager : PersistentManager<GameManager>
 
     [SerializeField] private State state;
     public State CurrentState => state;
+    
+    // Game session data (not persisted)
+    private int currentScore;
+    private float levelLastPlayTimeStamp;
+    private float levelPlayedTime;
 
     protected override void Awake()
     {
@@ -55,7 +60,7 @@ public class GameManager : PersistentManager<GameManager>
         GamePauseManager.Instance.OnReturnToMainMenuRequested += () =>
         {
             SetState(State.WaitingToStart);
-            SceneLoader.Load(SceneLoader.Scene.MainMenuScene);
+            SceneLoader.Load(Scene.MainMenuScene);
         };
     }
 
@@ -65,14 +70,14 @@ public class GameManager : PersistentManager<GameManager>
         SceneLoader.OnNonGameSceneLoaded -= HandleNonGameSceneLoaded;
     }
 
-    private void HandleNonGameSceneLoaded(SceneLoader.Scene loadedScene)
+    private void HandleNonGameSceneLoaded(Scene loadedScene)
     {
         GameInput.Instance.EnableActionMap(GameInput.ActionMap.UI);
         SetState(State.WaitingToStart);
         Debug.Log("GameManager: Non-game scene found.");
     }
 
-    private void HandleGameSceneLoaded(SceneLoader.Scene loadedScene)
+    private void HandleGameSceneLoaded(Scene loadedScene)
     {
         // Now the target scene has finished loading!
         var player = FindObjectOfType<Player>();
@@ -87,6 +92,17 @@ public class GameManager : PersistentManager<GameManager>
         Debug.Log("GameManager: Player found in GAME scene, setting up game state.");
         player.OnDead += HandlePlayerDead;
         player.OnWon += HandlePlayerWon;
+        
+        // Initialize game session
+        currentScore = 0;
+        levelLastPlayTimeStamp = Time.time;
+        
+        // Let DataManager handle level tracking
+        if (DataManager.Instance != null)
+        {
+            DataManager.Instance.StartLevel(loadedScene);
+        }
+        
         SetState(State.GamePlaying);
 
         GameInput.Instance.EnableActionMap(GameInput.ActionMap.Player);
@@ -106,8 +122,7 @@ public class GameManager : PersistentManager<GameManager>
             SoundManager.Instance.AttachDoorSound(door);
             door.OnDoorInteracted += (_, __) =>
             {
-                Debug.Log("Door interacted with, player won.");
-                SetState(State.LevelWon);
+                HandlePlayerWon();
             };
         }
     }
@@ -115,11 +130,14 @@ public class GameManager : PersistentManager<GameManager>
     private void HandlePlayerWon()
     {
         SetState(State.LevelWon);
+        DataManager.Instance.CompleteCurrentLevel(currentScore, levelPlayedTime);
     }
 
     private void HandlePlayerDead(object sender, EventArgs e)
     {
         SetState(State.LevelLost);
+        levelPlayedTime = Time.time - levelLastPlayTimeStamp;
+        DataManager.Instance.RecordPlayerDeath();
     }
 
     private void GameInput_OnResumeAction(object sender, EventArgs e)
@@ -127,6 +145,7 @@ public class GameManager : PersistentManager<GameManager>
         if(state == State.Paused)
         {
             SetState(State.GamePlaying);
+            levelLastPlayTimeStamp = Time.time;
         } 
         else
         {
@@ -140,6 +159,7 @@ public class GameManager : PersistentManager<GameManager>
         if (state == State.GamePlaying)
         {
             SetState(State.Paused);
+            levelPlayedTime += Time.time - levelLastPlayTimeStamp;
         }
         else
         {
@@ -149,12 +169,20 @@ public class GameManager : PersistentManager<GameManager>
 
     public int GetScore()
     {
-        return 0;
+        return currentScore;
     }
 
     public string GetTimeTaken()
     {
-        return "hh:mm:ss";
+        levelPlayedTime = Time.time - levelLastPlayTimeStamp;
+        TimeSpan timeSpan = TimeSpan.FromSeconds(levelPlayedTime);
+        return $"{timeSpan.Minutes:D2}:{timeSpan.Seconds:D2}";
+    }
+    
+    public void AddScore(int points)
+    {
+        currentScore += points;
+        Debug.Log($"GameManager: Score updated to {currentScore}");
     }
 
     private void SetState(State newState)

@@ -477,25 +477,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 673e2885eae3c92469a1cdc71eea98d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelPageConfig: {fileID: 11400000, guid: ac4ecdd6f19d4514bb9426c18cba076e, type: 2}
   levelButtonPrefab: {fileID: 5516044556767031805, guid: 1912325971e65ec4e9d2bc832c14af2d, type: 3}
   normalLevelContainer: {fileID: 1741307233}
   bossLevelButton: {fileID: 1632217089}
-  pageEntries:
-  - normalLevels:
-    - scene: 4
-    - scene: 5
-    bossLevel:
-      scene: 6
-  - normalLevels:
-    - scene: 3
-    - scene: 3
-    bossLevel:
-      scene: 6
   tutorialButton: {fileID: 324990121}
   backButton: {fileID: 855170855}
   nextPageButton: {fileID: 438768991}
   previousPageButton: {fileID: 1451479589}
-  pageTitleText: {fileID: 854255273}
+  pageNumberText: {fileID: 0}
+  pageNameText: {fileID: 0}
 --- !u!1001 &308364548
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1409,7 +1400,7 @@ GameObject:
   - component: {fileID: 854255274}
   - component: {fileID: 854255273}
   m_Layer: 5
-  m_Name: PageText
+  m_Name: PageNumberText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

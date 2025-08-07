@@ -126,11 +126,6 @@ public class SettingsMenuUI : PersistentManager<SettingsMenuUI>
         activeCategory = selected;
     }
 
-    public void SetVolume(float volume)
-    {
-        MusicManager.Instance.SetVolume(volume);
-    }
-
     private void UpdateVisual()
     {
         moveLeftText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Move_Left);

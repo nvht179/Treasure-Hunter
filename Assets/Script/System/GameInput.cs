@@ -47,9 +47,20 @@ public class GameInput : PersistentManager<GameInput>
 
         playerInputActions = new PlayerInputActions();
 
-        if (PlayerPrefs.HasKey(PLAYER_PREFS_BINDINGS))
+        // Try to load bindings from DataManager first, fallback to PlayerPrefs
+        string bindingsJson = "";
+        if (DataManager.Instance != null && DataManager.Instance.UserPreferences != null)
         {
-            playerInputActions.LoadBindingOverridesFromJson(PlayerPrefs.GetString(PLAYER_PREFS_BINDINGS));
+            bindingsJson = DataManager.Instance.UserPreferences.inputBindingsJson;
+        }
+        else if (PlayerPrefs.HasKey(PLAYER_PREFS_BINDINGS))
+        {
+            bindingsJson = PlayerPrefs.GetString(PLAYER_PREFS_BINDINGS);
+        }
+
+        if (!string.IsNullOrEmpty(bindingsJson))
+        {
+            playerInputActions.LoadBindingOverridesFromJson(bindingsJson);
         }
 
         playerInputActions.Player.Attack.performed += AttackOnPerformed;
@@ -258,6 +269,7 @@ public class GameInput : PersistentManager<GameInput>
 
     private bool IsDuplicate(string path, InputAction skipAction)
     {
+        // TODO: this is still insufficient
         return playerInputActions.asset
             .bindings
             .Where(b => !b.isPartOfComposite)
@@ -266,8 +278,18 @@ public class GameInput : PersistentManager<GameInput>
 
     private void SaveOverrides()
     {
-        PlayerPrefs.SetString(PLAYER_PREFS_BINDINGS, playerInputActions.SaveBindingOverridesAsJson());
-        PlayerPrefs.Save();
+        string bindingsJson = playerInputActions.SaveBindingOverridesAsJson();
+        
+        // Save to DataManager if available, otherwise use PlayerPrefs
+        if (DataManager.Instance != null)
+        {
+            DataManager.Instance.UpdateInputBindings(bindingsJson);
+        }
+        else
+        {
+            PlayerPrefs.SetString(PLAYER_PREFS_BINDINGS, bindingsJson);
+            PlayerPrefs.Save();
+        }
     }
 
 }
