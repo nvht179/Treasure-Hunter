@@ -16,45 +16,39 @@ MonoBehaviour:
   - pageName: 1
     pageNumber: 1
     normalLevels:
-    - levelId: 6
-      displayName: Pirate Ship Scene
+    - levelId: 8
+      displayName: Tutorial Scene
       levelNumber: 1
       totalCollectibles: 0
-      unlockedByDefault: 1
+      unlockedByDefault: 0
       prerequisiteLevels: []
     - levelId: 5
       displayName: Palm Tree Island Scene
       levelNumber: 2
       totalCollectibles: 10
-      unlockedByDefault: 1
+      unlockedByDefault: 0
       prerequisiteLevels: []
     bossLevel:
       levelId: 7
       displayName: Boss Scene
       levelNumber: 0
       totalCollectibles: 10
-      unlockedByDefault: 1
+      unlockedByDefault: 0
       prerequisiteLevels: []
   - pageName: 2
     pageNumber: 2
     normalLevels:
     - levelId: 5
       displayName: Palm Tree Island Scene
-      levelNumber: 1
+      levelNumber: 3
       totalCollectibles: 10
-      unlockedByDefault: 1
+      unlockedByDefault: 0
       prerequisiteLevels: []
     - levelId: 6
       displayName: Pirate Ship Scene
-      levelNumber: 2
+      levelNumber: 4
       totalCollectibles: 0
-      unlockedByDefault: 1
-      prerequisiteLevels: []
-    - levelId: 8
-      displayName: Tron Scene
-      levelNumber: 3
-      totalCollectibles: 0
-      unlockedByDefault: 1
+      unlockedByDefault: 0
       prerequisiteLevels: []
     bossLevel:
       levelId: 7
@@ -65,4 +59,4 @@ MonoBehaviour:
       prerequisiteLevels: []
   autoUnlockFirstLevel: 1
   linearProgression: 1
-  unlockAllLevel: 1
+  unlockAllLevel: 0

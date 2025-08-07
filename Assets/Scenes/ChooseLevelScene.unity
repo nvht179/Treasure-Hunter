@@ -477,7 +477,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 673e2885eae3c92469a1cdc71eea98d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelPageConfig: {fileID: 11400000, guid: ac4ecdd6f19d4514bb9426c18cba076e, type: 2}
   levelButtonPrefab: {fileID: 5516044556767031805, guid: 1912325971e65ec4e9d2bc832c14af2d, type: 3}
   normalLevelContainer: {fileID: 1741307233}
   bossLevelButton: {fileID: 1632217089}
@@ -485,7 +484,7 @@ MonoBehaviour:
   backButton: {fileID: 855170855}
   nextPageButton: {fileID: 438768991}
   previousPageButton: {fileID: 1451479589}
-  pageNumberText: {fileID: 0}
+  pageNumberText: {fileID: 854255273}
   pageNameText: {fileID: 0}
 --- !u!1001 &308364548
 PrefabInstance:

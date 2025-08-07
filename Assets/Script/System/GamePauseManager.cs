@@ -31,9 +31,7 @@ public class GamePauseManager : PersistentManager<GamePauseManager>
         });
         restartButton.onClick.AddListener(() =>
         {
-            Hide();
             SceneLoader.ReloadCurrentScene();
-            OnResumeRequested?.Invoke();
         });
         settingsButton.onClick.AddListener(() =>
         {
@@ -103,8 +101,7 @@ public class GamePauseManager : PersistentManager<GamePauseManager>
         settingsButton.gameObject.SetActive(true);
         mainMenuButton.gameObject.SetActive(true);
         blurBackground.gameObject.SetActive(true);
-
-        //pauseButton.interactable = false;
+        pauseButton.gameObject.SetActive(true);
     }
 
     private void Hide()
@@ -115,8 +112,7 @@ public class GamePauseManager : PersistentManager<GamePauseManager>
         settingsButton.gameObject.SetActive(false);
         mainMenuButton.gameObject.SetActive(false);
         blurBackground.gameObject.SetActive(false);
-
-        //pauseButton.interactable = true;
+        pauseButton.gameObject.SetActive(true);
     }
 
     private void HideAll()

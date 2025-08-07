@@ -127,7 +127,7 @@ public static class SceneLoader
 
     public static void ReloadCurrentScene()
     {
-        Debug.Log($"Reloading current scene: {currentScene.ToString()}");
+        Debug.Log($"Reloading current scene: {currentScene}");
         Load(currentScene);
     }
 
