@@ -67,6 +67,7 @@ namespace Script.Enemy.BossStar
         private int moveDirection; // 1 = right, -1 = left
 
         private bool isActive;
+        private bool isInvincible;
 
         public Player Player => player;
         public float WanderSpeed => wanderSpeed;
@@ -232,6 +233,16 @@ namespace Script.Enemy.BossStar
         public bool IsActive()
         {
             return isActive;
+        }
+
+        public void SetInvincible(bool invincible)
+        {
+            isInvincible = invincible;
+        }
+
+        public bool IsInvincible()
+        {
+            return isInvincible;
         }
 
         private void OnDrawGizmos()

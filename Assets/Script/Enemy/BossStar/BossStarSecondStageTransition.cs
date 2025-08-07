@@ -14,6 +14,7 @@ namespace Script.Enemy.BossStar
         public override void EnterState()
         {
             invincibleTimer = BossStar.InvincibleDuration;
+            BossStar.SetInvincible(true);
         }
 
         public override void UpdateState()
@@ -23,7 +24,13 @@ namespace Script.Enemy.BossStar
             if (invincibleTimer < 0)
             {
                 BossStar.SwitchState(BossStar.SecondStageActive);
+                BossStar.SetInvincible(false);
             }
+        }
+
+        public override void TakeDamage(IDamageable.DamageInfo offenderInfo)
+        {
+            // invincible - does not take damage
         }
     }
 }

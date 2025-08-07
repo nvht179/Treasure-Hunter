@@ -14,6 +14,7 @@ namespace Script.Enemy.BossStar
 
         public override void EnterState()
         {
+            BossStar.SetInvincible(true);
         }
 
         public override void UpdateState()
@@ -28,6 +29,7 @@ namespace Script.Enemy.BossStar
             else
             {
                 BossStar.SwitchState(BossStar.ThirdStageActive);
+                BossStar.SetInvincible(false);
             }
         }
 

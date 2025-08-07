@@ -5,9 +5,11 @@ namespace Script.Enemy.BossStar
     public class BossStarVisual : MonoBehaviour
     {
         [SerializeField] private BossStarContext bossStar;
+        [SerializeField] private Transform shield;
+
         private SpriteRenderer spriteRenderer;
         private Animator animator;
-        
+
         private static readonly int IsActive = Animator.StringToHash("IsActive");
         private static readonly int DeadHit = Animator.StringToHash("DeadHit");
 
@@ -35,8 +37,17 @@ namespace Script.Enemy.BossStar
             HandleFlipX();
             var velocity = bossStar.GetVelocity();
             var isActive = bossStar.IsActive();
+            var isInvincible = bossStar.IsInvincible();
 
             animator.SetBool(IsActive, isActive || velocity != Vector2.zero);
+            if(isInvincible)
+            {
+                shield.gameObject.SetActive(true);
+            }
+            else
+            {
+                shield.gameObject.SetActive(false);
+            }
         }
 
         private void HandleFlipX()
