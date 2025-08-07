@@ -24,4 +24,4 @@ MonoBehaviour:
   stackable: 1
   maxStack: 0
   buyPrice: 0
-  value: 10
+  value: 5

@@ -33,7 +33,7 @@ public class TotemHead : ShooterTrap, IDamageable {
             if (TryGetComponent<Collider2D>(out var col2d)) {
                 col2d.enabled = false;
             }
-            CoinSpawner.Instance.SpawnCoin(transform.position);
+            ResourceSpawner.Instance.SpawnMoney(transform.position, 1, 20);
             Destroy(gameObject, 2f);
         }
     }

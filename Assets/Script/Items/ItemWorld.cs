@@ -3,14 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemWorld : MonoBehaviour {
-    public static ItemWorld SpawnItemWorld(Vector3 position, Item item, Transform prefab = null) {
+    public static ItemWorld SpawnItemWorld(Vector3 position, Item item) {
         Transform itemTransform;
-        if (prefab) {
-            itemTransform = Instantiate(prefab, position, Quaternion.identity);
-        }
-        else {
-            itemTransform = Instantiate(item.itemSO.prefab, position, Quaternion.identity);
-        }
+        itemTransform = Instantiate(item.itemSO.prefab, position, Quaternion.identity);
 
         // Find the foreground text component
         Transform foregroundTransform = itemTransform.Find("QuantityCanvas/number/foreground");

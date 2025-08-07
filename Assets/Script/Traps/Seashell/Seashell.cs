@@ -29,7 +29,7 @@ public class Seashell : ShooterTrap, IDamageable {
             isDead = true;
             OnDestroyed?.Invoke(this, EventArgs.Empty);
             StopShooting();
-            CoinSpawner.Instance.SpawnCoin(transform.position);
+            ResourceSpawner.Instance.SpawnMoney(transform.position, 10, 15);
             Destroy(gameObject, 2f);
         }
     }

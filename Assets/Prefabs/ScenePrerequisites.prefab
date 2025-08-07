@@ -2720,6 +2720,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6210624782623218792, guid: e3874df57690bff4ba8d78644a801280, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 6469916356800574317, guid: e3874df57690bff4ba8d78644a801280, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -3199,6 +3203,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2184428069752803045}
     m_Modifications:
+    - target: {fileID: 2130983328498152341, guid: c24922e846db3fe4abfd4977f267bebb, type: 3}
+      propertyPath: CoinSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 0e5321dedbae7ae4d9320fbe403ac926, type: 2}
+    - target: {fileID: 2130983328498152341, guid: c24922e846db3fe4abfd4977f267bebb, type: 3}
+      propertyPath: RedGemSO
+      value: 
+      objectReference: {fileID: 11400000, guid: c2a00535137a93a4984cd3d4e0fc3d69, type: 2}
+    - target: {fileID: 2130983328498152341, guid: c24922e846db3fe4abfd4977f267bebb, type: 3}
+      propertyPath: GreenGemSO
+      value: 
+      objectReference: {fileID: 11400000, guid: b1331c7dbb9db4943a9e9ee4ecd49aa6, type: 2}
+    - target: {fileID: 2130983328498152341, guid: c24922e846db3fe4abfd4977f267bebb, type: 3}
+      propertyPath: GoldenKeySO
+      value: 
+      objectReference: {fileID: 11400000, guid: 4cd782762c7e07c4d948a27f18e7cfc3, type: 2}
     - target: {fileID: 7344690673371360276, guid: c24922e846db3fe4abfd4977f267bebb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3241,7 +3261,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8552361038542513537, guid: c24922e846db3fe4abfd4977f267bebb, type: 3}
       propertyPath: m_Name
-      value: CoinSpawner
+      value: ResourceSpawner
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
