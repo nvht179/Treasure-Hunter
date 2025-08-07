@@ -78,39 +78,33 @@ public class SettingsMenuUI : PersistentManager<SettingsMenuUI>
 
         resetButton.onClick.AddListener(() =>
         {
-            bool resetSuccessfully = false;
-            DialogManager.Instance.ShowDialog(new() {
+            DialogManager.Instance.ShowDialog(new DialogData {
                 Title = "Reset all preferences!",
                 Message = "Are you sure? This action cannot be undone!",
                 Buttons = new List<DialogButton> { 
-                    new() {
-                        Label = "",
+                    new DialogButton {
+                        Label = "Yes",
                         ButtonType = DialogButtonType.Accept,
                         Callback = () => {
+                            // Reset the preferences
                             DataManager.Instance.ResetUserPreferences();
-                            resetSuccessfully = true;
+                            
+                            // Update the UI to reflect the reset values
+                            UpdateVisual();
+                            
+                            // Delay the success dialog to avoid nesting issues
+                            StartCoroutine(ShowResetSuccessDialog());
                         }
                     },
-                    new() {
-                        Label = "",
+                    new DialogButton {
+                        Label = "No",
                         ButtonType = DialogButtonType.Decline,
                         Callback = () => {
-                            Debug.Log("Decline resetting preferences!");
+                            Debug.Log("Reset cancelled by user.");
                         }
                     }
                 },
             });
-
-            if (resetSuccessfully)
-            {
-                UpdateVisual();
-                DialogManager.Instance.ShowDialog(new()
-                {
-                    Title = "Reset successfully!",
-                    Message = "",
-                    Buttons = {}
-                });
-            }
         });
 
         musicVolumeSlider.onValueChanged.AddListener(sliderValue =>
@@ -209,6 +203,25 @@ public class SettingsMenuUI : PersistentManager<SettingsMenuUI>
     private void HidePressToRebindKey()
     {
         pressToRebindKeyTransform.gameObject.SetActive(false);
+    }
+
+    private IEnumerator ShowResetSuccessDialog()
+    {
+        // Wait one frame to ensure the previous dialog is fully closed
+        yield return null;
+        
+        DialogManager.Instance.ShowDialog(new DialogData
+        {
+            Title = "Reset successfully!",
+            Message = "All preferences have been reset to default values.",
+            Buttons = new List<DialogButton> {
+                new DialogButton {
+                    Label = "OK",
+                    ButtonType = DialogButtonType.Accept,
+                    Callback = () => { Debug.Log("Reset completed successfully."); }
+                }
+            }
+        });
     }
 
     private void RebindBinding(GameInput.Binding binding)
