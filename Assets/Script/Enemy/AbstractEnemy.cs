@@ -38,7 +38,7 @@ namespace Script.Enemy
                 Enemy = this
             });
         }
-        public void TakeDamage(IDamageable.DamageInfo offenderInfo)
+        public virtual void TakeDamage(IDamageable.DamageInfo offenderInfo)
         {
         }
     }

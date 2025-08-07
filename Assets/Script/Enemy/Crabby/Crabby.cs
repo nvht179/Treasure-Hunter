@@ -49,6 +49,7 @@ public class Crabby : AbstractEnemy, IDamageable
     private float deadHitTimer;
     private bool hasAttacked;
     private bool isRecharging;
+    private Vector3 initialAttackOriginLocalPosition;
 
     private const float EyeHeightToBodyRatio = 0.75f;
     private const float GroundCheckDistance = 0.1f;
@@ -63,6 +64,7 @@ public class Crabby : AbstractEnemy, IDamageable
         state = CrabbyState.Wandering;
         CurrentHealth = MaxHealth;
         isRecharging = false;
+        initialAttackOriginLocalPosition = attackOrigin.localPosition;
     }
 
     private void Update()
@@ -70,8 +72,9 @@ public class Crabby : AbstractEnemy, IDamageable
         ManageStates();
         groundAndWallCheckPosition = new Vector3(transform.position.x + moveDirection * groundAndWallCheckOriginOffset,
             transform.position.y, transform.position.z);
-        attackOrigin.position = new Vector3(moveDirection * attackOrigin.position.x, attackOrigin.position.y,
-            attackOrigin.position.z);
+        var attackDirection = (Player.transform.position - transform.position).x < 0 ? -1 : 1;
+        attackOrigin.localPosition = new Vector3(attackDirection * initialAttackOriginLocalPosition.x, initialAttackOriginLocalPosition.y,
+            initialAttackOriginLocalPosition.z);
     }
 
     private void FixedUpdate()
@@ -130,13 +133,13 @@ public class Crabby : AbstractEnemy, IDamageable
         {
             if (playerCollider != null)
             {
-                var damageable = playerCollider.GetComponent<IDamageable>();
+                var player = playerCollider.GetComponent<Player>();
                 var offenderInfo = new IDamageable.DamageInfo
                 {
                     Damage = attackDamage
                     // ignore other fields because player attack does not knockback enemies
                 };
-                damageable?.TakeDamage(offenderInfo);
+                player?.TakeDamage(offenderInfo);
             }
         }
 
@@ -145,7 +148,7 @@ public class Crabby : AbstractEnemy, IDamageable
         hasAttacked = true;
     }
 
-    public void TakeDamage(IDamageable.DamageInfo offender)
+    public override void TakeDamage(IDamageable.DamageInfo offender)
     {
         CurrentHealth = math.clamp(CurrentHealth - offender.Damage, 0, MaxHealth);
         OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs

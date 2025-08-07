@@ -19,7 +19,7 @@ namespace Script.Enemy.PinkStar
 
         private const float GroundCheckDistance = 0.1f;
         private const float GroundAndWallCheckAheadDistance = 0.7f;
-        public const float AttackRadius = 0.3f;
+        public const float AttackRadius = 0.4f;
         public const float HitRecoverTime = 0.5f; // time to recover from being hit
         public const float DeadShowTime = 0.5f; // time for playing the DeadGround animation and showing enemy corpse
 
@@ -191,7 +191,7 @@ namespace Script.Enemy.PinkStar
             return true;
         }
 
-        public void TakeDamage(IDamageable.DamageInfo offenderInfo)
+        public override void TakeDamage(IDamageable.DamageInfo offenderInfo)
         {
             currentState.TakeDamage(offenderInfo);
             OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs

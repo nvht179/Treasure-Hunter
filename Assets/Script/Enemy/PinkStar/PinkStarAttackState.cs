@@ -28,13 +28,14 @@ namespace Script.Enemy.PinkStar
         public void HandleAttack()
         {
             var enemiesInRange = new Collider2D[10];
-            _ = Physics2D.OverlapCircleNonAlloc(PinkStar.Pivot.position, PinkStarStateManager.AttackRadius, enemiesInRange, PinkStar.PlayerLayer);
+            _ = Physics2D.OverlapCircleNonAlloc(PinkStar.Pivot.position, PinkStarStateManager.AttackRadius,
+                enemiesInRange, PinkStar.PlayerLayer);
             foreach (var enemy in enemiesInRange)
             {
                 // make enemy take damage
                 if (enemy != null)
                 {
-                    var damageable = enemy.GetComponent<IDamageable>();
+                    var player = enemy.GetComponent<Player>();
                     var offenderInfo = new IDamageable.DamageInfo
                     {
                         Damage = PinkStar.AttackDamage,
@@ -42,7 +43,11 @@ namespace Script.Enemy.PinkStar
                         Velocity = Rb.velocity,
                         // KnockbackTime as default
                     };
-                    damageable?.TakeDamage(offenderInfo);
+                    if (player != null)
+                    {
+                        player.TakeDamage(offenderInfo);
+                        PinkStar.SwitchState(PinkStar.RechargeState);
+                    }
                 }
             }
         }

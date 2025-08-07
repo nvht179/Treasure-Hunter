@@ -41,7 +41,7 @@ namespace Script.Enemy.PinkStar
 
         private void PinkStarOnDamageTaken(object sender, IDamageable.OnDamageTakenEventArgs e)
         {
-            if (e.CurrentHealth != 0 && (isCharging || isAttacking))
+            if (e.CurrentHealth != 0)
             {
                 StartCoroutine(BlinkCharacter(3, 0.1f));
                 return;
