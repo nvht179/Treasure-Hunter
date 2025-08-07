@@ -24,7 +24,7 @@ public class AudioClipRefsSO : ScriptableObject
     public AudioClip[] shopClose;
     public AudioClip doorOpenClose;
 
-    [HideInInspector]
+    [HideInInspector] 
     public AudioClip[] itemUse; // TODO: can be removed
     public AudioClip[] itemDrop;
     public AudioClip itemBuy;
