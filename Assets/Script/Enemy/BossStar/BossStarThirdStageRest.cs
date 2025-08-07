@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace Script.Enemy.BossStar
@@ -8,6 +9,7 @@ namespace Script.Enemy.BossStar
         private Vector3 fleeTarget;
         private bool isFleeing;
         private float restTimer;
+        private Transform targetedTransform;
 
         public BossStarThirdStageRest(BossStarContext context) : base(context)
         {
@@ -29,17 +31,19 @@ namespace Script.Enemy.BossStar
                 BossStar.SwitchState(BossStar.Dead);
                 return;
             }
-            
+
             if (restTimer < 0)
             {
                 BossStar.SwitchState(BossStar.ThirdStageActive);
                 return;
             }
 
-            if (ShouldFlee())
-            {
-                HandleFlee();
-            }
+            Wander();
+
+            // if (ShouldFlee())
+            // {
+            //     HandleFlee();
+            // }
         }
 
         private bool ShouldFlee()
@@ -77,7 +81,7 @@ namespace Script.Enemy.BossStar
             else
             {
                 BossStar.transform.position = Vector3.MoveTowards(
-                    BossStar.transform.position, 
+                    BossStar.transform.position,
                     fleeTarget,
                     BossStar.FleeSpeed * Time.deltaTime);
             }
@@ -87,13 +91,13 @@ namespace Script.Enemy.BossStar
         {
             var maxDistance = 0f;
             var maxDistanceIndex = 0;
-            
+
             for (var i = 0; i < BossStar.FleePositions.Length; i++)
             {
                 var distance = Vector3.Distance(
-                    BossStar.FleePositions[i].transform.position, 
+                    BossStar.FleePositions[i].transform.position,
                     BossStar.transform.position);
-                    
+
                 if (distance > maxDistance)
                 {
                     maxDistance = distance;
@@ -102,6 +106,27 @@ namespace Script.Enemy.BossStar
             }
 
             return BossStar.FleePositions[maxDistanceIndex].position;
+        }
+
+        private void Wander()
+        {
+            if (targetedTransform == null)
+            {
+                targetedTransform = BossStar.FleePositions[Random.Range(0, BossStar.FleePositions.Length)];
+            }
+            else if (BossStar.transform.position != targetedTransform.position)
+            {
+                BossStar.transform.position = Vector3.MoveTowards(
+                    BossStar.transform.position,
+                    targetedTransform.position,
+                    BossStar.WanderSpeed * Time.deltaTime);
+            }
+            else
+            {
+                var nextPositionsCount = BossStar.FleePositions.Count(t => t != targetedTransform);
+                var randomIndex = Random.Range(0, nextPositionsCount);
+                targetedTransform = BossStar.FleePositions.Where(t => t != targetedTransform).ElementAt(randomIndex);
+            }
         }
     }
 }

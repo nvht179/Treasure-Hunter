@@ -9,7 +9,7 @@ namespace Script.Enemy.BossStar
     public class BossStarContext : MonoBehaviour, IDamageable
     {
         [SerializeField] private float maxHealth;
-        [SerializeField] private float pursueSpeed;
+        [SerializeField] private float wanderSpeed;
         [SerializeField] private float fleeSpeed;
         [SerializeField] private float attackDamage;
         [SerializeField] private float knockbackForce;
@@ -26,7 +26,7 @@ namespace Script.Enemy.BossStar
         [SerializeField] private int secondStageEnemyLimit;
         [SerializeField] private Transform[] enemySpawnPositions;
         [SerializeField] private Transform[] fleePositions;
-        [SerializeField] private Transform centralPosition;
+        [SerializeField] private Transform centralTransform;
         [SerializeField] private FlyingObjectSO[] bulletTypes;
         [SerializeField] private EnemySO[] enemyTypes;
 
@@ -69,7 +69,7 @@ namespace Script.Enemy.BossStar
         private bool isActive;
 
         public Player Player => player;
-        public float PursueSpeed => pursueSpeed;
+        public float WanderSpeed => wanderSpeed;
         public float FleeSpeed => fleeSpeed;
         public float AttackDamage => attackDamage;
         public float KnockbackForce => knockbackForce;
@@ -102,7 +102,7 @@ namespace Script.Enemy.BossStar
             set => moveDirection = value < 0 ? -1 : 1;
         }
 
-        public Transform CentralPosition => centralPosition;
+        public Transform CentralTransform => centralTransform;
 
         private BossStarBaseStage currentState;
         public BossStarFirstStageActive FirstStageActive;

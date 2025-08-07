@@ -30,7 +30,7 @@ namespace Script.Enemy
             set => player = value;
         }
 
-        public void SelfDestroy()
+        public virtual void SelfDestroy()
         {
             Destroy(gameObject);
             OnDestroyed?.Invoke(this, new OnDestroyedEventArgs

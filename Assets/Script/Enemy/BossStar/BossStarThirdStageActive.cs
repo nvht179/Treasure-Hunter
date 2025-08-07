@@ -34,6 +34,14 @@ namespace Script.Enemy.BossStar
                 BossStar.SwitchState(BossStar.ThirdStageRest);
             }
 
+            if (BossStar.transform.position != BossStar.CentralTransform.position)
+            {
+                BossStar.transform.position = Vector3.MoveTowards(
+                    BossStar.transform.position,
+                    BossStar.CentralTransform.position,
+                    BossStar.FleeSpeed * Time.deltaTime);
+            }
+
             var shootPattern = Random.Range(0, 3);
             var repeat = Random.Range(1, BossStarContext.MaxConsecutive + 1);
             switch (shootPattern)
@@ -107,7 +115,7 @@ namespace Script.Enemy.BossStar
             var bulletTypeIndex = Random.Range(0, BossStar.BulletTypes.Length);
             var bulletType = BossStar.BulletTypes[bulletTypeIndex];
             var bulletTransform = Object.Instantiate(bulletType.prefab,
-                BossStar.CentralPosition.position, BossStar.CentralPosition.rotation);
+                BossStar.CentralTransform.position, BossStar.CentralTransform.rotation);
             if (bulletTransform.TryGetComponent<FlyingObject>(out var bullet))
             {
                 bullet.SetDirection(direction);

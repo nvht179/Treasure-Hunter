@@ -5,6 +5,8 @@ namespace Script.Enemy.BossStar
 {
     public class BossStarSecondStageActive : BossStarBaseStage
     {
+        private Transform targetedTransform;
+
         public BossStarSecondStageActive(BossStarContext context) : base(context)
         {
         }
@@ -43,7 +45,6 @@ namespace Script.Enemy.BossStar
                         BossStar.RegisterEnemy(enemy);
                     }
                 }
-
             }
         }
 
@@ -58,10 +59,33 @@ namespace Script.Enemy.BossStar
                 BossStar.SwitchState(BossStar.SecondStageRest);
             }
 
+            Wander();
+
             var enemiesToUnregister = BossStar.AliveEnemies.Where(aliveEnemy => aliveEnemy.CurrentHealth == 0).ToList();
             foreach (var aliveEnemy in enemiesToUnregister)
             {
                 BossStar.UnregisterEnemy(aliveEnemy);
+            }
+        }
+
+        private void Wander()
+        {
+            if (targetedTransform == null)
+            {
+                targetedTransform = BossStar.FleePositions[Random.Range(0, BossStar.FleePositions.Length)];
+            }
+            else if (BossStar.transform.position != targetedTransform.position)
+            {
+                BossStar.transform.position = Vector3.MoveTowards(
+                    BossStar.transform.position,
+                    targetedTransform.position,
+                    BossStar.WanderSpeed * Time.deltaTime);
+            }
+            else
+            {
+                var nextPositionsCount = BossStar.FleePositions.Count(t => t != targetedTransform);
+                var randomIndex = Random.Range(0, nextPositionsCount);
+                targetedTransform = BossStar.FleePositions.Where(t => t != targetedTransform).ElementAt(randomIndex);
             }
         }
     }

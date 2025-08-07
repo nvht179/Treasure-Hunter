@@ -7,6 +7,7 @@ namespace Script.Enemy.BossStar
     {
         private float restTimer;
         private float initialHealth;
+        private Transform targetedTransform;
 
         public BossStarSecondStageRest(BossStarContext context) : base(context)
         {
@@ -34,9 +35,13 @@ namespace Script.Enemy.BossStar
                 return;
             }
 
+            Wander();
+
             if (ShouldAttack())
             {
+                BossStar.SetActive(true);
                 Attack();
+                BossStar.SetActive(false);
             }
             
             var enemiesToUnregister = BossStar.AliveEnemies.Where(aliveEnemy => aliveEnemy.CurrentHealth == 0).ToList();
@@ -73,6 +78,27 @@ namespace Script.Enemy.BossStar
             var healthLost = initialHealth - BossStar.CurrentHealth;
             var fleeThreshold = BossStar.MaxHealth * BossStarContext.FleePercentageMaxHealthThreshold;
             return healthLost > fleeThreshold;
+        }
+        
+        private void Wander()
+        {
+            if (targetedTransform == null)
+            {
+                targetedTransform = BossStar.FleePositions[Random.Range(0, BossStar.FleePositions.Length)];
+            }
+            else if (BossStar.transform.position != targetedTransform.position)
+            {
+                BossStar.transform.position = Vector3.MoveTowards(
+                    BossStar.transform.position,
+                    targetedTransform.position,
+                    BossStar.WanderSpeed * Time.deltaTime);
+            }
+            else
+            {
+                var nextPositionsCount = BossStar.FleePositions.Count(t => t != targetedTransform);
+                var randomIndex = Random.Range(0, nextPositionsCount);
+                targetedTransform = BossStar.FleePositions.Where(t => t != targetedTransform).ElementAt(randomIndex);
+            }
         }
     }
 }

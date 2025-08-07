@@ -53,6 +53,7 @@ public class Crabby : AbstractEnemy, IDamageable
 
     private const float EyeHeightToBodyRatio = 0.75f;
     private const float GroundCheckDistance = 0.1f;
+    private const int MaxMoneyOnDead = 3;
 
     private void Awake()
     {
@@ -73,7 +74,8 @@ public class Crabby : AbstractEnemy, IDamageable
         groundAndWallCheckPosition = new Vector3(transform.position.x + moveDirection * groundAndWallCheckOriginOffset,
             transform.position.y, transform.position.z);
         var attackDirection = (Player.transform.position - transform.position).x < 0 ? -1 : 1;
-        attackOrigin.localPosition = new Vector3(attackDirection * initialAttackOriginLocalPosition.x, initialAttackOriginLocalPosition.y,
+        attackOrigin.localPosition = new Vector3(attackDirection * initialAttackOriginLocalPosition.x,
+            initialAttackOriginLocalPosition.y,
             initialAttackOriginLocalPosition.z);
     }
 
@@ -168,6 +170,12 @@ public class Crabby : AbstractEnemy, IDamageable
         hitTimer = hitTime;
     }
 
+    public override void SelfDestroy()
+    {
+        base.SelfDestroy();
+        ResourceSpawner.Instance.SpawnMoney(transform.position, 1, MaxMoneyOnDead);
+    }
+
     // TODO: fix crabby not following attacking pattern when pushing it towards a wall
     private void ManageStates()
     {
@@ -254,7 +262,7 @@ public class Crabby : AbstractEnemy, IDamageable
                 state = CrabbyState.Wandering;
             }
         }
-    
+
         if (state == CrabbyState.DeadHit)
         {
             if (deadHitTimer <= 0)

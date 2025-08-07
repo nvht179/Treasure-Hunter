@@ -47,7 +47,7 @@ public class Player : MonoBehaviour, IDamageable
     public event EventHandler<OnSelectedObjectChangedEventArgs> OnSelectedObjectChanged;
     public class OnSelectedObjectChangedEventArgs : EventArgs
     {
-        public IInteractiveObject selectedObject;
+        public IInteractiveObject SelectedObject;
     }
 
     // Sound effects
@@ -304,7 +304,7 @@ public class Player : MonoBehaviour, IDamageable
         this.selectedObject = selectedObject;
         OnSelectedObjectChanged?.Invoke(this, new OnSelectedObjectChangedEventArgs
         {
-            selectedObject = this.selectedObject
+            SelectedObject = this.selectedObject
         });
     }
 

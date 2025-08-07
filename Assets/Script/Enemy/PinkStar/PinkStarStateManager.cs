@@ -19,6 +19,7 @@ namespace Script.Enemy.PinkStar
 
         private const float GroundCheckDistance = 0.1f;
         private const float GroundAndWallCheckAheadDistance = 0.7f;
+        private const int MaxMoneyOnDead = 5;
         public const float AttackRadius = 0.4f;
         public const float HitRecoverTime = 0.5f; // time to recover from being hit
         public const float DeadShowTime = 0.5f; // time for playing the DeadGround animation and showing enemy corpse
@@ -200,7 +201,13 @@ namespace Script.Enemy.PinkStar
                 MaxHealth = MaxHealth
             });
         }
-        
+
+        public override void SelfDestroy()
+        {
+            base.SelfDestroy();
+            ResourceSpawner.Instance.SpawnMoney(transform.position, 1, MaxMoneyOnDead);
+        }
+
         private void OnDrawGizmos()
         {
             if (pivot == null) return;

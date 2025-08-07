@@ -18,7 +18,7 @@ namespace Script.Enemy.BossStar
         public override void EnterState()
         {
             BossStar.SetActive(true);
-            BossStar.transform.position = BossStar.CentralPosition.position;
+            BossStar.transform.position = BossStar.CentralTransform.position;
             firstStageActiveTimer = BossStar.FirstStageActiveTime;
             bulletCooldownTimer = BossStarContext.LowCooldown;
         }

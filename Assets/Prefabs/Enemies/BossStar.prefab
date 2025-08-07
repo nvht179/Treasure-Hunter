@@ -888,7 +888,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1000
-  pursueSpeed: 1
+  wanderSpeed: 7
   fleeSpeed: 50
   attackDamage: 0
   knockbackForce: 50
@@ -923,9 +923,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  centralPosition: {fileID: 0}
+  centralTransform: {fileID: 0}
   bulletTypes:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  enemyTypes: []
+  enemyTypes:
+  - {fileID: 11400000, guid: 3357f0d96be50ac47ac386b1c027aabb, type: 2}
+  - {fileID: 11400000, guid: d2ca00d3d7ecb9e488d9abde22195848, type: 2}

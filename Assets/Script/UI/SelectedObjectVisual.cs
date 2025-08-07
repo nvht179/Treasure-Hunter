@@ -18,7 +18,7 @@ public class SelectedObjectVisual : MonoBehaviour {
     }
 
     private void Player_OnSelectedObjectChanged(object sender, Player.OnSelectedObjectChangedEventArgs e) {
-        if (e.selectedObject == interactiveObject) {
+        if (e.SelectedObject == interactiveObject) {
             Show();
         }
         else {

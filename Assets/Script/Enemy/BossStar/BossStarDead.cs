@@ -14,6 +14,7 @@ namespace Script.Enemy.BossStar
         public override void EnterState()
         {
             deadShowTimer = BossStarContext.DeadShowTime;
+            ResourceSpawner.Instance.SpawnGoldenKey(BossStar.transform.position);
         }
 
         public override void UpdateState()

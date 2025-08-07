@@ -128,7 +128,7 @@ MonoBehaviour:
     m_Bits: 192
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 2304
   interactiveObjectLayer:
     serializedVersion: 2
     m_Bits: 0
