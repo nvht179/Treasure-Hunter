@@ -12,6 +12,7 @@ public class GamePauseManager : PersistentManager<GamePauseManager>
     public event Action OnReturnToMainMenuRequested;
 
     [SerializeField] private Button resumeButton;
+    [SerializeField] private Button restartButton;
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button mainMenuButton;
     [SerializeField] private Button pauseButton;
@@ -28,10 +29,16 @@ public class GamePauseManager : PersistentManager<GamePauseManager>
         {
             OnResumeRequested?.Invoke();
         });
+        restartButton.onClick.AddListener(() =>
+        {
+            Hide();
+            SceneLoader.ReloadCurrentScene();
+            OnResumeRequested?.Invoke();
+        });
         settingsButton.onClick.AddListener(() =>
         {
             // no need to set time running again
-            HideAll();
+            Hide();
             SettingsMenuUI.Instance.Show(Show);
         });
         mainMenuButton.onClick.AddListener(() =>
@@ -92,27 +99,30 @@ public class GamePauseManager : PersistentManager<GamePauseManager>
     {
         //gameObject.SetActive(true);
         resumeButton.gameObject.SetActive(true);
+        restartButton.gameObject.SetActive(true);
         settingsButton.gameObject.SetActive(true);
         mainMenuButton.gameObject.SetActive(true);
         blurBackground.gameObject.SetActive(true);
 
-        pauseButton.gameObject.SetActive(false);
+        //pauseButton.interactable = false;
     }
 
     private void Hide()
     {
         //gameObject.SetActive(false);
         resumeButton.gameObject.SetActive(false);
+        restartButton.gameObject.SetActive(false);
         settingsButton.gameObject.SetActive(false);
         mainMenuButton.gameObject.SetActive(false);
         blurBackground.gameObject.SetActive(false);
 
-        pauseButton.gameObject.SetActive(true);
+        //pauseButton.interactable = true;
     }
 
     private void HideAll()
     {
         resumeButton.gameObject.SetActive(false);
+        restartButton.gameObject.SetActive(false);
         settingsButton.gameObject.SetActive(false);
         mainMenuButton.gameObject.SetActive(false);
         blurBackground.gameObject.SetActive(false);
