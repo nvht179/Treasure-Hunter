@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Script.Enemy
@@ -6,6 +7,13 @@ namespace Script.Enemy
     {
         [SerializeField] private Player player;
         [SerializeField] private float maxHealth;
+
+        public event EventHandler<OnDestroyedEventArgs> OnDestroyed;
+
+        public class OnDestroyedEventArgs : EventArgs
+        {
+            public AbstractEnemy Enemy;
+        }
 
         private float currentHealth;
         public float MaxHealth => maxHealth;
@@ -25,6 +33,13 @@ namespace Script.Enemy
         public void SelfDestroy()
         {
             Destroy(gameObject);
+            OnDestroyed?.Invoke(this, new OnDestroyedEventArgs
+            {
+                Enemy = this
+            });
+        }
+        public void TakeDamage(IDamageable.DamageInfo offenderInfo)
+        {
         }
     }
 }

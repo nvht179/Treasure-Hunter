@@ -18,7 +18,7 @@ namespace Script.Enemy.PinkStar
         {
             Rb.velocity = new Vector2(PinkStar.MoveSpeed * PinkStar.MoveDirection, Rb.velocity.y);
             
-            if (PinkStar.IsGroundAhead() || PinkStar.IsWallAhead())
+            if (!PinkStar.IsGroundAhead() || PinkStar.IsWallAhead())
             {
                 PinkStar.MoveDirection *= -1;
             }

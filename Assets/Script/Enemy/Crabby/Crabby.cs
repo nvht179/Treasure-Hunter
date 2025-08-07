@@ -103,7 +103,7 @@ public class Crabby : AbstractEnemy, IDamageable
                 DeadHit();
                 break;
             case CrabbyState.Dead:
-                Destroy(gameObject);
+                SelfDestroy();
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

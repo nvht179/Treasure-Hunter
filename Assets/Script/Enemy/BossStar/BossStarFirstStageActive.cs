@@ -17,6 +17,7 @@ namespace Script.Enemy.BossStar
 
         public override void EnterState()
         {
+            BossStar.SetActive(true);
             BossStar.transform.position = BossStar.CentralPosition.position;
             firstStageActiveTimer = BossStar.FirstStageActiveTime;
             bulletCooldownTimer = BossStarContext.LowCooldown;
@@ -45,6 +46,7 @@ namespace Script.Enemy.BossStar
 
         private void Shoot()
         {
+            var bulletTypeCounts = BossStar.BulletTypes.Length;
             for (var i = alternate ? 1 : 0; i < BossStar.FiringPoints.Count; i += 2)
             {
                 var bulletTransform = Object.Instantiate(BossStar.BulletTypes[bulletTypeIndex].prefab,
@@ -56,7 +58,7 @@ namespace Script.Enemy.BossStar
             }
 
             alternate = !alternate;
-            bulletTypeIndex++;
+            bulletTypeIndex = (bulletTypeIndex + 1) % bulletTypeCounts;
         }
     }
 }

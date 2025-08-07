@@ -1,18 +1,18 @@
+using System.Linq;
 using UnityEngine;
 
 namespace Script.Enemy.BossStar
 {
     public class BossStarSecondStageActive : BossStarBaseStage
     {
-        private bool init;
-
         public BossStarSecondStageActive(BossStarContext context) : base(context)
         {
         }
 
         public override void EnterState()
         {
-            if (!init)
+            BossStar.SetActive(true);
+            if (!BossStar.SecondStageInit)
             {
                 foreach (var enemySpawnPosition in BossStar.EnemySpawnPositions)
                 {
@@ -22,22 +22,28 @@ namespace Script.Enemy.BossStar
                     if (enemyTransform.TryGetComponent<AbstractEnemy>(out var enemy))
                     {
                         enemy.Player = BossStar.Player;
+                        BossStar.RegisterEnemy(enemy);
                     }
                 }
 
-                init = false;
+                BossStar.InitSecondStage();
             }
             else
             {
-                var randomSpawnPosition = Random.Range(0, BossStar.EnemySpawnPositions.Length);
-                var randomEnemyTypeIndex = Random.Range(0, BossStar.EnemyTypes.Length);
-                var enemySpawnPosition = BossStar.EnemySpawnPositions[randomSpawnPosition];
-                var enemyTransform = Object.Instantiate(BossStar.EnemyTypes[randomEnemyTypeIndex].prefab,
-                    enemySpawnPosition.position, enemySpawnPosition.rotation);
-                if (enemyTransform.TryGetComponent<AbstractEnemy>(out var enemy))
+                if (BossStar.AliveEnemies.Count < BossStar.SecondStageEnemyLimit)
                 {
-                    enemy.Player = BossStar.Player;
+                    var randomSpawnPosition = Random.Range(0, BossStar.EnemySpawnPositions.Length);
+                    var randomEnemyTypeIndex = Random.Range(0, BossStar.EnemyTypes.Length);
+                    var enemySpawnPosition = BossStar.EnemySpawnPositions[randomSpawnPosition];
+                    var enemyTransform = Object.Instantiate(BossStar.EnemyTypes[randomEnemyTypeIndex].prefab,
+                        enemySpawnPosition.position, enemySpawnPosition.rotation);
+                    if (enemyTransform.TryGetComponent<AbstractEnemy>(out var enemy))
+                    {
+                        enemy.Player = BossStar.Player;
+                        BossStar.RegisterEnemy(enemy);
+                    }
                 }
+
             }
         }
 
@@ -50,6 +56,12 @@ namespace Script.Enemy.BossStar
             else
             {
                 BossStar.SwitchState(BossStar.SecondStageRest);
+            }
+
+            var enemiesToUnregister = BossStar.AliveEnemies.Where(aliveEnemy => aliveEnemy.CurrentHealth == 0).ToList();
+            foreach (var aliveEnemy in enemiesToUnregister)
+            {
+                BossStar.UnregisterEnemy(aliveEnemy);
             }
         }
     }

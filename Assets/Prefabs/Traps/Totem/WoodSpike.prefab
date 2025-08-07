@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 9121272902283288316}
   - component: {fileID: 7496322231519289347}
   - component: {fileID: 4236425614536628759}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: WoodSpike
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ MonoBehaviour:
   flyingObjectSO: {fileID: 11400000, guid: c7b6a222e19d8cc4aa3ffcc0aa441ac6, type: 2}
   collisionLayer:
     serializedVersion: 2
-    m_Bits: 200
+    m_Bits: 72
 --- !u!50 &7496322231519289347
 Rigidbody2D:
   serializedVersion: 4

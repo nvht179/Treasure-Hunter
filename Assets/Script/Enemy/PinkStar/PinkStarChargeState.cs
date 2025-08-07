@@ -26,5 +26,11 @@ namespace Script.Enemy.PinkStar
                 PinkStar.SwitchState(PinkStar.AttackState);
             }
         }
+
+        public override void TakeDamage(IDamageable.DamageInfo offender)
+        {
+            base.TakeDamage(offender);
+            PinkStar.SwitchState(PinkStar.HitState);
+        }
     }
 }

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Pearl : FlyingObject {
-    private void Awake() {
+    protected override void Awake() {
+        base.Awake();
         DestroyDelay = 0f;
     }
 

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3247181080702601844}
   - component: {fileID: 5940782093861222950}
   - component: {fileID: 8819125274799942500}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Pearl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ MonoBehaviour:
   flyingObjectSO: {fileID: 11400000, guid: 1d4a19b9f12c56a428f0a58e0bfd45e9, type: 2}
   collisionLayer:
     serializedVersion: 2
-    m_Bits: 200
+    m_Bits: 72
 --- !u!1 &2256632419621710803
 GameObject:
   m_ObjectHideFlags: 0

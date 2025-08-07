@@ -16,9 +16,9 @@ namespace Script.Enemy.BossStar
         public abstract void EnterState();
         public abstract void UpdateState();
 
-        public virtual void TakeDamage(float damage)
+        public virtual void TakeDamage(IDamageable.DamageInfo offenderInfo)
         {
-            BossStar.CurrentHealth -= damage;
+            BossStar.CurrentHealth -= offenderInfo.Damage;
         }
     }
 }

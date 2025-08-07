@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class FlyingSwordVisual : MonoBehaviour
@@ -29,7 +30,7 @@ public class FlyingSwordVisual : MonoBehaviour
         var velocity = flyingSword.GetVelocity();
         
         animator.SetBool(IsEmbedded, isEmbedded);
-        animator.SetFloat(XVelocity, velocity.x);
+        animator.SetFloat(XVelocity, math.abs(velocity.x));
     }
     
     private void HandleFlipX()

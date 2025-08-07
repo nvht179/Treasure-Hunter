@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace Script.Enemy.BossStar
@@ -13,6 +14,7 @@ namespace Script.Enemy.BossStar
 
         public override void EnterState()
         {
+            BossStar.SetActive(false);
             restTimer = BossStar.SecondStageRestTime;
             initialHealth = BossStar.CurrentHealth;
         }
@@ -35,6 +37,12 @@ namespace Script.Enemy.BossStar
             if (ShouldAttack())
             {
                 Attack();
+            }
+            
+            var enemiesToUnregister = BossStar.AliveEnemies.Where(aliveEnemy => aliveEnemy.CurrentHealth == 0).ToList();
+            foreach (var aliveEnemy in enemiesToUnregister)
+            {
+                BossStar.UnregisterEnemy(aliveEnemy);
             }
         }
 

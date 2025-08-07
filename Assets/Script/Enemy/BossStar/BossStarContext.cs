@@ -23,6 +23,7 @@ namespace Script.Enemy.BossStar
         [SerializeField] private float secondStageRestTime;
         [SerializeField] private float thirdStageActiveTime;
         [SerializeField] private float thirdStageRestTime;
+        [SerializeField] private int secondStageEnemyLimit;
         [SerializeField] private Transform[] enemySpawnPositions;
         [SerializeField] private Transform[] fleePositions;
         [SerializeField] private Transform centralPosition;
@@ -49,8 +50,9 @@ namespace Script.Enemy.BossStar
          * snipe: fire from the central with very high speed and moderate cooldown
          */
 
-        public const float LowCooldown = 1f;
+        public const float LowCooldown = 0.5f;
         public const float MediumCooldown = 3f;
+        public const float HighCooldown = 7f;
         public const int MaxConsecutive = 5; // maximum number of the same consecutive bullet pattern
 
         public event EventHandler OnDestroyed;
@@ -60,8 +62,11 @@ namespace Script.Enemy.BossStar
         public Collider2D Collider2D { get; private set; }
         public List<Transform> FiringPoints { get; private set; }
         public List<Vector3> SprayFiringDirections { get; private set; }
+        public HashSet<AbstractEnemy> AliveEnemies { get; private set; }
         private float currentHealth;
         private int moveDirection; // 1 = right, -1 = left
+
+        private bool isActive;
 
         public Player Player => player;
         public float PursueSpeed => pursueSpeed;
@@ -74,12 +79,14 @@ namespace Script.Enemy.BossStar
         public float SecondStageRestTime => secondStageRestTime;
         public float ThirdStageActiveTime => thirdStageActiveTime;
         public float ThirdStageRestTime => thirdStageRestTime;
+        public float SecondStageEnemyLimit => secondStageEnemyLimit;
         public FlyingObjectSO[] BulletTypes => bulletTypes;
         public EnemySO[] EnemyTypes => enemyTypes;
         public Transform[] EnemySpawnPositions => enemySpawnPositions;
         public Transform[] FleePositions => fleePositions;
         public Transform Pivot => pivot;
         public LayerMask PlayerLayer => playerLayer;
+        public bool SecondStageInit { get; private set; }
 
         public float CurrentHealth
         {
@@ -119,6 +126,8 @@ namespace Script.Enemy.BossStar
             ThirdStageActive = new BossStarThirdStageActive(this);
             ThirdStageRest = new BossStarThirdStageRest(this);
             Dead = new BossStarDead(this);
+            SprayFiringDirections = new List<Vector3>();
+            AliveEnemies = new HashSet<AbstractEnemy>();
             currentState = FirstStageActive;
         }
 
@@ -180,12 +189,44 @@ namespace Script.Enemy.BossStar
 
         public void TakeDamage(IDamageable.DamageInfo offenderInfo)
         {
-            currentState.TakeDamage(offenderInfo.Damage);
+            currentState.TakeDamage(offenderInfo);
             OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
             {
                 CurrentHealth = CurrentHealth,
                 MaxHealth = maxHealth
             });
+        }
+
+        public void InitSecondStage()
+        {
+            SecondStageInit = true;
+        }
+        
+        public void RegisterEnemy(AbstractEnemy enemy)
+        {
+            if (AliveEnemies.Add(enemy))
+                enemy.OnDestroyed += EnemyOnDestroyed;
+        }
+
+        private void EnemyOnDestroyed(object sender, AbstractEnemy.OnDestroyedEventArgs e)
+        {
+            UnregisterEnemy(e.Enemy);
+        }
+
+        public void UnregisterEnemy(AbstractEnemy enemy)
+        {
+            if (AliveEnemies.Remove(enemy))
+                enemy.OnDestroyed -= EnemyOnDestroyed;
+        }
+
+        public void SetActive(bool active)
+        {
+            isActive = active;
+        }
+
+        public bool IsActive()
+        {
+            return isActive;
         }
 
         private void OnDrawGizmos()

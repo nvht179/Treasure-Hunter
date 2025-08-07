@@ -17,28 +17,34 @@ namespace Script.Enemy.PinkStar
         public override void UpdateState()
         {
             Rb.velocity = new Vector2(PinkStar.ChargeSpeed * PinkStar.MoveDirection, Rb.velocity.y);
-            if (PinkStar.IsWallAhead())
+            if (PinkStar.IsWallAhead() || !PinkStar.IsGroundAhead())
             {
                 PinkStar.SwitchState(PinkStar.RechargeState);
             }
+
+            HandleAttack();
         }
 
-        public override void OnCollisionEnter(Collision2D other)
+        public void HandleAttack()
         {
-            if (other.gameObject.CompareTag("Player"))
+            var enemiesInRange = new Collider2D[10];
+            _ = Physics2D.OverlapCircleNonAlloc(PinkStar.Pivot.position, PinkStarStateManager.AttackRadius, enemiesInRange, PinkStar.PlayerLayer);
+            foreach (var enemy in enemiesInRange)
             {
-                var offenderInfo = new IDamageable.DamageInfo
+                // make enemy take damage
+                if (enemy != null)
                 {
-                    Damage = PinkStar.AttackDamage,
-                    Force = PinkStar.KnockbackForce,
-                    Velocity = Rb.velocity,
-                    // KnockbackTime as default
-                };
-                other.gameObject.GetComponent<Player>().TakeDamage(offenderInfo);
+                    var damageable = enemy.GetComponent<IDamageable>();
+                    var offenderInfo = new IDamageable.DamageInfo
+                    {
+                        Damage = PinkStar.AttackDamage,
+                        Force = PinkStar.KnockbackForce,
+                        Velocity = Rb.velocity,
+                        // KnockbackTime as default
+                    };
+                    damageable?.TakeDamage(offenderInfo);
+                }
             }
-
-            Rb.velocity = new Vector2(0, Rb.velocity.y);
-            PinkStar.SwitchState(PinkStar.RechargeState);
         }
 
         public override void TakeDamage(IDamageable.DamageInfo offender)

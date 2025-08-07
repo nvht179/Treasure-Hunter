@@ -12,6 +12,7 @@ namespace Script.Enemy.BossStar
 
         public override void EnterState()
         {
+            BossStar.SetActive(false);
             restTimer = BossStar.FirstStageRestTime;
         }
 

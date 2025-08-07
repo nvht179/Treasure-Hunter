@@ -75,15 +75,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3c9beef669444c14c98c8cab7f523c7b, type: 3}
+  m_Sprite: {fileID: -1540834004, guid: 3c9beef669444c14c98c8cab7f523c7b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.625, y: 0.625}
+  m_Size: {x: 0.59375, y: 0.4375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &4930057326019209550
@@ -96,7 +96,7 @@ Animator:
   m_GameObject: {fileID: 2344263700181655348}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: eda12792ac4be0b46ab03fa72042e996, type: 2}
+  m_Controller: {fileID: 9100000, guid: f430d3d56878eee42bece25ac018b69e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 280718891211471389}
   - component: {fileID: 5762283205000862090}
   - component: {fileID: 712186381407081265}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: FlyingSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +170,7 @@ Rigidbody2D:
   m_Mass: 0.0001
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -242,4 +242,4 @@ MonoBehaviour:
   flyingObjectSO: {fileID: 11400000, guid: b7cdcf9d9e099a44a92bc65e32b72c2f, type: 2}
   collisionLayer:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 2496

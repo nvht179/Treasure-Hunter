@@ -19,8 +19,11 @@ namespace Script.Enemy.PinkStar
 
         private const float GroundCheckDistance = 0.1f;
         private const float GroundAndWallCheckAheadDistance = 0.7f;
+        public const float AttackRadius = 0.3f;
         public const float HitRecoverTime = 0.5f; // time to recover from being hit
         public const float DeadShowTime = 0.5f; // time for playing the DeadGround animation and showing enemy corpse
+
+        public event EventHandler OnCollisionEnter;
         public event EventHandler OnDestroyed;
         public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
@@ -46,6 +49,8 @@ namespace Script.Enemy.PinkStar
         public float ChargeTime => chargeTime;
         public float RechargeTime => rechargeTime;
         public float KnockbackForce => knockbackForce;
+        public Transform Pivot => pivot;
+        public LayerMask PlayerLayer => playerLayer;
 
         public int MoveDirection
         {
@@ -91,6 +96,7 @@ namespace Script.Enemy.PinkStar
         private void OnCollisionEnter2D(Collision2D other)
         {
             currentState.OnCollisionEnter(other);
+            OnCollisionEnter?.Invoke(this, EventArgs.Empty);
         }
 
         public bool CastVisionRay(Vector2 direction)
@@ -115,7 +121,10 @@ namespace Script.Enemy.PinkStar
                 pivot.position.x + MoveDirection * GroundAndWallCheckAheadDistance,
                 pivot.position.y);
 
-            var hit = Physics2D.Raycast(groundAheadCheckPosition, Vector2.down, GroundCheckDistance, groundLayer);
+            // the groundAheadCheckPosition is not the pivot, so the offset must be compensated
+            var groundCheckAheadDistance = GroundCheckDistance + (groundAheadCheckPosition.y - transform.position.y);
+
+            var hit = Physics2D.Raycast(groundAheadCheckPosition, Vector2.down, groundCheckAheadDistance, groundLayer);
             return hit.collider != null;
         }
 
@@ -190,6 +199,31 @@ namespace Script.Enemy.PinkStar
                 CurrentHealth = CurrentHealth,
                 MaxHealth = MaxHealth
             });
+        }
+        
+        private void OnDrawGizmos()
+        {
+            if (pivot == null) return;
+
+            // Draw the GroundAndWallCheckAhead point
+            var groundAndWallCheckAheadPos = new Vector2(
+                pivot.position.x + MoveDirection * GroundAndWallCheckAheadDistance,
+                pivot.position.y
+            );
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(groundAndWallCheckAheadPos, 0.07f);
+            
+            // Draw the ray for ground check ahead
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(
+                groundAndWallCheckAheadPos,
+                groundAndWallCheckAheadPos + Vector2.down * (GroundCheckDistance + (groundAndWallCheckAheadPos.y - transform.position.y))
+            );
+
+            // Optionally, draw the ray for wall check
+            var dir = MoveDirection == 1 ? Vector2.right : Vector2.left;
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(pivot.position, pivot.position + (Vector3)(dir * GroundAndWallCheckAheadDistance));
         }
     }
 }

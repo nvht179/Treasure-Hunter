@@ -17,6 +17,7 @@ namespace Script.Enemy.BossStar
 
         public override void EnterState()
         {
+            BossStar.SetActive(true);
             activeTimer = BossStar.ThirdStageActiveTime;
         }
 
@@ -51,7 +52,7 @@ namespace Script.Enemy.BossStar
 
         private void ShootRepeat(int times, Action action)
         {
-            for (var i = 0; i < times;)
+            for (var i = 0; i < times; i++)
             {
                 if (bulletCooldown < 0)
                 {
@@ -79,7 +80,7 @@ namespace Script.Enemy.BossStar
             }
 
             alternateSpray = !alternateSpray;
-            bulletCooldown = BossStarContext.LowCooldown;
+            bulletCooldown = BossStarContext.HighCooldown;
         }
 
         private void BarrelShoot()
@@ -97,7 +98,7 @@ namespace Script.Enemy.BossStar
                 }
             }
 
-            bulletCooldown = BossStarContext.MediumCooldown;
+            bulletCooldown = BossStarContext.HighCooldown;
         }
 
         private void SnipeShoot()

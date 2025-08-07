@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 448998765086416758}
   - component: {fileID: 8998648538660707344}
   - component: {fileID: 2628375610207087816}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: CannonBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,7 +157,7 @@ MonoBehaviour:
   flyingObjectSO: {fileID: 11400000, guid: c801a2e267827994eb749e3fd06f349e, type: 2}
   collisionLayer:
     serializedVersion: 2
-    m_Bits: 200
+    m_Bits: 72
 --- !u!50 &8998648538660707344
 Rigidbody2D:
   serializedVersion: 4

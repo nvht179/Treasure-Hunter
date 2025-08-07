@@ -1,11 +1,10 @@
-using System;
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 
 namespace Script.Enemy.PinkStar
 {
-    public class PinkStarVisual : MonoBehaviour
+    public class PinkStarHitVisual : MonoBehaviour
     {
         [SerializeField] private PinkStarStateManager pinkStar;
         private SpriteRenderer spriteRenderer;
@@ -32,6 +31,7 @@ namespace Script.Enemy.PinkStar
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
+            spriteRenderer.enabled = false;
         }
 
         private void Start()
@@ -43,10 +43,22 @@ namespace Script.Enemy.PinkStar
         {
             if (e.CurrentHealth != 0 && (isCharging || isAttacking))
             {
+                StartCoroutine(BlinkCharacter(3, 0.1f));
                 return;
             }
 
             animator.SetTrigger(e.CurrentHealth == 0f ? DeadHit : Hit);
+        }
+
+        private IEnumerator BlinkCharacter(int times, float interval)
+        {
+            for (var i = 0; i < times; i++)
+            {
+                spriteRenderer.enabled = true;
+                yield return new WaitForSeconds(interval);
+                spriteRenderer.enabled = false;
+                yield return new WaitForSeconds(interval);
+            }
         }
 
         private void Update()

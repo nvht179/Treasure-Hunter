@@ -111,12 +111,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82c561d612874694e99dbe048b44eb43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  basePlayerDamage: 5
+  baseCritChance: 0.1
+  baseCritMultiplier: 2
+  baseHealth: 100
+  baseHealthRestoreRate: 0.1
+  baseStamina: 100
+  baseStaminaRestoreRate: 10
+  baseMoveSpeed: 5
   jumpPower: 10
   jumpDegrader: 3
-  moveSpeed: 5
-  attackOrigin: {fileID: 6210624782623218792}
-  attackRadius: 0.5
-  playerPivot: {fileID: 289685678331913250}
+  flyingSwordSO: {fileID: 11400000, guid: b7cdcf9d9e099a44a92bc65e32b72c2f, type: 2}
   playerVisual: {fileID: 8865661576407353970}
   groundLayer:
     serializedVersion: 2
@@ -127,13 +132,12 @@ MonoBehaviour:
   interactiveObjectLayer:
     serializedVersion: 2
     m_Bits: 0
-  flyingSwordSO: {fileID: 11400000, guid: b7cdcf9d9e099a44a92bc65e32b72c2f, type: 2}
-  playerDamage: 5
+  attackOrigin: {fileID: 6210624782623218792}
+  playerPivot: {fileID: 289685678331913250}
+  attackRadius: 0.5
   attackCooldownTime: 0.3
   attackAlternateCooldownTime: 0.5
   attackAlternateStaminaCost: 10
-  maxHealthPoint: 100
-  maxStamina: 100
   knockbackForce: 30
   knockbackDuration: 0.3
   inventoryUI: {fileID: 0}

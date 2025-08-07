@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class FlyingObject : MonoBehaviour {
@@ -11,13 +12,18 @@ public class FlyingObject : MonoBehaviour {
     private float destroyTimer;
     protected float DestroyDelay;
 
-    private void Start() {
+    protected virtual void Awake()
+    {
         rb = GetComponent<Rigidbody2D>();
+
+        willDestroy = false;
+    }
+
+    private void Start()
+    {
         if (rb != null) {
             rb.velocity = direction * flyingObjectSO.speed;
         }
-
-        willDestroy = false;
     }
 
     private void Update() {

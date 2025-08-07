@@ -7,7 +7,8 @@ public class CannonBall : FlyingObject {
 
     public event EventHandler OnCannonBallCollided;
 
-    private void Awake() {
+    protected override void Awake() {
+        base.Awake();
         DestroyDelay = 0.3f;
     }
 

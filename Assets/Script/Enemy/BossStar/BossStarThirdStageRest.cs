@@ -15,6 +15,7 @@ namespace Script.Enemy.BossStar
 
         public override void EnterState()
         {
+            BossStar.SetActive(false);
             initialHealth = BossStar.CurrentHealth;
             restTimer = BossStar.ThirdStageRestTime;
         }
