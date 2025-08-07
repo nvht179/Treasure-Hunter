@@ -16,7 +16,11 @@ public class UseButton : MonoBehaviour {
     }
 
     private void InventoryUI_OnItemSelected(object sender, ISelectItem.OnItemSelectedEventArgs e) {
-        if(e.item.itemSO.consumable) {
+        if(e.item == null || e.item.itemSO == null) {
+            Hide();
+            return;
+        }
+        if (e.item.itemSO.consumable) {
             Show();
         }
         else {

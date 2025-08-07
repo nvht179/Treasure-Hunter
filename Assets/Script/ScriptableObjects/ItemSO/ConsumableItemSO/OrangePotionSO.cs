@@ -12,8 +12,9 @@ public class OrangePotionSO : ConsumableItemSO
         consumable = true;
     }
 
-    public override void Consume(Player player)
+    public override void Consume(Player player, out float duration)
     {
+        duration = 0f;
         player.DamageSystem.AddCritMultiplierBuff(criticalDamageMultiplier);
     }
 }

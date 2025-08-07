@@ -23,8 +23,12 @@ public class ItemSO : ScriptableObject {
 }
 
 public enum ItemType {
+    Sword,
+    Shield,
+    Hat,
+    Boots,
+    Ring,
     GoldenKey,
     Resources,
     Consumable,
-    PassiveItem,
 }

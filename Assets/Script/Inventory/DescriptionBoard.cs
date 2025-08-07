@@ -20,8 +20,7 @@ public class DescriptionBoard : MonoBehaviour {
 
     private void UI_Inventory_OnItemSelected(object sender, ISelectItem.OnItemSelectedEventArgs e) {
         if (e.item == null || e.item.itemSO == null) {
-            descriptionText.text = string.Empty;
-            itemNameText.text = string.Empty;
+            HideInfo();
             return;
         }
 

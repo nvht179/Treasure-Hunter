@@ -17,7 +17,11 @@ public class DropButton : MonoBehaviour {
     }
 
     private void InventoryUI_OnItemSelected(object sender, ISelectItem.OnItemSelectedEventArgs e) {
-        if(e.item.itemSO.droppable) {
+        if(e.item == null || e.item.itemSO == null) {
+            Hide();
+            return;
+        }
+        if (e.item.itemSO.droppable) {
             Show();
         }
         else {

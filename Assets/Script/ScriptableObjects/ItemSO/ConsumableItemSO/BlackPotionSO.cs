@@ -13,8 +13,9 @@ public class BlackPotionSO : ConsumableItemSO
         consumable = true;
     }
 
-    public override void Consume(Player player)
+    public override void Consume(Player player, out float duration)
     {
+        duration = this.duration;
         player.DamageReceivedSystem.AddDamageReceivedBuff(2.0f, duration);
         player.GoldBonusSystem.AddGoldBonus(goldMultiplier, duration);
     }

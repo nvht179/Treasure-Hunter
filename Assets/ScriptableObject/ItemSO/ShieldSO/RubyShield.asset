@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: RubyShield
   m_EditorClassIdentifier: 
   itemName: Ruby Shield
-  description: 'Passive: Provides 60 max health.'
+  description: 'Passive: Provides 60 max health and receive 10% damage reduction.'
   droppable: 1
-  consumable: 0
-  itemType: 3
+  consumable: 1
+  itemType: 1
   icon: {fileID: 498423440, guid: db2b8f86654df4747bbec33c751ea5a4, type: 3}
   prefab: {fileID: 2279580397876598774, guid: b22af9a7dbbddaf4ca365370feb93bee, type: 3}
   collectEffectPrefab: {fileID: 7934267159419852871, guid: c29719f94173dde4d8e680bcf2db5323, type: 3}
@@ -25,3 +25,4 @@ MonoBehaviour:
   maxStack: 1
   buyPrice: 60
   maxHealthAdded: 60
+  damageReduction: 0.1

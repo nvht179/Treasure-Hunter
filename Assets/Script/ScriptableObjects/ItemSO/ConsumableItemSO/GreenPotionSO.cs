@@ -10,8 +10,9 @@ public class GreenPotionSO : ConsumableItemSO
         consumable = true;
     }
 
-    public override void Consume(Player player)
+    public override void Consume(Player player, out float duration)
     {
+        duration = 0f;
         if (Random.value < 0.5f)
         {
             player.HealthSystem.LosePercentCurrentHealth(0.5f);

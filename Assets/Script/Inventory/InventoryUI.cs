@@ -15,7 +15,6 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
     [Header("UI Elements")]
     [SerializeField] private Transform itemSlotContainer;
     [SerializeField] private Transform itemSlotTemplate;
-    [SerializeField] private ItemListSO itemListSO;
 
     [Header("Navigation")]
     [SerializeField] private UnityEngine.UI.Button closeButton;
@@ -25,6 +24,9 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
     [Header("Actions")]
     [SerializeField] private UnityEngine.UI.Button useButton;
     [SerializeField] private UnityEngine.UI.Button dropButton;
+
+    [Header("Active Item")]
+    [SerializeField] private ActiveItemUI activeItemUI;
 
     private Inventory inventory;
     private bool isInventoryShown;
@@ -39,7 +41,20 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
 
     private void Start() {
         GameInput.Instance.OnInventoryAction += GameInput_OnInventoryAction;
+        activeItemUI.OnPotionUsed += ActiveItemUI_OnPotionUsed;
         Hide();
+    }
+
+    private void ActiveItemUI_OnPotionUsed(object sender, EventArgs e) {
+        inventory.RemoveItem(selectedItem);
+        if (selectedItem.quantity == 0)
+        {
+            selectedItem = null;
+        }
+        RefreshInventoryItems();
+        OnItemSelected?.Invoke(this, new ISelectItem.OnItemSelectedEventArgs {
+            item = selectedItem
+        }); 
     }
 
     private void OnDestroy() {
@@ -65,12 +80,7 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
 
         useButton.onClick.AddListener(() => {
             if (selectedItem != null && selectedItem.itemSO.consumable) {
-                inventory.UseItem(selectedItem);
-                inventory.RemoveItem(selectedItem);
-                if (selectedItem.quantity == 0) {
-                    selectedItem = null; // TODO
-                }
-                RefreshInventoryItems();
+                activeItemUI.TryEquipItem(selectedItem);
             }
         });
 
@@ -78,7 +88,7 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
             if (selectedItem != null) {
                 inventory.RemoveItem(selectedItem);
                 if(selectedItem.quantity == 0) {
-                    selectedItem = null; // TODO
+                    selectedItem = null;
                 }
                 RefreshInventoryItems();
 

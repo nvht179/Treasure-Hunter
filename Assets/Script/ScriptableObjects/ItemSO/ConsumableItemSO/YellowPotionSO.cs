@@ -13,8 +13,9 @@ public class YellowPotionSO : ConsumableItemSO
         consumable = true;
     }
 
-    public override void Consume(Player player)
+    public override void Consume(Player player, out float duration)
     {
-        player.MoveSpeedSystem.AddMoveSpeedMultiplier(speedBoost, duration);
+        duration = this.duration;
+        player.MoveSpeedSystem.AddSpeedBonus(speedBoost, duration);
     }
 }

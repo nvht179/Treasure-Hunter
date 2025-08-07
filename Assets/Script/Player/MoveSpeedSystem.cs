@@ -8,11 +8,12 @@ public class MoveSpeedSystem
     {
         public Guid Id;
         public float Multiplier;   // e.g. 0.1 means +10% speed
-        public float ExpireTime;   // Time.time + duration; PositiveInfinity = permanent
+        public float ExpireTime;   // Time.time + duration; PositiveInfinity for permanent
         public bool IsPermanent => float.IsPositiveInfinity(ExpireTime);
     }
 
     private readonly List<SpeedBuff> buffs = new();
+
     private float baseSpeed;
 
     public MoveSpeedSystem(float initialBaseSpeed)
@@ -27,12 +28,12 @@ public class MoveSpeedSystem
 
     public float GetBaseSpeed() => baseSpeed;
 
-    public Guid AddMoveSpeedMultiplier(float multiplier, float duration = 0f)
+    public Guid AddSpeedBonus(float addition, float duration = 0f)
     {
         var buff = new SpeedBuff
         {
             Id = Guid.NewGuid(),
-            Multiplier = multiplier,
+            Multiplier = addition,
             ExpireTime = duration > 0f ? Time.time + duration : float.PositiveInfinity
         };
         buffs.Add(buff);
@@ -43,12 +44,10 @@ public class MoveSpeedSystem
     {
         return buffs.RemoveAll(b => b.Id == id) > 0;
     }
-
     public void RemoveAllTemporaryBuffs()
     {
         buffs.RemoveAll(b => !b.IsPermanent);
     }
-
     public void ClearAllBuffs()
     {
         buffs.Clear();
@@ -58,20 +57,31 @@ public class MoveSpeedSystem
     {
         TickIfNeeded();
 
-        float totalMultiplier = 1f;
-        foreach (var buff in buffs)
-        {
-            totalMultiplier *= (1f + buff.Multiplier);
-        }
-
-        return baseSpeed * totalMultiplier;
+        return baseSpeed * GetPermanentMultiplier() * GetBestTemporaryMultiplier();
     }
 
-    // Expire old buffs once per frame
+    private float GetPermanentMultiplier()
+    {
+        float sum = 1f;
+        foreach (var b in buffs)
+            if (b.IsPermanent) sum *= (1 + b.Multiplier);
+        return sum;
+    }
+
+    private float GetBestTemporaryMultiplier()
+    {
+        float best = 0f;
+        foreach (var b in buffs)
+            if (!b.IsPermanent && b.Multiplier > best) best = b.Multiplier;
+        return 1 + best;
+    }
+
+    // --- internal ticking to expire temporary buffs ---
+
     public void Tick()
     {
         float now = Time.time;
-        buffs.RemoveAll(b => !b.IsPermanent && now >= b.ExpireTime);
+        int removed = buffs.RemoveAll(b => !b.IsPermanent && now >= b.ExpireTime);
     }
 
     private float lastTickTime = -1f;

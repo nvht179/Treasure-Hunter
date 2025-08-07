@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Bring to the door and win level!!!
   droppable: 0
   consumable: 0
-  itemType: 0
+  itemType: 5
   icon: {fileID: 21300000, guid: 1601ba5b31c1fb0438c0cd02a93b0f9c, type: 3}
   prefab: {fileID: 3634387741341607068, guid: d09593260dc871f4890af3eb432b0327, type: 3}
   collectEffectPrefab: {fileID: 1064276299002934880, guid: 0de0fe83774e819478cdc6d08e49cad4, type: 3}

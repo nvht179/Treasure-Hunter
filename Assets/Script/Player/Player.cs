@@ -129,7 +129,7 @@ public class Player : MonoBehaviour, IDamageable
         gravityScale = rb.gravityScale;
         attackAlternateCooldownTimer = attackAlternateCooldownTime;
 
-        inventory = new Inventory(UseItem, EquipItem, UnEquipItem);
+        inventory = new Inventory();
         inventoryUI.SetInventory(inventory);
         money = 200; // TODO: Initial money for testing purposes
 
@@ -504,29 +504,4 @@ public class Player : MonoBehaviour, IDamageable
     {
         return inventoryUI;
     }
-
-    private void UseItem(Item item)
-    {
-        if(item.itemSO is IConsumable consumable)
-        {
-            consumable.Consume(this);
-        }
-    }
-
-    private void EquipItem(Item item)
-    {
-        if (item.itemSO is IPassiveEffect passive)
-        {
-            passive.ApplyEffect(this);
-        }
-    }
-
-    private void UnEquipItem(Item item)
-    {
-        if (item.itemSO is IPassiveEffect passive)
-        {
-            passive.RemoveEffect(this);
-        }
-    }
-
 }

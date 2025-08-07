@@ -13,8 +13,9 @@ public class PurplePotionSO : ConsumableItemSO
         consumable = true;
     }
 
-    public override void Consume(Player player)
+    public override void Consume(Player player, out float duration)
     {
+        duration = this.duration;
         player.DamageSystem.AddCritChanceBuff(criticalChanceIncrease, duration);
     }
 }

@@ -15,8 +15,8 @@ MonoBehaviour:
   itemName: Common Shield
   description: 'Passive: Provides 20 max health and receive 5% damage reduction.'
   droppable: 1
-  consumable: 0
-  itemType: 3
+  consumable: 1
+  itemType: 1
   icon: {fileID: 1269659226, guid: db2b8f86654df4747bbec33c751ea5a4, type: 3}
   prefab: {fileID: 4900830257371591207, guid: 7f8a78a1732a4c64cbf4e837053babb2, type: 3}
   collectEffectPrefab: {fileID: 7934267159419852871, guid: c29719f94173dde4d8e680bcf2db5323, type: 3}

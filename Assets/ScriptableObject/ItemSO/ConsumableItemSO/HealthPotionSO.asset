@@ -16,7 +16,7 @@ MonoBehaviour:
   description: 'Consumable: Restores 20HP'
   droppable: 1
   consumable: 1
-  itemType: 1
+  itemType: 7
   icon: {fileID: 1153009193, guid: d132f4da4fe74654b8e9f7fbb4eb9454, type: 3}
   prefab: {fileID: 3689167139230260618, guid: 030419cb4a28f6c46891d8d1bd488cf6, type: 3}
   collectEffectPrefab: {fileID: 7992529899703622214, guid: 34b21386f8862aa42822cbcbaeb27d58, type: 3}

@@ -86,7 +86,12 @@ public class ShopUI : MonoBehaviour, ISelectItem {
             OnItemBuy?.Invoke(this, new OnItemBuyEventArgs {
                 item = selectedItem
             });
-            selectedItem = null;
+            if(selectedItem.quantity == 0) {
+                selectedItem = null;
+            }
+            OnItemSelected?.Invoke(this, new ISelectItem.OnItemSelectedEventArgs {
+                item = selectedItem
+            });
             RefreshInventoryItems();
         });
 

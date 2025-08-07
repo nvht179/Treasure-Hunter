@@ -15,8 +15,8 @@ MonoBehaviour:
   itemName: Lava Ring
   description: 'Passive: Receive 35% more gold'
   droppable: 1
-  consumable: 0
-  itemType: 3
+  consumable: 1
+  itemType: 4
   icon: {fileID: 1040838789, guid: 123d6a7c5b2c46a4b9d4e5d70150022f, type: 3}
   prefab: {fileID: 3560556819775702814, guid: 410a8cceb1c0ff04bbfcc3cdb85c69b8, type: 3}
   collectEffectPrefab: {fileID: 7934267159419852871, guid: c29719f94173dde4d8e680bcf2db5323, type: 3}

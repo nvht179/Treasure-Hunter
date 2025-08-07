@@ -3,5 +3,5 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface IConsumable {
-    public void Consume(Player player);
+    public void Consume(Player player, out float duration);
 }

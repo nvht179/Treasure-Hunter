@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Increase your critical damage by 1.1% permanently
   droppable: 1
   consumable: 1
-  itemType: 1
+  itemType: 7
   icon: {fileID: -548967319, guid: d132f4da4fe74654b8e9f7fbb4eb9454, type: 3}
   prefab: {fileID: 6625337710213379300, guid: 173c59c9088bcc940a5a8c3aa779ba25, type: 3}
   collectEffectPrefab: {fileID: 7992529899703622214, guid: 34b21386f8862aa42822cbcbaeb27d58, type: 3}

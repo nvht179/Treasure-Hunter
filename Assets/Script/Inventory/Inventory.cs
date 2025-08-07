@@ -6,14 +6,8 @@ using UnityEngine;
 public class Inventory {
 
     private List<Item> itemList;
-    private readonly Action<Item> useItemAction;
-    private readonly Action<Item> wearItemAction;
-    private readonly Action<Item> dropItemAction;
 
-    public Inventory(Action<Item> useItemAction = null, Action<Item> wearItemAction = null, Action<Item> dropItemAction = null) {
-        this.useItemAction = useItemAction;
-        this.wearItemAction = wearItemAction;
-        this.dropItemAction = dropItemAction;
+    public Inventory() {
         itemList = new List<Item>();
     }
 
@@ -42,7 +36,6 @@ public class Inventory {
 
         // If not stackable or no existing stack found or excess beyond maxStack
         itemList.Add(new Item(newItem.itemSO, newItem.quantity));
-        wearItemAction?.Invoke(newItem);
     }
 
     public void RemoveItem(Item itemToRemove) {
@@ -50,19 +43,13 @@ public class Inventory {
         for (int i = 0; i < itemList.Count; i++) {
             Item item = itemList[i];
             if (item.itemSO == itemToRemove.itemSO) {
-                if (item.quantity > 1) {
-                    --item.quantity;
-                } else {
+                --item.quantity;
+                if(item.quantity <= 0) {
                     itemList.RemoveAt(i);
                 }
                 return;
             }
         }
-        dropItemAction?.Invoke(itemToRemove);
-    }
-
-    public void UseItem(Item item) {
-        useItemAction(item);
     }
 
     public List<Item> GetItemList() {

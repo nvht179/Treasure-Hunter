@@ -16,7 +16,7 @@ MonoBehaviour:
   description: 'Consumable: Increase 20% critical chance in 20 seconds'
   droppable: 1
   consumable: 1
-  itemType: 1
+  itemType: 7
   icon: {fileID: -305203237, guid: d132f4da4fe74654b8e9f7fbb4eb9454, type: 3}
   prefab: {fileID: 3985040091833676845, guid: 1def4852cb8edf9429e446364ae3e11d, type: 3}
   collectEffectPrefab: {fileID: 7992529899703622214, guid: 34b21386f8862aa42822cbcbaeb27d58, type: 3}

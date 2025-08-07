@@ -14,12 +14,12 @@
         {
             description = "Passive: Provides " + staminaRegenerationAmount + " stamina restore per second and move " + (moveSpeedAmount * 100).ToString() + "% faster";
             droppable = true;
-            consumable = false;
+            consumable = true;
         }
         public override void ApplyEffect(Player player)
         {
             staminaBuffId = player.StaminaSystem.ApplyBonusRegen(staminaRegenerationAmount);
-            moveSpeedBuffId = player.MoveSpeedSystem.AddMoveSpeedMultiplier(moveSpeedAmount);
+            moveSpeedBuffId = player.MoveSpeedSystem.AddSpeedBonus(moveSpeedAmount);
         }
 
         public override void RemoveEffect(Player player)

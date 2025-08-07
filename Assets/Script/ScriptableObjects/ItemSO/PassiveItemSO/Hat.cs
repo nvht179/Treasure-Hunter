@@ -12,7 +12,7 @@ public class Hat : PassiveItemSO
     {
         description = "Passive: Provides " + (healthRegenerationAmount * 100).ToString() + "% health regeneration";
         droppable = true;
-        consumable = false;
+        consumable = true;
     }
     public override void ApplyEffect(Player player)
     {

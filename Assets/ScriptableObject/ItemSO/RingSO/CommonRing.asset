@@ -15,8 +15,8 @@ MonoBehaviour:
   itemName: Common Ring
   description: 'Passive: Receive 10% more gold'
   droppable: 1
-  consumable: 0
-  itemType: 3
+  consumable: 1
+  itemType: 4
   icon: {fileID: 611112345, guid: 123d6a7c5b2c46a4b9d4e5d70150022f, type: 3}
   prefab: {fileID: 6622206755588396037, guid: 25d6fd231d8439848a57002bc4407218, type: 3}
   collectEffectPrefab: {fileID: 7934267159419852871, guid: c29719f94173dde4d8e680bcf2db5323, type: 3}

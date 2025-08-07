@@ -12,7 +12,7 @@ public class Ring : PassiveItemSO
     {
         description = "Passive: Receive " + (bonusGoldMultiplier*100).ToString() + "% more gold";
         droppable = true;
-        consumable = false;
+        consumable = true;
     }
     public override void ApplyEffect(Player player)
     {

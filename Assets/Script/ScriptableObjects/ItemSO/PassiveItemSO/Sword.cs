@@ -14,7 +14,7 @@ public class Sword : PassiveItemSO
     {
         description = "Passive: Provides " + damageAmount.ToString() + " damage, and " + (criticalChance * 100).ToString() + "% critical chance";
         droppable = true;
-        consumable = false;
+        consumable = true;
     }
     public override void ApplyEffect(Player player)
     {

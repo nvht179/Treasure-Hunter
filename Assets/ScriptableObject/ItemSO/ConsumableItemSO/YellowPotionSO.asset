@@ -16,7 +16,7 @@ MonoBehaviour:
   description: 'Consumable: Boost your move speed little for 20 seconds (cannot stack)'
   droppable: 1
   consumable: 1
-  itemType: 1
+  itemType: 7
   icon: {fileID: 1927197124, guid: d132f4da4fe74654b8e9f7fbb4eb9454, type: 3}
   prefab: {fileID: 4836717857562968605, guid: 0f18eb40ecb209c489e6706961e9d86e, type: 3}
   collectEffectPrefab: {fileID: 7992529899703622214, guid: 34b21386f8862aa42822cbcbaeb27d58, type: 3}

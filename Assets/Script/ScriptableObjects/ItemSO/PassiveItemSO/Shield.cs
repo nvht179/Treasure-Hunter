@@ -12,7 +12,7 @@ public class Shield : PassiveItemSO
     {
         description = "Passive: Provides " + maxHealthAdded.ToString() + " max health and receive " + (damageReduction*100).ToString() + "% damage reduction.";
         droppable = true;
-        consumable = false;
+        consumable = true;
     }
     public override void ApplyEffect(Player player)
     {

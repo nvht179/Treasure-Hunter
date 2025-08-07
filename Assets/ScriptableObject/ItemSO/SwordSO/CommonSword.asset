@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: CommonSword
   m_EditorClassIdentifier: 
   itemName: Common Sword
-  description: 'Passive: Provides 2 damage'
+  description: 'Passive: Provides 2 damage, and 5% critical chance'
   droppable: 1
-  consumable: 0
-  itemType: 3
+  consumable: 1
+  itemType: 0
   icon: {fileID: -476329323, guid: db2b8f86654df4747bbec33c751ea5a4, type: 3}
   prefab: {fileID: 7986058097105614587, guid: f6d12dc8a48e9a945a81e6e8fe622a94, type: 3}
   collectEffectPrefab: {fileID: 7934267159419852871, guid: c29719f94173dde4d8e680bcf2db5323, type: 3}
@@ -25,3 +25,4 @@ MonoBehaviour:
   maxStack: 1
   buyPrice: 20
   damageAmount: 2
+  criticalChance: 0.05

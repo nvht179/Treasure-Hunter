@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DiamondBoots
   m_EditorClassIdentifier: 
   itemName: Ruby Boots
-  description: 'Passive: Provides 1 stamina restore per second and move 12% faster'
+  description: 'Passive: Provides 1.2 stamina restore per second and move 15% faster'
   droppable: 1
   consumable: 0
   itemType: 3
@@ -23,6 +23,6 @@ MonoBehaviour:
   scaleInUI: 20
   stackable: 0
   maxStack: 1
-  buyPrice: 50
-  staminaRegenerationAmount: 1
-  moveSpeedAmount: 0.12
+  buyPrice: 65
+  staminaRegenerationAmount: 1.2
+  moveSpeedAmount: 0.15
