@@ -104,7 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePoint: {fileID: 730094689246535442}
   flyingObjectSO: {fileID: 11400000, guid: 1d4a19b9f12c56a428f0a58e0bfd45e9, type: 2}
-  fireRate: 2
+  fireRate: 3
   fireDirection: 0
   maxHealthPoint: 10
 --- !u!61 &144960388748944299

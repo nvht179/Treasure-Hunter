@@ -38,17 +38,16 @@ public class ItemWorld : MonoBehaviour {
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision) {
-        if (item.itemSO.collectEffectPrefab != null)
-        {
-            var effect = Instantiate(
-                item.itemSO.collectEffectPrefab,
-                transform.position,
-                Quaternion.identity
-            );
-            Destroy(effect.gameObject, 3f);
-        }
 
         if (collision.TryGetComponent<Player>(out Player player)) {
+            if (item.itemSO.collectEffectPrefab != null) {
+                var effect = Instantiate(
+                    item.itemSO.collectEffectPrefab,
+                    transform.position,
+                    Quaternion.identity
+                );
+                Destroy(effect.gameObject, 3f);
+            }
             DestroySelf();
         }
     }
