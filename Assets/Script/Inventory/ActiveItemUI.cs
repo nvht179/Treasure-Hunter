@@ -50,10 +50,10 @@ public class ActiveItemUI : MonoBehaviour
         if (item == null || item.itemSO == null) return;
         if (item.itemSO is ConsumableItemSO consumableItemSO)
         {
-            OnPotionUsed?.Invoke(this, EventArgs.Empty);
             consumableItemSO.Consume(player, out float duration);
             potionItems.Add(new PotionItem { Item = item, ExpireTime = Time.time + duration });
             RefreshActiveList();
+            OnPotionUsed?.Invoke(this, EventArgs.Empty);
         }
         if (item.itemSO is PassiveItemSO passive)
         {

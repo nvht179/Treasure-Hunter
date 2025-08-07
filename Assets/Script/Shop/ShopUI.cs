@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ShopUI : MonoBehaviour, ISelectItem {
 
+    public event EventHandler OnShopOpen;
     public event EventHandler<ISelectItem.OnItemSelectedEventArgs> OnItemSelected;
     public event EventHandler OnNotEnoughMoney;
 
@@ -49,6 +50,7 @@ public class ShopUI : MonoBehaviour, ISelectItem {
         RefreshInventoryItems();
         SetInventory(player.GetInventory());
         Show();
+        OnShopOpen?.Invoke(this, EventArgs.Empty);
     }
 
     public void CloseShopUI() {

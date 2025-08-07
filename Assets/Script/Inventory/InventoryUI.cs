@@ -97,12 +97,12 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
         });
     }
 
-    private void Hide() {
+    public void Hide() {
         gameObject.SetActive(false);
         isInventoryShown = false;
     }
 
-    private void Show() {
+    public void Show() {
         gameObject.SetActive(true);
         isInventoryShown = true;
         itemSlotTemplate.gameObject.SetActive(false);
@@ -207,5 +207,9 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
         // disable/enable page buttons
         nextPageButton.interactable = currentPage < maxPage;
         previousPageButton.interactable = currentPage > 0;
+    }
+
+    public bool IsInventoryShown() {
+        return isInventoryShown;
     }
 }
