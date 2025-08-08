@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class GameWonUI : MonoBehaviour
 {
+    [SerializeField] private Transform visuals;
     [SerializeField] private Button homeButton;
     [SerializeField] private Button nextLevelButton;
     [SerializeField] private Button exitButton;
@@ -82,11 +83,11 @@ public class GameWonUI : MonoBehaviour
         {
             diamondImages[i].color = Color.white;
         }
-        gameObject.SetActive(true);
+        visuals.gameObject.SetActive(true);
     }
 
     public void Hide()
     {
-        gameObject.SetActive(false);
+        visuals.gameObject.SetActive(false);
     }
 }
