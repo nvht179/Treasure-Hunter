@@ -29,6 +29,7 @@ public class SettingsMenuUI : PersistentManager<SettingsMenuUI>
 
     [SerializeField] private Button backButton;
     [SerializeField] private Button resetButton;
+    [SerializeField] private Button deleteAllDataButton;
 
     [SerializeField] private Slider musicVolumeSlider;
     [SerializeField] private Slider sfxVolumeSlider;
@@ -101,6 +102,33 @@ public class SettingsMenuUI : PersistentManager<SettingsMenuUI>
                         ButtonType = DialogButtonType.Decline,
                         Callback = () => {
                             Debug.Log("Reset cancelled by user.");
+                        }
+                    }
+                },
+            });
+        });
+
+        deleteAllDataButton.onClick.AddListener(() =>
+        {
+            DialogManager.Instance.ShowDialog(new DialogData {
+                Title = "Delete all game progress!",
+                Message = "Are you sure? This action cannot be undone!",
+                Buttons = new List<DialogButton> { 
+                    new DialogButton {
+                        Label = "Yes",
+                        ButtonType = DialogButtonType.Accept,
+                        Callback = () => {
+                            // Delete all user data
+                            DataManager.Instance.DeleteSaveData();
+
+                            StartCoroutine(ShowDeleteSuccessDialog());
+                        }
+                    },
+                    new DialogButton {
+                        Label = "No",
+                        ButtonType = DialogButtonType.Decline,
+                        Callback = () => {
+                            Debug.Log("Delete all data cancelled by user.");
                         }
                     }
                 },
@@ -219,6 +247,25 @@ public class SettingsMenuUI : PersistentManager<SettingsMenuUI>
                     Label = "OK",
                     ButtonType = DialogButtonType.Accept,
                     Callback = () => { Debug.Log("Reset completed successfully."); }
+                }
+            }
+        });
+    }
+
+    private IEnumerator ShowDeleteSuccessDialog()
+    {
+        // Wait one frame to ensure the previous dialog is fully closed
+        yield return null;
+
+        DialogManager.Instance.ShowDialog(new DialogData
+        {
+            Title = "Delete successfully!",
+            Message = "All game progress data have been deleted.",
+            Buttons = new List<DialogButton> {
+                new DialogButton {
+                    Label = "OK",
+                    ButtonType = DialogButtonType.Accept,
+                    Callback = () => { Debug.Log("Delete completed successfully."); }
                 }
             }
         });
