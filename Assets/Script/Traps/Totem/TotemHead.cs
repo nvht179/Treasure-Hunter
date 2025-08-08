@@ -9,6 +9,8 @@ public class TotemHead : ShooterTrap, IDamageable {
     public event EventHandler OnDestroyed;
 
     [SerializeField] private float maxHealthPoint = 20f;
+    [SerializeField] private int minMoneyOnDead;
+    [SerializeField] private int maxMoneyOnDead;
     [SerializeField] private TotemHeadSO totemHeadSO;
 
     private float currentHealthPoint;
@@ -34,7 +36,7 @@ public class TotemHead : ShooterTrap, IDamageable {
             if (TryGetComponent<Collider2D>(out var col2d)) {
                 col2d.enabled = false;
             }
-            ResourceSpawner.Instance.SpawnMoney(transform.position, 1, 20);
+            ResourceSpawner.Instance.SpawnMoney(transform.position, minMoneyOnDead, maxMoneyOnDead);
             Destroy(gameObject, 2f);
 
             GameManager.Instance.AddScoreOnEnemyDead(totemHeadSO.scoreOnDead);

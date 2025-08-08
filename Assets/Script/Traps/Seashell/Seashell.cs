@@ -10,6 +10,8 @@ public class Seashell : ShooterTrap, IDamageable {
 
     [SerializeField] private ShooterTrapSO seaShellSO;
     [SerializeField] private int maxHealth;
+    [SerializeField] private int minMoneyOnDead;
+    [SerializeField] private int maxMoneyOnDead;
     private float currentHealthPoint;
     private bool isDead;
 
@@ -30,7 +32,7 @@ public class Seashell : ShooterTrap, IDamageable {
             isDead = true;
             OnDestroyed?.Invoke(this, EventArgs.Empty);
             StopShooting();
-            ResourceSpawner.Instance.SpawnMoney(transform.position, 10, 15);
+            ResourceSpawner.Instance.SpawnMoney(transform.position, minMoneyOnDead, maxMoneyOnDead);
             Destroy(gameObject, 2f);
 
             GameManager.Instance.AddScoreOnEnemyDead(seaShellSO.scoreOnDead);
