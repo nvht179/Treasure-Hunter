@@ -1,10 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Resources;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : PersistentManager<GameManager>
 {
@@ -139,8 +134,13 @@ public class GameManager : PersistentManager<GameManager>
     private void HandlePlayerWon()
     {
         SetState(State.LevelWon);
+        currentScore = CalculateLevelScore();
         DataManager.Instance.CompleteCurrentLevel(currentScore, levelPlayedTime, diamondsCollected);
-        diamondsCollected = 0;
+    }
+
+    private int CalculateLevelScore()
+    {
+        return currentScore + (diamondsCollected * 100) + (int)Math.Clamp(10000 - 5 * levelPlayedTime, 0.0f, 10000.0f);
     }
 
     private void HandlePlayerDead(object sender, EventArgs e)
@@ -161,7 +161,6 @@ public class GameManager : PersistentManager<GameManager>
         {
             Debug.Log("Not in a paused state, cannot resume.");
         }
-        
     }
 
     private void GameInput_OnPauseAction(object sender, EventArgs e)
@@ -187,12 +186,6 @@ public class GameManager : PersistentManager<GameManager>
         levelPlayedTime = Time.time - levelLastPlayTimeStamp;
         TimeSpan timeSpan = TimeSpan.FromSeconds(levelPlayedTime);
         return $"{timeSpan.Minutes:D2}:{timeSpan.Seconds:D2}";
-    }
-    
-    public void AddScore(int points)
-    {
-        currentScore += points;
-        Debug.Log($"GameManager: Score updated to {currentScore}");
     }
 
     private void SetState(State newState)

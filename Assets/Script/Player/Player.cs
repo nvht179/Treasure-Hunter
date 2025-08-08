@@ -67,7 +67,7 @@ public class Player : MonoBehaviour, IDamageable
     public event EventHandler OnGreenPotionSuccess;
     public event EventHandler OnBluePotionUsed;
     public event EventHandler OnHealthPotionUsed;
-    public event EventHandler OnKeyCollected;
+    public event EventHandler OnResourcesCollected;
     public event EventHandler OnDiamondCollected;
 
     public event EventHandler OnHealthChanged; // For refactor
@@ -411,13 +411,13 @@ public class Player : MonoBehaviour, IDamageable
                 if (itemSO.itemType == ItemType.GoldenKey)
                 {
                     inventory.AddItem(itemWorld.GetItem());
-                    OnKeyCollected?.Invoke(this, EventArgs.Empty);
                 }
             }
             else
             {
                 inventory.AddItem(itemWorld.GetItem());
             }
+            OnResourcesCollected?.Invoke(this, EventArgs.Empty);
         }
     }
 

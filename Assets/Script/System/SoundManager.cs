@@ -59,7 +59,7 @@ public class SoundManager : PersistentManager<SoundManager>
         player.OnGreenPotionFail += Player_OnGreenPotionFail;
         player.OnBluePotionUsed += Player_OnBluePotionUsed;
         player.OnHealthPotionUsed += Player_OnHealthPotionUsed;
-        player.OnKeyCollected += Player_OnKeyCollected;
+        player.OnResourcesCollected += Player_OnResourcesCollected;
         player.HealthSystem.OnDamageReceived += HealthSystemOnDamageReceived;
         player.HealthSystem.OnDeath += Player_OnPlayerDead;
 
@@ -92,7 +92,7 @@ public class SoundManager : PersistentManager<SoundManager>
         PlaySound(audioClipRefsSO.playerDead, player.transform.position);
     }
 
-    private void Player_OnKeyCollected(object sender, System.EventArgs e)
+    private void Player_OnResourcesCollected(object sender, System.EventArgs e)
     {
         Debug.Log("Player_OnKeyCollected");
         PlaySound(audioClipRefsSO.keyCollected, ((Player)sender).transform.position);
