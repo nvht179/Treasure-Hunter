@@ -26,9 +26,9 @@ public class SoundManager : PersistentManager<SoundManager>
         GameManager_OnStateChanged(GameManager.State.None, GameManager.Instance.CurrentState);
     }
 
-    private void DataManager_OnUserPreferencesChanged(UserPreferencesData obj)
+    private void DataManager_OnUserPreferencesChanged(UserPreferencesData data)
     {
-        SetVolume(volume);
+        SetVolume(data.sfxVolume);
     }
 
     private void GameManager_OnStateChanged(GameManager.State oldState, GameManager.State newState)

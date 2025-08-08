@@ -87,13 +87,9 @@ public class SettingsMenuUI : PersistentManager<SettingsMenuUI>
                         Label = "Yes",
                         ButtonType = DialogButtonType.Accept,
                         Callback = () => {
-                            // Reset the preferences
                             DataManager.Instance.ResetUserPreferences();
-                            
-                            // Update the UI to reflect the reset values
                             UpdateVisual();
                             
-                            // Delay the success dialog to avoid nesting issues
                             StartCoroutine(ShowResetSuccessDialog());
                         }
                     },
@@ -118,7 +114,6 @@ public class SettingsMenuUI : PersistentManager<SettingsMenuUI>
                         Label = "Yes",
                         ButtonType = DialogButtonType.Accept,
                         Callback = () => {
-                            // Delete all user data
                             DataManager.Instance.DeleteSaveData();
 
                             StartCoroutine(ShowDeleteSuccessDialog());
@@ -216,6 +211,8 @@ public class SettingsMenuUI : PersistentManager<SettingsMenuUI>
         {
             OnCategorySelected(activeCategory);
         }
+        
+        deleteAllDataButton.interactable = GameManager.Instance.CurrentState != GameManager.State.Paused;
     }
 
     private void Hide()
