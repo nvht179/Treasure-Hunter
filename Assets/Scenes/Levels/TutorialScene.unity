@@ -2662,6 +2662,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -1.9
       objectReference: {fileID: 0}
+    - target: {fileID: 3064486551741434963, guid: f66c0e78935681c429e1ba55c6293b3e, type: 3}
+      propertyPath: basePlayerDamage
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4895856867643241211, guid: f66c0e78935681c429e1ba55c6293b3e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

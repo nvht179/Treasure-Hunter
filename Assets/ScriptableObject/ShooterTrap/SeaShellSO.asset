@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: SeaShellSO
   m_EditorClassIdentifier: 
   trapName: Sea Shell
-  scoreOnDead: 5
+  scoreOnDead: 15
   maxHealth: 50

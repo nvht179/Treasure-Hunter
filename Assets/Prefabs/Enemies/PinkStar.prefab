@@ -1012,10 +1012,13 @@ MonoBehaviour:
   enemySO: {fileID: 11400000, guid: d2ca00d3d7ecb9e488d9abde22195848, type: 2}
   moveSpeed: 3
   chargeSpeed: 15
-  visionDistance: 10
   attackDamage: 10
   chargeTime: 0.5
   rechargeTime: 2
+  knockbackForce: 50
+  minMoneyOnDead: 5
+  maxMoneyOnDead: 10
+  visionDistance: 10
   pivot: {fileID: 5433814789420289379}
   groundLayer:
     serializedVersion: 2
@@ -1023,4 +1026,3 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
-  knockbackForce: 50

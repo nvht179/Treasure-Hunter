@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc6e5da51c422f34a895184e406a2833, type: 3}
   m_Name: DiamondHat
   m_EditorClassIdentifier: 
-  itemName: Lava Hat
+  itemName: Diamond Hat
   description: 'Passive: Provides 100% health regeneration'
   droppable: 1
   consumable: 1

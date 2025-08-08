@@ -890,6 +890,10 @@ MonoBehaviour:
   player: {fileID: 0}
   enemySO: {fileID: 11400000, guid: 3357f0d96be50ac47ac386b1c027aabb, type: 2}
   moveSpeed: 2
+  attackDamage: 10
+  chargeTime: 0.5
+  minMoneyOnDead: 5
+  maxMoneyOnDead: 10
   groundLayer:
     serializedVersion: 2
     m_Bits: 192
@@ -901,9 +905,7 @@ MonoBehaviour:
   groundAndWallCheckOriginOffset: 0.6
   wallCheckDistance: 0.1
   nearPlayerThreshold: 1.2
-  attackDamage: 10
   attackRange: 0.7
-  chargeTime: 0.5
   hitTime: 0.35
   deadHitTime: 0.35
   rechargeTime: 1
