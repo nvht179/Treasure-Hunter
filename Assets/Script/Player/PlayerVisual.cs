@@ -52,7 +52,7 @@ public class PlayerVisual : MonoBehaviour
         animator.SetBool(IsAttacking, isAttacking);
         animator.SetBool(IsConstantlyAttacking, isConstantlyAttacking);
         animator.SetFloat(XVelocity, math.abs(velocity.x));
-        animator.SetFloat(YVelocity, math.abs(velocity.y));
+        animator.SetFloat(YVelocity, velocity.y);
     }
 
     private void HandleFlipX()
