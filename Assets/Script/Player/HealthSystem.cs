@@ -83,6 +83,13 @@ public class HealthSystem
             Debug.Log($"HealthSystem: Took damage, current health is now {currentHealth}");
     }
 
+    public void Sink()
+    {
+        currentHealth = 0f;
+        RaiseHealthChanged();
+        OnDeath?.Invoke(this, EventArgs.Empty);
+    }
+
     public void LosePercentCurrentHealth(float percent)
     {
         if (percent <= 0f || percent > 1f) return;

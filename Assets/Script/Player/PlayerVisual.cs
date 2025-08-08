@@ -17,7 +17,7 @@ public class PlayerVisual : MonoBehaviour
     private static readonly int XVelocity = Animator.StringToHash("XVelocity");
     private static readonly int YVelocity = Animator.StringToHash("YVelocity");
     private static readonly int Hit = Animator.StringToHash("Hit");
-
+    private static readonly int DeadHit = Animator.StringToHash("DeadHit");
 
     private void Awake()
     {
@@ -29,6 +29,12 @@ public class PlayerVisual : MonoBehaviour
     private void Start()
     {
         player.HealthSystem.OnDamageReceived += HealthSystemOnDamageReceived;
+        player.HealthSystem.OnDeath += HealthSystemOnDeath;
+    }
+
+    private void HealthSystemOnDeath(object sender, EventArgs e)
+    {
+        animator.SetTrigger(DeadHit);
     }
 
     private void HealthSystemOnDamageReceived(object sender, EventArgs e)

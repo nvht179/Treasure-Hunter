@@ -55,12 +55,19 @@ public class GameWonUI : MonoBehaviour
         Debug.Log("GameWonUI -> GameManager_OnStateChanged");
         if (newState == GameManager.State.LevelWon)
         {
-            Show();
+            StartCoroutine(ShowWithDelay());
         }
         else
         {
+            StopAllCoroutines();
             Hide();
         }
+    }
+
+    private IEnumerator ShowWithDelay()
+    {
+        yield return new WaitForSecondsRealtime(1.5f);
+        Show();
     }
 
     public void Show()

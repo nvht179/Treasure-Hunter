@@ -26,6 +26,11 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private LayerMask interactiveObjectLayer;
+    [SerializeField] private LayerMask waterLayer;
+
+    [Header("Sink")]
+    [SerializeField] private float sinkSpeed = 1f;
+    [SerializeField] private float sinkDelay = 2f; // seconds before death
 
     [Header("Attack")]
     [SerializeField] private Transform attackOrigin;
@@ -102,7 +107,10 @@ public class Player : MonoBehaviour, IDamageable
     // Hit
     private Vector2 knockbackVelocity;
     private float knockbackTimer;
-    
+
+    // Sink
+    private bool isSinking;
+
     private Rigidbody2D rb;
 
     private Inventory inventory;
@@ -385,6 +393,11 @@ public class Player : MonoBehaviour, IDamageable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (((1 << collision.gameObject.layer) & waterLayer) != 0 && !isSinking)
+        {
+            StartCoroutine(SinkAndDie());
+        }
+
         if (collision.TryGetComponent<ItemWorld>(out var itemWorld))
         {
             ItemSO itemSO = itemWorld.GetItem().itemSO;
@@ -419,6 +432,26 @@ public class Player : MonoBehaviour, IDamageable
 
         money += collectedAmount;
     }
+    private IEnumerator SinkAndDie()
+    {
+        isSinking = true;
+
+        // Disable input
+        moveVector = Vector3.zero;
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = 0;
+
+        HealthSystem.Sink();
+        float timer = 0f;
+        while (timer < sinkDelay)
+        {
+            // Slowly sink
+            transform.position += Vector3.down * sinkSpeed * Time.deltaTime;
+            timer += Time.deltaTime;
+            yield return null;
+        }
+    }
+
 
     private void OnDrawGizmos()
     {

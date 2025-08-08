@@ -12,6 +12,7 @@ public class GameLostUI : MonoBehaviour
     [SerializeField] private Button exitButton;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI timeTakenText;
+    [SerializeField] private Transform visuals;
 
     private void Awake()
     {
@@ -53,23 +54,30 @@ public class GameLostUI : MonoBehaviour
         Debug.Log("GameOverUI -> GameManager_OnStateChanged");
         if (newState == GameManager.State.LevelLost)
         {
-            Show();
+            StartCoroutine(ShowWithDelay());
         }
         else
         {
+            StopAllCoroutines();
             Hide();
         }
+    }
+
+    private IEnumerator ShowWithDelay()
+    {
+        yield return new WaitForSecondsRealtime(1.5f);
+        Show();
     }
 
     public void Show()
     {
         scoreText.text = $"Score: {GameManager.Instance.GetScore()}";
         timeTakenText.text = $"Time: {GameManager.Instance.GetTimeTaken()}";
-        gameObject.SetActive(true);
+        visuals.gameObject.SetActive(true);
     }
 
     public void Hide()
     {
-        gameObject.SetActive(false);
+        visuals.gameObject.SetActive(false);
     }
 }
