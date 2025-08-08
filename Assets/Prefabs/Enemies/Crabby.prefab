@@ -888,7 +888,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  maxHealth: 20
+  enemySO: {fileID: 11400000, guid: 3357f0d96be50ac47ac386b1c027aabb, type: 2}
   moveSpeed: 2
   groundLayer:
     serializedVersion: 2

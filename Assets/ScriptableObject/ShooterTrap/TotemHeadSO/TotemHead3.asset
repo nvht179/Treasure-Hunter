@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d3e2cfa746c87545820e79dc6991f08, type: 3}
   m_Name: TotemHead3
   m_EditorClassIdentifier: 
-  totemName: Totem Head 3A
+  trapName: Totem Head 3
+  scoreOnDead: 8
+  maxHealth: 80
   height: 0.7
   deltaWidth: 0
   normalSprite: {fileID: 21300000, guid: ba113cf3469d12a4a87172ad035c1785, type: 3}

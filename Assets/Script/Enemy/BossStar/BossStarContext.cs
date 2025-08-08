@@ -8,6 +8,7 @@ namespace Script.Enemy.BossStar
     public class BossStarContext : MonoBehaviour, IDamageable
     {
         [SerializeField] private float maxHealth;
+        [SerializeField] private int scoreOnDead;
         [SerializeField] private float wanderSpeed;
         [SerializeField] private float fleeSpeed;
         [SerializeField] private float attackDamage;
@@ -191,6 +192,8 @@ namespace Script.Enemy.BossStar
         public void SelfDestroy()
         {
             Destroy(gameObject);
+
+            GameManager.Instance.AddScoreOnEnemyDead(scoreOnDead);
         }
 
         public void TakeDamage(IDamageable.DamageInfo offenderInfo)

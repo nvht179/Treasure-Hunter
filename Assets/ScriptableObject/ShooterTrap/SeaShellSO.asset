@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b52991a46b648179555185fd8782747, type: 3}
-  m_Name: PinkStarSO
+  m_Script: {fileID: 11500000, guid: 59e114058648e2149bee06db9f1f9d77, type: 3}
+  m_Name: SeaShellSO
   m_EditorClassIdentifier: 
-  enemyName: Pink Star
-  prefab: {fileID: 6014555149247026926, guid: 610e9b074f112f44b8f6172736ab91dd, type: 3}
-  maxHealth: 30
-  scoreOnDead: 15
+  trapName: Sea Shell
+  scoreOnDead: 5
+  maxHealth: 200

@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Trap/TotemHead")]
-public class TotemHeadSO : ScriptableObject {
+public class TotemHeadSO : ShooterTrapSO {
     [Header("General")]
-    public string totemName;
     public float height;
     public float deltaWidth; // to balance the width between heads
 

@@ -9,6 +9,7 @@ public class TotemHead : ShooterTrap, IDamageable {
     public event EventHandler OnDestroyed;
 
     [SerializeField] private float maxHealthPoint = 20f;
+    [SerializeField] private TotemHeadSO totemHeadSO;
 
     private float currentHealthPoint;
     private bool isDead = false;
@@ -35,6 +36,12 @@ public class TotemHead : ShooterTrap, IDamageable {
             }
             ResourceSpawner.Instance.SpawnMoney(transform.position, 1, 20);
             Destroy(gameObject, 2f);
+
+            GameManager.Instance.AddScoreOnEnemyDead(totemHeadSO.scoreOnDead);
         }
+    }
+    public void SetTotemHeadSO(TotemHeadSO totemHeadSO)
+    {
+        this.totemHeadSO = totemHeadSO;
     }
 }

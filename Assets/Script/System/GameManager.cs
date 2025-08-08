@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Resources;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : PersistentManager<GameManager>
 {
@@ -24,10 +25,11 @@ public class GameManager : PersistentManager<GameManager>
     public State CurrentState => state;
     
     // Game session data (not persisted)
-    private int currentScore;
     private float levelLastPlayTimeStamp;
     private float levelPlayedTime;
     private int diamondsCollected;
+    private int numberOfEnemiesKilled;
+    private int currentScore;
 
     protected override void Awake()
     {
@@ -101,6 +103,9 @@ public class GameManager : PersistentManager<GameManager>
         Debug.Log("GameManager: Player found in GAME scene, setting up game state.");
 
         diamondsCollected = 0;
+        numberOfEnemiesKilled = 0;
+        currentScore = 0;
+
         player.OnDead += HandlePlayerDead;
         player.OnDiamondCollected += (_, __) => diamondsCollected++;
         
@@ -202,5 +207,11 @@ public class GameManager : PersistentManager<GameManager>
     public int GetNumberOfDiamonds()
     {
         return diamondsCollected;
+    }
+
+    public void AddScoreOnEnemyDead(int score)
+    {
+        numberOfEnemiesKilled++;
+        currentScore += score;
     }
 }

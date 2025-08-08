@@ -1009,7 +1009,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  maxHealth: 30
+  enemySO: {fileID: 11400000, guid: d2ca00d3d7ecb9e488d9abde22195848, type: 2}
   moveSpeed: 3
   chargeSpeed: 15
   visionDistance: 10

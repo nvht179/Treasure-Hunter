@@ -16,7 +16,7 @@ MonoBehaviour:
   description: 'passive: use this to trade'
   droppable: 1
   consumable: 1
-  itemType: 6
+  itemType: 7
   icon: {fileID: 21300000, guid: ba18bf89202be8148a05e829b1c38223, type: 3}
   prefab: {fileID: 1628601066568278247, guid: d3e90ca49d6f2cf439e1a62b1318e778, type: 3}
   collectEffectPrefab: {fileID: 7442991642777013236, guid: e95d7b7e67d4ded4fab7e57cd706861d, type: 3}

@@ -7,5 +7,7 @@ namespace Script.ScriptableObjects
     {
         public string enemyName;
         public Transform prefab;
+        public float maxHealth;
+        public int scoreOnDead;
     }
 }

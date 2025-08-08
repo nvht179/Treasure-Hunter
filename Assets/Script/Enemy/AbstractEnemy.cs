@@ -6,7 +6,7 @@ namespace Script.Enemy
     public abstract class AbstractEnemy : MonoBehaviour
     {
         [SerializeField] private Player player;
-        [SerializeField] private float maxHealth;
+        [SerializeField] private ScriptableObjects.EnemySO enemySO;
 
         public event EventHandler<OnDestroyedEventArgs> OnDestroyed;
 
@@ -16,12 +16,12 @@ namespace Script.Enemy
         }
 
         private float currentHealth;
-        public float MaxHealth => maxHealth;
+        public float MaxHealth => enemySO.maxHealth;
 
         public float CurrentHealth
         {
             get => currentHealth;
-            set => currentHealth = Mathf.Clamp(value, 0, maxHealth);
+            set => currentHealth = Mathf.Clamp(value, 0, enemySO.maxHealth);
         }
 
         public Player Player
@@ -37,6 +37,8 @@ namespace Script.Enemy
             {
                 Enemy = this
             });
+
+            GameManager.Instance.AddScoreOnEnemyDead(enemySO.scoreOnDead);
         }
         public virtual void TakeDamage(IDamageable.DamageInfo offenderInfo)
         {

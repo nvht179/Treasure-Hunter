@@ -44,6 +44,7 @@ public class Totem : MonoBehaviour {
 
             // instantiate & position
             var headT = Instantiate(prefab, transform);
+            headT.GetComponent<TotemHead>().SetTotemHeadSO(headSO);
             headT.localPosition = new Vector3(-headSO.deltaWidth * (fireDirection == ShooterTrap.FireDirection.Left ? 1 : -1), currentY, 0);
             
             // override sprite if needed
@@ -85,6 +86,7 @@ public class Totem : MonoBehaviour {
 
             // instantiate & position
             var headT = Instantiate(prefab, transform);
+            headT.GetComponent<TotemHead>().SetTotemHeadSO(headSO);
             headT.localPosition = new Vector3(xOffset, currentY, 0);
 
             // override sprite if needed
