@@ -1014,7 +1014,7 @@ MonoBehaviour:
   chargeSpeed: 15
   visionDistance: 10
   attackDamage: 10
-  chargeTime: 2
+  chargeTime: 0.5
   rechargeTime: 2
   pivot: {fileID: 5433814789420289379}
   groundLayer:

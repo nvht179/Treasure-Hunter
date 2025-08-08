@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PearlSO
   m_EditorClassIdentifier: 
   objectName: Pearl
-  speed: 10
+  speed: 9
   damage: 1
   force: 1
   prefab: {fileID: 2234119884151101640, guid: 4f099a62b2e5ca2409520542820d06e2, type: 3}
