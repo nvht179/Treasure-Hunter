@@ -8,6 +8,7 @@ public class LevelData
     public bool isCompleted;
     public bool isUnlocked;
     public int bestScore;
+    public int bestNumberOfDiamondsCollected;
     public float bestTime; // in seconds
     public DateTime firstCompletedDate;
     public DateTime lastPlayedDate;
@@ -29,6 +30,7 @@ public class LevelData
         isCompleted = false;
         isUnlocked = false;
         bestScore = 0;
+        bestNumberOfDiamondsCollected = 0;
         bestTime = float.MaxValue;
         firstCompletedDate = DateTime.MinValue;
         lastPlayedDate = DateTime.MinValue;
@@ -45,6 +47,7 @@ public class LevelData
         isCompleted = false;
         isUnlocked = false;
         bestScore = 0;
+        bestNumberOfDiamondsCollected = 0;
         bestTime = 0;
         firstCompletedDate = DateTime.MinValue;
         lastPlayedDate = DateTime.MinValue;
@@ -69,8 +72,16 @@ public class LevelData
             bestTime = newTime;
         }
     }
-    
-    public void CompleteLevel(int score, float time)
+
+    public void UpdateDiamondsCollected(int diamonds)
+    {
+        if (diamonds > bestNumberOfDiamondsCollected)
+        {
+            bestNumberOfDiamondsCollected = diamonds;
+        }
+    }
+
+    public void CompleteLevel(int score, float time, int diamondsCollected)
     {
         if (!isCompleted)
         {
@@ -80,6 +91,7 @@ public class LevelData
         
         UpdateScore(score);
         UpdateTime(time);
+        UpdateDiamondsCollected(diamondsCollected);
         lastPlayedDate = DateTime.Now;
         timesPlayed++;
     }

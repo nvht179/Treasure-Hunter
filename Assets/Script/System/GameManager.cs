@@ -27,6 +27,7 @@ public class GameManager : PersistentManager<GameManager>
     private int currentScore;
     private float levelLastPlayTimeStamp;
     private float levelPlayedTime;
+    private int diamondsCollected;
 
     protected override void Awake()
     {
@@ -98,23 +99,18 @@ public class GameManager : PersistentManager<GameManager>
         }
 
         Debug.Log("GameManager: Player found in GAME scene, setting up game state.");
+
+        diamondsCollected = 0;
         player.OnDead += HandlePlayerDead;
-        player.OnWon += HandlePlayerWon;
+        player.OnDiamondCollected += (_, __) => diamondsCollected++;
         
         // Initialize game session
         currentScore = 0;
         levelLastPlayTimeStamp = Time.time;
         
-        // Let DataManager handle level tracking
-        if (DataManager.Instance != null)
-        {
-            DataManager.Instance.StartLevel(loadedScene);
-        }
-        
+        DataManager.Instance.StartLevel(loadedScene);
         SetState(State.GamePlaying);
-
         GameInput.Instance.EnableActionMap(GameInput.ActionMap.Player);
-
         SoundManager.Instance.AttachPlayerSound(player);
 
         var shop = FindObjectOfType<Shop>();
@@ -138,7 +134,8 @@ public class GameManager : PersistentManager<GameManager>
     private void HandlePlayerWon()
     {
         SetState(State.LevelWon);
-        DataManager.Instance.CompleteCurrentLevel(currentScore, levelPlayedTime);
+        DataManager.Instance.CompleteCurrentLevel(currentScore, levelPlayedTime, diamondsCollected);
+        diamondsCollected = 0;
     }
 
     private void HandlePlayerDead(object sender, EventArgs e)
@@ -204,7 +201,6 @@ public class GameManager : PersistentManager<GameManager>
 
     public int GetNumberOfDiamonds()
     {
-        // TODO: show how many diamonds player got
-        return 0;
+        return diamondsCollected;
     }
 }

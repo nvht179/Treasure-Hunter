@@ -69,7 +69,9 @@ public class GameWonUI : MonoBehaviour
         timeTakenText.text = $"Time: {GameManager.Instance.GetTimeTaken()}";
         int numberOfDiamonds = GameManager.Instance.GetNumberOfDiamonds();
 
-        for (int i = 0; i < Math.Min(numberOfDiamonds,3); ++i)
+        Debug.Log("Number of Diamonds: " + numberOfDiamonds);
+
+        for (int i = 0; i < Math.Min(numberOfDiamonds, 3); ++i)
         {
             diamondImages[i].color = Color.white;
         }

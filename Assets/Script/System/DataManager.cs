@@ -392,12 +392,12 @@ public class DataManager : PersistentManager<DataManager>
     
     #region Game Progress API
     
-    public void CompleteLevel(Scene levelId, int score, float timeInSeconds, int pageIndex = -1, int levelIndex = -1, bool isBossLevel = false)
+    public void CompleteLevel(Scene levelId, int score, float timeInSeconds, int pageIndex = -1, int levelIndex = -1, bool isBossLevel = false, int diamondsCollected = 0)
     {
         var levelData = currentSaveData.gameProgress.GetLevelData(levelId);
         if (levelData != null)
         {
-            currentSaveData.gameProgress.CompleteLevel(levelId, score, timeInSeconds);
+            currentSaveData.gameProgress.CompleteLevel(levelId, score, timeInSeconds, diamondsCollected);
             
             // Unlock next level using efficient position-based approach
             UnlockNextLevel(levelId, pageIndex, levelIndex, isBossLevel);
@@ -454,7 +454,7 @@ public class DataManager : PersistentManager<DataManager>
         Debug.Log($"DataManager: Started level {levelId}");
     }
     
-    public void CompleteCurrentLevel(int score, float timeInSeconds)
+    public void CompleteCurrentLevel(int score, float timeInSeconds, int diamondsCollected)
     {
         if (currentSaveData.gameProgress.currentLevelId == Scene.None)
         {
@@ -468,7 +468,7 @@ public class DataManager : PersistentManager<DataManager>
         var (pageIndex, levelIndex, isBossLevel) = GetLevelPosition(levelId);
         
         // Complete the level
-        CompleteLevel(levelId, score, timeInSeconds, pageIndex, levelIndex, isBossLevel);
+        CompleteLevel(levelId, score, timeInSeconds, pageIndex, levelIndex, isBossLevel, diamondsCollected);
         
         Debug.Log($"DataManager: Completed current level {levelId} with score {score} and time {timeInSeconds:F2}s");
     }

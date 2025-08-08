@@ -29,6 +29,7 @@ public enum ItemType {
     Boots,
     Ring,
     GoldenKey,
+    Diamond,
     Resources,
     Consumable,
 }

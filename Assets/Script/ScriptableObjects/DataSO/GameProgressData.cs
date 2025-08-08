@@ -74,13 +74,13 @@ public class GameProgressData
         }
     }
     
-    public void CompleteLevel(Scene levelId, int score, float time)
+    public void CompleteLevel(Scene levelId, int score, float time, int diamondsCollected)
     {
         var levelData = GetLevelData(levelId);
         if (levelData != null)
         {
             bool wasCompleted = levelData.isCompleted;
-            levelData.CompleteLevel(score, time);
+            levelData.CompleteLevel(score, time, diamondsCollected);
             
             // Update global stats
             if (!wasCompleted)

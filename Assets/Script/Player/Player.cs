@@ -64,13 +64,13 @@ public class Player : MonoBehaviour, IDamageable
     public event EventHandler OnBluePotionUsed;
     public event EventHandler OnHealthPotionUsed;
     public event EventHandler OnKeyCollected;
+    public event EventHandler OnDiamondCollected;
 
     public event EventHandler OnHealthChanged; // For refactor
     public event EventHandler OnDestroyed;
     public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
     public event EventHandler<OnStaminaUsedEventArgs> OnStaminaUsed;
     public event EventHandler OnNeedKey;
-    public event Action OnWon;
     public class OnStaminaUsedEventArgs : EventArgs
     {
         public float CurrentStamina;
@@ -201,7 +201,6 @@ public class Player : MonoBehaviour, IDamageable
     private void PlayerOnAttack(object sender, EventArgs e)
     {
         isConstantlyAttacking = !isConstantlyAttacking;
-
     }
 
     private void PlayerOnAttackAlternate(object sender, EventArgs e)
@@ -397,7 +396,11 @@ public class Player : MonoBehaviour, IDamageable
         if (collision.TryGetComponent<ItemWorld>(out var itemWorld))
         {
             ItemSO itemSO = itemWorld.GetItem().itemSO;
-            if(itemSO is ResourceItemSO resourceItemSO)
+            if (itemSO.itemType == ItemType.Diamond)
+            {
+                OnDiamondCollected?.Invoke(this, EventArgs.Empty);
+            }
+            else if(itemSO is ResourceItemSO resourceItemSO)
             {
                 HandleResourceCollected(itemWorld, resourceItemSO);
                 if (itemSO.itemType == ItemType.GoldenKey)
