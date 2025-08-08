@@ -9,17 +9,18 @@ public class Seashell : ShooterTrap, IDamageable {
     public event EventHandler OnDestroyed;
 
     [SerializeField] private ShooterTrapSO seaShellSO;
+    [SerializeField] private int maxHealth;
     private float currentHealthPoint;
     private bool isDead;
 
     private new void Awake() {
         base.Awake();
         FireDelay = 0.15f;
-        currentHealthPoint = seaShellSO.maxHealth;
+        currentHealthPoint = maxHealth;
     }
 
     public void TakeDamage(IDamageable.DamageInfo offenderInfo) {
-        currentHealthPoint = Mathf.Clamp(currentHealthPoint - offenderInfo.Damage, 0, seaShellSO.maxHealth);
+        currentHealthPoint = Mathf.Clamp(currentHealthPoint - offenderInfo.Damage, 0, maxHealth);
         OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs {
             MaxHealth = seaShellSO.maxHealth,
             CurrentHealth = currentHealthPoint
