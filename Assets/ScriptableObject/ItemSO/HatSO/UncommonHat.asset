@@ -18,7 +18,7 @@ MonoBehaviour:
   consumable: 1
   itemType: 2
   icon: {fileID: -1853905252, guid: 123d6a7c5b2c46a4b9d4e5d70150022f, type: 3}
-  prefab: {fileID: 775798835996706988, guid: c7154956640bcd9468aae1cb68e31fb4, type: 3}
+  prefab: {fileID: 2342865497543918112, guid: 7d3b1b5ff5265cd4686d489ffd364b9d, type: 3}
   collectEffectPrefab: {fileID: 7934267159419852871, guid: c29719f94173dde4d8e680bcf2db5323, type: 3}
   scaleInUI: 20
   stackable: 0

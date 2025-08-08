@@ -903,7 +903,7 @@ MonoBehaviour:
   nearPlayerThreshold: 1.2
   attackDamage: 10
   attackRange: 0.7
-  chargeTime: 1
+  chargeTime: 0.5
   hitTime: 0.35
   deadHitTime: 0.35
   rechargeTime: 1

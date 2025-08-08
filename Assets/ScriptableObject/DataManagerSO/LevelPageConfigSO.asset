@@ -16,8 +16,8 @@ MonoBehaviour:
   - pageName: 1
     pageNumber: 1
     normalLevels:
-    - levelId: 8
-      displayName: Tutorial Scene
+    - levelId: 6
+      displayName: Pirate Ship Scene
       levelNumber: 1
       totalCollectibles: 0
       unlockedByDefault: 0

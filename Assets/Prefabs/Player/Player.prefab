@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82c561d612874694e99dbe048b44eb43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  basePlayerDamage: 5
+  basePlayerDamage: 2
   baseCritChance: 0.1
   baseCritMultiplier: 2
   baseHealth: 100
