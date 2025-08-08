@@ -9,9 +9,7 @@ public class SoundManager : PersistentManager<SoundManager>
     [SerializeField] private AudioClipRefsSO audioClipRefsSO;
     private Player player; // default position to play sound effects
 
-
     private float volume = 1f;
-
 
     protected override void Awake()
     {
@@ -63,7 +61,7 @@ public class SoundManager : PersistentManager<SoundManager>
         player.OnHealthPotionUsed += Player_OnHealthPotionUsed;
         player.OnKeyCollected += Player_OnKeyCollected;
         player.HealthSystem.OnDamageReceived += HealthSystemOnDamageReceived;
-        player.OnDead += Player_OnPlayerDead;
+        player.HealthSystem.OnDeath += Player_OnPlayerDead;
 
         InventoryUI inventoryUI = player.GetInventoryUI();
         inventoryUI.OnInventoryOpen += Player_OnInventoryOpen;
@@ -85,13 +83,13 @@ public class SoundManager : PersistentManager<SoundManager>
     {
         Debug.Log("PlayerOnDamageTaken");
         // TODO: sender is HealthSystem, but it should be Player
-        // PlaySound(audioClipRefsSO.playerGotHit, ((Player)sender).transform.position);
+         PlaySound(audioClipRefsSO.playerGotHit, player.transform.position);
     }
 
-    private void Player_OnPlayerDead(object sender, System.EventArgs e)
+    private void Player_OnPlayerDead(object sender, EventArgs e)
     {
         Debug.Log("Player_OnPlayerDead");
-        PlaySound(audioClipRefsSO.playerDead, ((Player)sender).transform.position);
+        PlaySound(audioClipRefsSO.playerDead, player.transform.position);
     }
 
     private void Player_OnKeyCollected(object sender, System.EventArgs e)
@@ -189,7 +187,7 @@ public class SoundManager : PersistentManager<SoundManager>
     private void Player_OnAttack(object sender, System.EventArgs e)
     {
         Debug.Log("Player_OnAttack");
-        PlaySound(audioClipRefsSO.attack, ((Player)sender).transform.position);
+        PlaySound(audioClipRefsSO.attack, ((Player)sender).transform.position, 0.8f);
     }
 
     private void Player_OnAirAttack(object sender, System.EventArgs e)

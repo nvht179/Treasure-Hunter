@@ -106,7 +106,7 @@ public class GameManager : PersistentManager<GameManager>
         numberOfEnemiesKilled = 0;
         currentScore = 0;
 
-        player.OnDead += HandlePlayerDead;
+        player.HealthSystem.OnDeath += HandlePlayerDead;
         player.OnDiamondCollected += (_, __) => diamondsCollected++;
         
         // Initialize game session

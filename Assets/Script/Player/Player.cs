@@ -57,7 +57,6 @@ public class Player : MonoBehaviour, IDamageable
     public event EventHandler OnAttack;
     public event EventHandler OnAirAttack;
     public event EventHandler OnAttackAlternate;
-    public event EventHandler OnDead;
 
     public event EventHandler OnGreenPotionFail;
     public event EventHandler OnGreenPotionSuccess;
@@ -141,11 +140,6 @@ public class Player : MonoBehaviour, IDamageable
         DamageReceivedSystem = new DamageReceivedSystem();
     }
 
-    private void HealthSystem_OnDeath()
-    {
-        OnDead?.Invoke(this, EventArgs.Empty);
-    }
-
     private void StaminaSystem_OnStaminaChanged(float currentStamina, float maxStamina)
     {
         OnStaminaUsed?.Invoke(this, new OnStaminaUsedEventArgs
@@ -161,8 +155,6 @@ public class Player : MonoBehaviour, IDamageable
         GameInput.Instance.OnAttackAction += PlayerOnAttack;
         GameInput.Instance.OnAttackAlternateAction += PlayerOnAttackAlternate;
         GameInput.Instance.OnInteractAction += PlayerOnInteract;
-
-        HealthSystem.OnDeath += HealthSystem_OnDeath;
 
         StaminaSystem.OnStaminaChanged += StaminaSystem_OnStaminaChanged;
 

@@ -34,7 +34,7 @@ public class HealthSystem
         public float MaxHealth;
     }
     public event EventHandler OnDamageReceived;
-    public event Action OnDeath;
+    public event EventHandler OnDeath;
 
     // --- Constructor ---
     public HealthSystem(float initialHealth, float baseRegen)
@@ -75,7 +75,12 @@ public class HealthSystem
         RaiseHealthChanged();
         OnDamageReceived?.Invoke(this, EventArgs.Empty);
         if (currentHealth <= 0f)
-            OnDeath?.Invoke();
+        {
+            OnDeath?.Invoke(this, EventArgs.Empty);
+            Debug.Log("HealthSystem: Player has died.");
+        }
+        else
+            Debug.Log($"HealthSystem: Took damage, current health is now {currentHealth}");
     }
 
     public void LosePercentCurrentHealth(float percent)

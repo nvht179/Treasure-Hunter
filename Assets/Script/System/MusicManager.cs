@@ -152,8 +152,8 @@ public class MusicManager : PersistentManager<MusicManager>
             return null;
         }
 
-        //return clips[Random.Range(0, clips.Length)];
-        return clips[0];
+        return clips[Random.Range(0, clips.Length)];
+        //return clips[0];
     }
 
     public void SetVolume(float newVolume)
