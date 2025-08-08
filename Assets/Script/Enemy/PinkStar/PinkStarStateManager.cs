@@ -6,16 +6,23 @@ namespace Script.Enemy.PinkStar
 {
     public class PinkStarStateManager : AbstractEnemy, IDamageable
     {
+        [Header("Stats")]
         [SerializeField] private float moveSpeed;
         [SerializeField] private float chargeSpeed;
-        [SerializeField] private float visionDistance;
         [SerializeField] private float attackDamage;
         [SerializeField] private float chargeTime;
         [SerializeField] private float rechargeTime;
+        [SerializeField] private float knockbackForce;
+
+        [Header("Money")]
+        [SerializeField] private int minMoneyOnDead;
+        [SerializeField] private int maxMoneyOnDead;
+
+        [Header("Reference")]
+        [SerializeField] private float visionDistance;
         [SerializeField] private Transform pivot; // used for vision and ground/wall ahead checking
         [SerializeField] private LayerMask groundLayer;
         [SerializeField] private LayerMask playerLayer;
-        [SerializeField] private float knockbackForce;
 
         private const float GroundCheckDistance = 0.1f;
         private const float GroundAndWallCheckAheadDistance = 0.7f;
@@ -205,7 +212,7 @@ namespace Script.Enemy.PinkStar
         public override void SelfDestroy()
         {
             base.SelfDestroy();
-            ResourceSpawner.Instance.SpawnMoney(transform.position, 1, MaxMoneyOnDead);
+            ResourceSpawner.Instance.SpawnMoney(pivot.position, minMoneyOnDead, maxMoneyOnDead);
         }
 
         private void OnDrawGizmos()

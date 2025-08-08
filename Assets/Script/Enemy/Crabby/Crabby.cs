@@ -6,7 +6,16 @@ using UnityEngine;
 
 public class Crabby : AbstractEnemy, IDamageable
 {
+    [Header("Stats")]
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float attackDamage;
+    [SerializeField] private float chargeTime;
+
+    [Header("Money")]
+    [SerializeField] private int minMoneyOnDead;
+    [SerializeField] private int maxMoneyOnDead;
+
+    [Header("References")]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private Transform attackOrigin;
@@ -14,9 +23,7 @@ public class Crabby : AbstractEnemy, IDamageable
     [SerializeField] private float groundAndWallCheckOriginOffset;
     [SerializeField] private float wallCheckDistance;
     [SerializeField] private float nearPlayerThreshold;
-    [SerializeField] private float attackDamage;
     [SerializeField] private float attackRange;
-    [SerializeField] private float chargeTime;
     [SerializeField] private float hitTime;
     [SerializeField] private float deadHitTime;
     [SerializeField] private float rechargeTime;
@@ -53,7 +60,6 @@ public class Crabby : AbstractEnemy, IDamageable
 
     private const float EyeHeightToBodyRatio = 0.75f;
     private const float GroundCheckDistance = 0.1f;
-    private const int MaxMoneyOnDead = 3;
 
     private void Awake()
     {
@@ -173,7 +179,7 @@ public class Crabby : AbstractEnemy, IDamageable
     public override void SelfDestroy()
     {
         base.SelfDestroy();
-        ResourceSpawner.Instance.SpawnMoney(transform.position, 1, MaxMoneyOnDead);
+        ResourceSpawner.Instance.SpawnMoney(attackOrigin.position, minMoneyOnDead, maxMoneyOnDead);
     }
 
     // TODO: fix crabby not following attacking pattern when pushing it towards a wall
