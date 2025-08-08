@@ -28758,6 +28758,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -4
       objectReference: {fileID: 0}
+    - target: {fileID: 3064486551741434963, guid: f66c0e78935681c429e1ba55c6293b3e, type: 3}
+      propertyPath: basePlayerDamage
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3841756963552747122, guid: f66c0e78935681c429e1ba55c6293b3e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -28805,6 +28809,10 @@ PrefabInstance:
     - target: {fileID: 4895856867643241211, guid: f66c0e78935681c429e1ba55c6293b3e, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689805807620961060, guid: f66c0e78935681c429e1ba55c6293b3e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

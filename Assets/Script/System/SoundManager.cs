@@ -83,7 +83,7 @@ public class SoundManager : PersistentManager<SoundManager>
     {
         Debug.Log("PlayerOnDamageTaken");
         // TODO: sender is HealthSystem, but it should be Player
-         PlaySound(audioClipRefsSO.playerGotHit, player.transform.position);
+        PlaySound(audioClipRefsSO.playerGotHit, player.transform.position);
     }
 
     private void Player_OnPlayerDead(object sender, EventArgs e)
