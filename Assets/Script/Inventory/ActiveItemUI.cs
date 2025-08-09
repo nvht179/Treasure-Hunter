@@ -12,10 +12,25 @@ public class ActiveItemUI : MonoBehaviour
     [SerializeField] private Transform activeItemTemplate;
 
     private Dictionary<ItemType, Item> active;
-    private struct PotionItem
+    private struct PotionItem : IEquatable<PotionItem>
     {
         public Item Item;
         public float ExpireTime;
+
+        public bool Equals(PotionItem other)
+        {
+            return Item.Equals(other.Item) && ExpireTime.Equals(other.ExpireTime);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is PotionItem other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Item, ExpireTime);
+        }
     }
 
     private List<PotionItem> potionItems;
@@ -83,6 +98,16 @@ public class ActiveItemUI : MonoBehaviour
         OnItemEquipped?.Invoke(this, EventArgs.Empty);
     }
 
+    public void DropItem(Item item)
+    {
+        if(item.itemSO is PassiveItemSO passiveItemSO)
+        {
+            passiveItemSO.RemoveEffect(player);
+            active[passiveItemSO.itemType] = new Item(null, 0);
+            RefreshActiveList();
+        }
+    }
+
     private void ShowDialogBeforeEquipment(PassiveItemSO passive)
     {
         var equipButton = new DialogButton
@@ -104,7 +129,7 @@ public class ActiveItemUI : MonoBehaviour
         DialogManager.Instance.ShowDialog(new DialogData
         {
             Title = "Equip new item!",
-            Message = "Your equiped one will be dropped!",
+            Message = "Your equipped item will be dropped!",
             Buttons = new List<DialogButton> { declineButton, equipButton },
         });
     }

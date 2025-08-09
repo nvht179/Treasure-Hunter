@@ -2806,6 +2806,10 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7426713197866518868, guid: e3874df57690bff4ba8d78644a801280, type: 3}
+      propertyPath: defaultListSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 433c40ba8f32fba4285dd54632cb716f, type: 2}
+    - target: {fileID: 7426713197866518868, guid: e3874df57690bff4ba8d78644a801280, type: 3}
       propertyPath: jumpMultiplier
       value: 3
       objectReference: {fileID: 0}

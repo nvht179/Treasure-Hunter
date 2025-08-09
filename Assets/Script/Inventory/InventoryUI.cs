@@ -86,6 +86,7 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
 
         dropButton.onClick.AddListener(() => {
             if (selectedItem != null) {
+                activeItemUI.DropItem(selectedItem);
                 inventory.RemoveItem(selectedItem);
                 if(selectedItem.quantity == 0) {
                     selectedItem = null;

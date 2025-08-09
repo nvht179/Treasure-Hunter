@@ -142,7 +142,6 @@ public class Player : MonoBehaviour, IDamageable
         {
             inventory.AddItem(new Item(itemSO, 1));
         }
-        
 
         HealthSystem = new HealthSystem(baseHealth, baseHealthRestoreRate);
         StaminaSystem = new StaminaSystem(baseStamina, baseStaminaRestoreRate);
