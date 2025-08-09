@@ -23,6 +23,7 @@ public class Seashell : ShooterTrap, IDamageable {
 
     public void TakeDamage(IDamageable.DamageInfo offenderInfo) {
         currentHealthPoint = Mathf.Clamp(currentHealthPoint - offenderInfo.Damage, 0, maxHealth);
+            
         OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs {
             MaxHealth = seaShellSO.maxHealth,
             CurrentHealth = currentHealthPoint

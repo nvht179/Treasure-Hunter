@@ -60,7 +60,7 @@ public class SoundManager : PersistentManager<SoundManager>
         player.OnBluePotionUsed += Player_OnBluePotionUsed;
         player.OnHealthPotionUsed += Player_OnHealthPotionUsed;
         player.OnResourcesCollected += Player_OnResourcesCollected;
-        player.HealthSystem.OnDamageReceived += HealthSystemOnDamageReceived;
+        player.HealthSystem.OnDamageReceived += Player_OnDamageReceived;
         player.HealthSystem.OnDeath += Player_OnPlayerDead;
 
         InventoryUI inventoryUI = player.GetInventoryUI();
@@ -79,10 +79,9 @@ public class SoundManager : PersistentManager<SoundManager>
         PlaySound(audioClipRefsSO.doorOpenClose, ((Door)sender).transform.position);
     }
 
-    private void HealthSystemOnDamageReceived(object sender, EventArgs e)
+    private void Player_OnDamageReceived(object sender, EventArgs e)
     {
         Debug.Log("PlayerOnDamageTaken");
-        // TODO: sender is HealthSystem, but it should be Player
         PlaySound(audioClipRefsSO.playerGotHit, player.transform.position);
     }
 
@@ -90,6 +89,8 @@ public class SoundManager : PersistentManager<SoundManager>
     {
         Debug.Log("Player_OnPlayerDead");
         PlaySound(audioClipRefsSO.playerDead, player.transform.position);
+        player.HealthSystem.OnDeath -= Player_OnPlayerDead;
+        player.HealthSystem.OnDamageReceived -= Player_OnDamageReceived;
     }
 
     private void Player_OnResourcesCollected(object sender, System.EventArgs e)
