@@ -116,7 +116,7 @@ MonoBehaviour:
   baseCritMultiplier: 2
   baseHealth: 100
   baseHealthRestoreRate: 0.1
-  baseStamina: 50
+  baseStamina: 30
   baseStaminaRestoreRate: 5
   baseMoveSpeed: 5
   jumpPower: 10
@@ -145,7 +145,6 @@ MonoBehaviour:
   attackAlternateStaminaCost: 10
   knockbackForce: 30
   knockbackDuration: 0.3
-  defaultListSO: {fileID: 0}
   inventoryUI: {fileID: 0}
   shopUI: {fileID: 0}
   money: 0

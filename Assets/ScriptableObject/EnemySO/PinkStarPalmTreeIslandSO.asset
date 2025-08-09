@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Pink Star
   prefab: {fileID: 6014555149247026926, guid: 610e9b074f112f44b8f6172736ab91dd, type: 3}
-  maxHealth: 50
+  maxHealth: 75
   scoreOnDead: 15

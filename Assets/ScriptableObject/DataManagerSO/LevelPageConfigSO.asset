@@ -59,4 +59,4 @@ MonoBehaviour:
       prerequisiteLevels: []
   autoUnlockFirstLevel: 1
   linearProgression: 1
-  unlockAllLevel: 0
+  unlockAllLevel: 1
