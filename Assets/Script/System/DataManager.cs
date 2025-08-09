@@ -500,6 +500,11 @@ public class DataManager : PersistentManager<DataManager>
 
     public Scene GetNextLevelID()
     {
+        if (currentSaveData.gameProgress.currentLevelId == Scene.TutorialScene)
+        {
+            return levelPageConfig.levelPages[0].NormalLevels[0].levelId;
+        }
+
         var (pageIndex, levelIndex, isBossLevel) = GetLevelPosition(currentSaveData.gameProgress.currentLevelId);
         return GetNextLevelByPosition(pageIndex, levelIndex, isBossLevel);
     }

@@ -11,6 +11,8 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
     public event EventHandler OnInventoryOpen;
     public event EventHandler OnInventoryClose;
     public event EventHandler OnItemDrop;
+    public event EventHandler OnItemEquipped;
+    public event EventHandler OnItemUsed;
 
     [Header("UI Elements")]
     [SerializeField] private Transform itemSlotContainer;
@@ -42,7 +44,13 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
     private void Start() {
         GameInput.Instance.OnInventoryAction += GameInput_OnInventoryAction;
         activeItemUI.OnPotionUsed += ActiveItemUI_OnPotionUsed;
+        activeItemUI.OnItemEquipped += ActiveItemUI_OnItemEquipped;
         Hide();
+    }
+
+    private void ActiveItemUI_OnItemEquipped(object sender, EventArgs e)
+    {
+        OnItemEquipped?.Invoke(this, EventArgs.Empty);
     }
 
     private void ActiveItemUI_OnPotionUsed(object sender, EventArgs e) {
@@ -56,6 +64,7 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
         OnItemSelected?.Invoke(this, new ISelectItem.OnItemSelectedEventArgs {
             item = selectedItem
         }); 
+        OnItemUsed?.Invoke(this, EventArgs.Empty);
     }
 
     private void OnDestroy() {

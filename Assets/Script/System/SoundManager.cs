@@ -64,6 +64,20 @@ public class SoundManager : PersistentManager<SoundManager>
         inventoryUI.OnInventoryOpen += Player_OnInventoryOpen;
         inventoryUI.OnInventoryClose += Player_OnInventoryClose;
         inventoryUI.OnItemDrop += Player_OnItemDrop;
+        inventoryUI.OnItemEquipped += Player_OnItemEquipped;
+        inventoryUI.OnItemUsed += Player_OnItemUsed;
+    }
+
+    private void Player_OnItemUsed(object sender, EventArgs e)
+    {
+        Debug.Log("Player_OnItemUsed");
+        PlaySound(audioClipRefsSO.itemUse, ((InventoryUI)sender).transform.position);
+    }
+
+    private void Player_OnItemEquipped(object sender, EventArgs e)
+    {
+        Debug.Log("Player_OnItemEquipped");
+        PlaySound(audioClipRefsSO.itemEquip, ((InventoryUI)sender).transform.position);
     }
 
     public void AttachDoorSound(Door door)

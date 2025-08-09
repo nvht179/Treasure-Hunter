@@ -10,10 +10,12 @@ public enum Scene
     MainMenuScene,
     LoadingScene,
     ChooseLevelScene,
-    GameScene,
     PalmTreeIslandScene,
     PirateShipScene,
     BossScene,
+    SeaShoreScene,
+    LargeCaveScene,
+    CrabbyBossScene,
     TutorialScene,
     CreditsScene,
 }
@@ -29,7 +31,7 @@ public static class SceneLoader
     public static event Action<Scene> OnNonGameSceneLoaded;
 
     private static Scene targetScene = Scene.MainMenuScene;
-    private static Scene currentScene = Scene.GameScene;
+    private static Scene currentScene = Scene.None;
     private static Scene lastScene = Scene.MainMenuScene;
 
     private static Action onLoaderCallback;
@@ -65,6 +67,16 @@ public static class SceneLoader
 
     public static void Load(Scene targetScene)
     {
+        if (IsInDevelopment(targetScene))
+        {
+            DialogManager.Instance.ShowDialog(new() { 
+                Title = "Coming soon!", 
+                Message = "This scene is still in development. Please check back later.", 
+                Buttons = { } 
+            });
+            return;
+        }
+
         lastScene = SceneLoader.targetScene;
         SceneLoader.targetScene = targetScene;
 
@@ -133,10 +145,19 @@ public static class SceneLoader
 
     public static bool IsGameScene(Scene scene)
     {
-        return scene == Scene.GameScene ||
-               scene == Scene.PalmTreeIslandScene ||
+        return scene == Scene.PalmTreeIslandScene ||
                scene == Scene.PirateShipScene ||
                scene == Scene.BossScene ||
+               scene == Scene.SeaShoreScene ||
+               scene == Scene.LargeCaveScene ||
+               scene == Scene.CrabbyBossScene ||
                scene == Scene.TutorialScene;
+    }
+
+    public static bool IsInDevelopment(Scene scene)
+    {
+        return scene == Scene.SeaShoreScene ||
+               scene == Scene.LargeCaveScene ||
+               scene == Scene.CrabbyBossScene;
     }
 }

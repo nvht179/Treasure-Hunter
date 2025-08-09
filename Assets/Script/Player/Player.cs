@@ -415,7 +415,6 @@ public class Player : MonoBehaviour, IDamageable
             else
             {
                 inventory.AddItem(itemWorld.GetItem());
-                DataManager.Instance.CurrentPlayerInventoryItems.Add(itemWorld.GetItem());
                 Debug.Log($"{itemWorld.GetItem()} added to current inventory");
             }
             OnResourcesCollected?.Invoke(this, EventArgs.Empty);
