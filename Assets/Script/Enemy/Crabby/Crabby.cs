@@ -57,7 +57,6 @@ public class Crabby : AbstractEnemy, IDamageable
     private bool hasAttacked;
     private bool isRecharging;
     private Vector3 initialAttackOriginLocalPosition;
-    private bool isStuckIdle;
 
     private const float EyeHeightToBodyRatio = 0.75f;
     private const float GroundCheckDistance = 0.1f;
@@ -190,32 +189,6 @@ public class Crabby : AbstractEnemy, IDamageable
         var playerDetectedRight = CastVisionRay(Vector2.right);
         var playerDetectedLeft = CastVisionRay(Vector2.left);
 
-        // Honor stuck idle state
-        if (isStuckIdle)
-        {
-            // if player appears, or either side becomes viable again, exit stuck state
-            if (playerDetectedLeft || playerDetectedRight)
-            {
-                isStuckIdle = false;
-            }
-            else
-            {
-                var leftViable = IsGroundAhead(-1) && !IsHittingWall(-1);
-                var rightViable = IsGroundAhead(1) && !IsHittingWall(1);
-
-                if (leftViable || rightViable)
-                {
-                    isStuckIdle = false;
-                }
-                else
-                {
-                    // remain idle until something changes
-                    state = CrabbyState.Waiting;
-                    return;
-                }
-            }
-        }
-
         if (state != CrabbyState.Recharging && state != CrabbyState.Hit && state != CrabbyState.DeadHit)
         {
             if (playerDetectedLeft || playerDetectedRight)
@@ -303,16 +276,6 @@ public class Crabby : AbstractEnemy, IDamageable
                 state = CrabbyState.Dead;
             }
         }
-
-        if (IsHittingWall() && state != CrabbyState.Charging && state != CrabbyState.Attacking)
-        {
-            isStuckIdle = true;
-            rb.velocity = new Vector2(0, rb.velocity.y);
-        }
-        else
-        {
-            isStuckIdle = false;
-        }
     }
 
     private bool CastVisionRay(Vector2 direction)
@@ -371,20 +334,7 @@ public class Crabby : AbstractEnemy, IDamageable
 
         if (!IsGroundAhead() || IsHittingWall())
         {
-            var opposite = -moveDirection;
-            var groundOpposite = IsGroundAhead(opposite);
-            var wallOpposite = IsHittingWall(opposite);
-
-            if (groundOpposite && !wallOpposite)
-            {
-                moveDirection = opposite;
-            }
-            else
-            {
-                isStuckIdle = true;
-                state = CrabbyState.Waiting;
-            }
-
+            moveDirection *= -1;
             rb.velocity = new Vector2(0, rb.velocity.y);
         }
     }
@@ -417,23 +367,6 @@ public class Crabby : AbstractEnemy, IDamageable
     {
         var dir = moveDirection == 1 ? Vector2.right : Vector2.left;
         var hit = Physics2D.Raycast(groundAndWallCheckPosition, dir, wallCheckDistance, groundLayer);
-        return hit.collider != null;
-    }
-
-    private bool IsGroundAhead(int direction)
-    {
-        var checkPos = new Vector2(transform.position.x + direction * groundAndWallCheckOriginOffset,
-                                   transform.position.y);
-        var hit = Physics2D.Raycast(checkPos, Vector2.down, groundAndWallCheckOriginOffset, groundLayer);
-        return hit.collider != null;
-    }
-
-    private bool IsHittingWall(int direction)
-    {
-        var dir = direction == 1 ? Vector2.right : Vector2.left;
-        var checkPos = new Vector2(transform.position.x + direction * groundAndWallCheckOriginOffset,
-                                   transform.position.y);
-        var hit = Physics2D.Raycast(checkPos, dir, wallCheckDistance, groundLayer);
         return hit.collider != null;
     }
 
