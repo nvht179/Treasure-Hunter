@@ -25580,6 +25580,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 439195365}
     - target: {fileID: 3285894999384705216, guid: 71602974581abf7449e84ef3a9a22f18, type: 3}
+      propertyPath: maxHealth
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3285894999384705216, guid: 71602974581abf7449e84ef3a9a22f18, type: 3}
       propertyPath: centralPosition
       value: 
       objectReference: {fileID: 1669230641}
@@ -25602,11 +25606,11 @@ PrefabInstance:
     - target: {fileID: 3285894999384705216, guid: 71602974581abf7449e84ef3a9a22f18, type: 3}
       propertyPath: bulletTypes.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: c801a2e267827994eb749e3fd06f349e, type: 2}
+      objectReference: {fileID: 11400000, guid: 2bc60dcb3fa7484498ebf2fa8d5a25d3, type: 2}
     - target: {fileID: 3285894999384705216, guid: 71602974581abf7449e84ef3a9a22f18, type: 3}
       propertyPath: bulletTypes.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 1d4a19b9f12c56a428f0a58e0bfd45e9, type: 2}
+      objectReference: {fileID: 11400000, guid: ef5fda04811644e4baf758d8527ab6a8, type: 2}
     - target: {fileID: 3285894999384705216, guid: 71602974581abf7449e84ef3a9a22f18, type: 3}
       propertyPath: bulletTypes.Array.data[2]
       value: 

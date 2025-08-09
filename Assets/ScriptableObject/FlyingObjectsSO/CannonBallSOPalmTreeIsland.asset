@@ -16,5 +16,5 @@ MonoBehaviour:
   speed: 5
   damage: 30
   force: 3
-  prefab: {fileID: 8831065471543746842, guid: d14a78789a169b64981e467e9fbf42a8, type: 3}
+  prefab: {fileID: 7929266309272076172, guid: 5e822f485aa6c724b88fb63c6c7e15d6, type: 3}
   sprite: {fileID: 21300000, guid: f27f6bbb3a3eeca41bae97de35e4a779, type: 3}
