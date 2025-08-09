@@ -158,7 +158,7 @@ public class MusicManager : PersistentManager<MusicManager>
 
     public void SetVolume(float newVolume)
     {
-        volume = newVolume;
+        volume = newVolume * 0.25f;
         backgroundMusicSource.volume = volume;
         gameMusicSource.volume = volume;
         Debug.Log($"Music volume changed to {newVolume}");

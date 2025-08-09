@@ -1,10 +1,11 @@
 using System;
 using Script.Enemy;
+using Script.Interfaces;
 using Unity.Mathematics;
 using UnityEngine;
 
 
-public class Crabby : AbstractEnemy, IDamageable
+public class Crabby : AbstractEnemy, IDamageable, IEnemy
 {
     [Header("Stats")]
     [SerializeField] private float moveSpeed;
@@ -28,7 +29,7 @@ public class Crabby : AbstractEnemy, IDamageable
     [SerializeField] private float deadHitTime;
     [SerializeField] private float rechargeTime;
 
-    public event EventHandler OnAttack;
+    public event EventHandler<IEnemy.OnAttackEventArgs> OnAttack;
     public event EventHandler OnDestroyed;
     public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
@@ -151,7 +152,10 @@ public class Crabby : AbstractEnemy, IDamageable
             }
         }
 
-        OnAttack?.Invoke(this, EventArgs.Empty);
+        OnAttack?.Invoke(this, new IEnemy.OnAttackEventArgs
+        {
+            Enemy = this
+        });
 
         hasAttacked = true;
     }

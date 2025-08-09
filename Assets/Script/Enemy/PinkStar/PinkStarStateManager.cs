@@ -1,10 +1,11 @@
 using System;
+using Script.Interfaces;
 using Unity.Mathematics;
 using UnityEngine;
 
 namespace Script.Enemy.PinkStar
 {
-    public class PinkStarStateManager : AbstractEnemy, IDamageable
+    public class PinkStarStateManager : AbstractEnemy, IDamageable, IEnemy
     {
         [Header("Stats")]
         [SerializeField] private float moveSpeed;
@@ -32,6 +33,7 @@ namespace Script.Enemy.PinkStar
         public const float DeadShowTime = 0.5f; // time for playing the DeadGround animation and showing enemy corpse
 
         public event EventHandler OnCollisionEnter;
+        public event EventHandler<IEnemy.OnAttackEventArgs> OnAttack;
         public event EventHandler OnDestroyed;
         public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
@@ -213,6 +215,14 @@ namespace Script.Enemy.PinkStar
         {
             base.SelfDestroy();
             ResourceSpawner.Instance.SpawnMoney(pivot.position, minMoneyOnDead, maxMoneyOnDead);
+        }
+
+        public void TriggerAttack()
+        {
+            OnAttack?.Invoke(this, new IEnemy.OnAttackEventArgs
+            {
+                Enemy = this
+            });
         }
 
         private void OnDrawGizmos()

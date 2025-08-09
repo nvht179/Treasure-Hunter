@@ -787,6 +787,7 @@ GameObject:
   - component: {fileID: 5004221980728460124}
   - component: {fileID: 3345808011872971629}
   - component: {fileID: 2589672965037733270}
+  - component: {fileID: 8098507707320831098}
   m_Layer: 8
   m_Name: Crabby
   m_TagString: Untagged
@@ -909,3 +910,16 @@ MonoBehaviour:
   hitTime: 0.35
   deadHitTime: 0.35
   rechargeTime: 1
+--- !u!114 &8098507707320831098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8358746183751154280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09544b648af8d80448b190d39124f278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  component: {fileID: 8358746183751154280}

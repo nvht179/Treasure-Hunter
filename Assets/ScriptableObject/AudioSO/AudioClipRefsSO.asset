@@ -72,3 +72,8 @@ MonoBehaviour:
   buttonClick: {fileID: 8300000, guid: f16f4f2453b54f048a1b2601b9804a6b, type: 3}
   won: {fileID: 8300000, guid: 9372a6cd79d35a14783ba3f6c2ae2e1f, type: 3}
   lost: {fileID: 8300000, guid: 03f233bd80d1a6547b68e25bbd546267, type: 3}
+  crabbyAttack: {fileID: 8300000, guid: 5737f6608a9ebc94d810fe88b88b8cb7, type: 3}
+  pinkStarAttack: {fileID: 8300000, guid: 7244cabf3cf667245af32b22faa8a20f, type: 3}
+  cannonBallShoot: {fileID: 8300000, guid: 17112740e69c5014d9e5011016049ac3, type: 3}
+  woodSpikeShoot: {fileID: 8300000, guid: 80776e5a2c40dd545806d6273d2ff292, type: 3}
+  pearlShoot: {fileID: 8300000, guid: e639181ef79d9814081a297c26a25dbc, type: 3}

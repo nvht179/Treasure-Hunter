@@ -1,16 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Script.Interfaces;
 using UnityEngine;
 
-public class ShooterTrap : MonoBehaviour {
+public class ShooterTrap : MonoBehaviour, IShooterTrap {
 
     public enum FireDirection {
         Left,
         Right
     }
 
-    public event EventHandler OnObjectFired;
+    public event EventHandler<IShooterTrap.OnShootEventArgs> OnShoot;
 
     [SerializeField] private Transform firePoint;
     [SerializeField] protected FlyingObjectSO flyingObjectSO;
@@ -34,7 +35,10 @@ public class ShooterTrap : MonoBehaviour {
     }
 
     private void Shoot() {
-        OnObjectFired?.Invoke(this, EventArgs.Empty);
+        OnShoot?.Invoke(this, new IShooterTrap.OnShootEventArgs
+        {
+            ShooterTrap = this
+        });
         StartCoroutine(DelayedFire());
     }
 

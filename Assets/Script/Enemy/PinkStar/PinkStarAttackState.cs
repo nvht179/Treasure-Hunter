@@ -46,6 +46,7 @@ namespace Script.Enemy.PinkStar
                     if (player != null)
                     {
                         player.TakeDamage(offenderInfo);
+                        PinkStar.TriggerAttack(); // Trigger the attack sound event
                         PinkStar.SwitchState(PinkStar.RechargeState);
                     }
                 }

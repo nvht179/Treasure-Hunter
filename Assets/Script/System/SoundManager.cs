@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using Script.Enemy.PinkStar;
+using Script.Interfaces;
 
 public class SoundManager : PersistentManager<SoundManager>
 {
@@ -10,11 +12,6 @@ public class SoundManager : PersistentManager<SoundManager>
     private Player player; // default position to play sound effects
 
     private float volume = 1f;
-
-    protected override void Awake()
-    {
-        base.Awake();
-    }
 
     private void Start()
     {
@@ -60,7 +57,7 @@ public class SoundManager : PersistentManager<SoundManager>
         player.OnBluePotionUsed += Player_OnBluePotionUsed;
         player.OnHealthPotionUsed += Player_OnHealthPotionUsed;
         player.OnResourcesCollected += Player_OnResourcesCollected;
-        player.HealthSystem.OnDamageReceived += Player_OnDamageReceived;
+        player.HealthSystem.OnDamageReceived += HealthSystemOnDamageReceived;
         player.HealthSystem.OnDeath += Player_OnPlayerDead;
 
         InventoryUI inventoryUI = player.GetInventoryUI();
@@ -68,9 +65,55 @@ public class SoundManager : PersistentManager<SoundManager>
         inventoryUI.OnInventoryClose += Player_OnInventoryClose;
         inventoryUI.OnItemDrop += Player_OnItemDrop;
     }
+
     public void AttachDoorSound(Door door)
     {
         door.OnDoorInteracted += Door_OnDoorInteracted;
+    }
+
+    public void AttachEnemySound(IEnemy enemy)
+    {
+        enemy.OnAttack += EnemyOnAttack;
+    }
+
+    private void EnemyOnAttack(object sender, IEnemy.OnAttackEventArgs e)
+    {
+        switch (e.Enemy)
+        {
+            case Crabby crabby:
+                PlaySound(audioClipRefsSO.crabbyAttack, crabby.transform.position);
+                break;
+            case PinkStarStateManager pinkStar:
+                PlaySound(audioClipRefsSO.pinkStarAttack, pinkStar.transform.position);
+                break;
+            default:
+                Debug.LogError("Invalid enemy type!");
+                break;
+        }
+    }
+
+    public void AttachShooterTrapSound(IShooterTrap shooterTrap)
+    {
+        shooterTrap.OnShoot += ShooterTrapOnShoot;
+    }
+
+    private void ShooterTrapOnShoot(object sender, IShooterTrap.OnShootEventArgs e)
+    {
+        switch (e.ShooterTrap)
+        {
+            case Cannon cannon:
+                PlaySound(audioClipRefsSO.cannonBallShoot, cannon.transform.position);
+                break;
+            case Seashell seashell:
+                PlaySound(audioClipRefsSO.pearlShoot, seashell.transform.position);
+                break;
+            case TotemHead totem:
+                PlaySound(audioClipRefsSO.woodSpikeShoot, totem.transform.position);
+                break;
+            default:
+                Debug.LogError("Invalid shooter trap type!");
+                break;
+        }
     }
 
     private void Door_OnDoorInteracted(object sender, System.EventArgs e)
@@ -79,10 +122,11 @@ public class SoundManager : PersistentManager<SoundManager>
         PlaySound(audioClipRefsSO.doorOpenClose, ((Door)sender).transform.position);
     }
 
-    private void Player_OnDamageReceived(object sender, EventArgs e)
+    private void HealthSystemOnDamageReceived(object sender, EventArgs e)
     {
         Debug.Log("PlayerOnDamageTaken");
-        PlaySound(audioClipRefsSO.playerGotHit, player.transform.position);
+        // TODO: sender is HealthSystem, but it should be Player
+        PlaySound(audioClipRefsSO.playerGotHit, player.transform.position, 0.25f);
     }
 
     private void Player_OnPlayerDead(object sender, EventArgs e)
@@ -90,7 +134,7 @@ public class SoundManager : PersistentManager<SoundManager>
         Debug.Log("Player_OnPlayerDead");
         PlaySound(audioClipRefsSO.playerDead, player.transform.position);
         player.HealthSystem.OnDeath -= Player_OnPlayerDead;
-        player.HealthSystem.OnDamageReceived -= Player_OnDamageReceived;
+        player.HealthSystem.OnDamageReceived -= HealthSystemOnDamageReceived;
     }
 
     private void Player_OnResourcesCollected(object sender, System.EventArgs e)
@@ -210,6 +254,7 @@ public class SoundManager : PersistentManager<SoundManager>
             Debug.Log("No audio clips available to play at position: " + position);
             return;
         }
+
         PlaySound(audioClipArray[Random.Range(0, audioClipArray.Length)], position, volume);
     }
 
@@ -220,6 +265,7 @@ public class SoundManager : PersistentManager<SoundManager>
             Debug.Log("No audio clip available");
             return;
         }
+
         AudioSource.PlayClipAtPoint(audioClip, position, volumeMultiplier * volume);
     }
 

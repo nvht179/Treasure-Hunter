@@ -147,6 +147,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8681945550905514184}
   - component: {fileID: 8430616958806299690}
+  - component: {fileID: 3744063308467175998}
   m_Layer: 0
   m_Name: Cannon
   m_TagString: Untagged
@@ -188,6 +189,19 @@ MonoBehaviour:
   flyingObjectSO: {fileID: 11400000, guid: c801a2e267827994eb749e3fd06f349e, type: 2}
   fireRate: 4
   fireDirection: 0
+--- !u!114 &3744063308467175998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8113704561974272818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09544b648af8d80448b190d39124f278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  component: {fileID: 8113704561974272818}
 --- !u!1 &8130380058668230812
 GameObject:
   m_ObjectHideFlags: 0

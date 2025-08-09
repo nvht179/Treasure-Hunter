@@ -65,6 +65,7 @@ GameObject:
   - component: {fileID: 296326817983538555}
   - component: {fileID: 8515894695067094705}
   - component: {fileID: 144960388748944299}
+  - component: {fileID: 7359298931207532296}
   m_Layer: 8
   m_Name: Seashell
   m_TagString: Untagged
@@ -155,6 +156,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.93134856, y: 0.5423233}
   m_EdgeRadius: 0
+--- !u!114 &7359298931207532296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356977055632422545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09544b648af8d80448b190d39124f278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  component: {fileID: 1356977055632422545}
 --- !u!1 &1812759029283910103
 GameObject:
   m_ObjectHideFlags: 0

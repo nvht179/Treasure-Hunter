@@ -37,4 +37,10 @@ public class AudioClipRefsSO : ScriptableObject
     public AudioClip buttonClick;
     public AudioClip won;
     public AudioClip lost;
+
+    public AudioClip crabbyAttack;
+    public AudioClip pinkStarAttack;
+    public AudioClip cannonBallShoot;
+    public AudioClip woodSpikeShoot;
+    public AudioClip pearlShoot;
 }

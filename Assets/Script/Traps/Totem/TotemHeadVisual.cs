@@ -14,7 +14,7 @@ public class TotemHeadVisual : ShooterTrapVisual {
     private new void Start() {
         base.Start();
         if (shooterTrap is TotemHead totemHead) {
-            totemHead.OnObjectFired += TotemHead_OnObjectFired;
+            totemHead.OnShoot += TotemHead_OnObjectFired;
             totemHead.OnDamageTaken += TotemHead_OnDamageTaken;
             totemHead.OnDestroyed += TotemHead_OnDestroyed;
         }
