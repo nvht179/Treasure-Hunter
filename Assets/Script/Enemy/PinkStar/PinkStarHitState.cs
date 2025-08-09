@@ -26,16 +26,15 @@ namespace Script.Enemy.PinkStar
         {
             hitRecoverTimer -= Time.deltaTime;
 
+            if (isDeadHit)
+            {
+                PinkStar.SwitchState(PinkStar.DeadState);
+                return;
+            }
+
             if (hitRecoverTimer < 0)
             {
-                if (isDeadHit)
-                {
-                    PinkStar.SwitchState(PinkStar.DeadState);
-                }
-                else
-                {
-                    PinkStar.SwitchState(PinkStar.WanderState);
-                }
+                PinkStar.SwitchState(PinkStar.WanderState);
             }
         }
 

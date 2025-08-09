@@ -15,6 +15,7 @@ namespace Script.Enemy.PinkStar
         private bool isJumping;
         private bool isAttacking;
         private bool isRecharging;
+        private bool isDead;
 
         private static readonly int XVelocity = Animator.StringToHash("XVelocity");
         private static readonly int YVelocity = Animator.StringToHash("YVelocity");
@@ -41,12 +42,20 @@ namespace Script.Enemy.PinkStar
 
         private void PinkStarOnDamageTaken(object sender, IDamageable.OnDamageTakenEventArgs e)
         {
-            if (e.CurrentHealth != 0 && (isCharging || isAttacking))
+            if ((e.CurrentHealth != 0 && (isCharging || isAttacking)) || isDead)
             {
                 return;
             }
 
-            animator.SetTrigger(e.CurrentHealth == 0f ? DeadHit : Hit);
+            if (e.CurrentHealth == 0f)
+            {
+                animator.SetTrigger(DeadHit);
+                isDead = true;
+            }
+            else
+            {
+                animator.SetTrigger(Hit);
+            }
         }
 
         private void Update()
