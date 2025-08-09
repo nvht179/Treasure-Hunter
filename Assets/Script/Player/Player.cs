@@ -43,6 +43,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private float knockbackDuration;
 
     [Header("Inventory")]
+    [SerializeField] private ItemListSO defaultListSO;
     [SerializeField] private InventoryUI inventoryUI;
     [SerializeField] private ShopUI shopUI;
 
@@ -137,8 +138,11 @@ public class Player : MonoBehaviour, IDamageable
         attackAlternateCooldownTimer = attackAlternateCooldownTime;
 
         inventory = new Inventory();
-        inventoryUI.SetInventory(inventory);
-        money = 200; // TODO: Initial money for testing purposes
+        foreach (var itemSO in defaultListSO.items)
+        {
+            inventory.AddItem(new Item(itemSO, 1));
+        }
+        
 
         HealthSystem = new HealthSystem(baseHealth, baseHealthRestoreRate);
         StaminaSystem = new StaminaSystem(baseStamina, baseStaminaRestoreRate);
@@ -159,6 +163,8 @@ public class Player : MonoBehaviour, IDamageable
 
     private void Start()
     {
+        inventoryUI.SetInventory(inventory);
+
         GameInput.Instance.OnJumpAction += PlayerOnJump;
         GameInput.Instance.OnAttackAction += PlayerOnAttack;
         GameInput.Instance.OnAttackAlternateAction += PlayerOnAttackAlternate;

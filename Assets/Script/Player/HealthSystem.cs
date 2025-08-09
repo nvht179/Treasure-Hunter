@@ -137,6 +137,7 @@ public class HealthSystem
         };
         activeMaxHealthBonuses.Add(buff);
         RaiseHealthChanged();
+        Heal(amount);
         return buff.Id;
     }
 

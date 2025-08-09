@@ -67,7 +67,7 @@ public class ActiveItemUI : MonoBehaviour
         }
     }
 
-    private void EquipPassiveItem(PassiveItemSO passive)
+    public void EquipPassiveItem(PassiveItemSO passive)
     {
         var slot = active[passive.itemType];
 

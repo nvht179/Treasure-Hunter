@@ -124,6 +124,12 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
 
     public void SetInventory(Inventory inventory) {
         this.inventory = inventory;
+        foreach(Item item in inventory.GetItemList()) {
+            if(item.itemSO is PassiveItemSO passive)
+            {
+                activeItemUI.EquipPassiveItem(passive);
+            }
+        }
         currentPage = 0;
         RefreshInventoryItems();
     }
