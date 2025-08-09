@@ -11,6 +11,7 @@ public class Door : MonoBehaviour, IInteractiveObject {
     public void Interact(Player player) {
         if(player.HasKey()) {
             // win
+            player.RemoveKey();
             OnDoorInteracted?.Invoke(this, EventArgs.Empty);
         } else {
             player.ActivateNeedKeyDialog();

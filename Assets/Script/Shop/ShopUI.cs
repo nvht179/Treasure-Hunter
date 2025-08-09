@@ -121,8 +121,8 @@ public class ShopUI : MonoBehaviour, ISelectItem {
     }
 
     private void RefreshInventoryItems(int pageNumber) {
-        List<Item> itemList = shopInventory.GetItemList();
-        int totalItems = shopInventory.GetItemListCount();
+        List<Item> itemList = shopInventory.ItemList;
+        int totalItems = shopInventory.ItemList.Count;
         maxPage = Mathf.Max(0, (totalItems - 1) / NumItemPerPage);
 
         // Clean previous slots

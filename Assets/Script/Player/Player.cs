@@ -43,7 +43,6 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private float knockbackDuration;
 
     [Header("Inventory")]
-    [SerializeField] private ItemListSO defaultListSO;
     [SerializeField] private InventoryUI inventoryUI;
     [SerializeField] private ShopUI shopUI;
 
@@ -99,7 +98,6 @@ public class Player : MonoBehaviour, IDamageable
     // Attack
     private bool isConstantlyAttacking;
     private bool isAttacking;
-    private bool isDamaged;
     private bool hasAirAttacked;
     private float attackCooldownTimer;
     private float attackAlternateCooldownTimer;
@@ -138,10 +136,6 @@ public class Player : MonoBehaviour, IDamageable
         attackAlternateCooldownTimer = attackAlternateCooldownTime;
 
         inventory = new Inventory();
-        foreach (var itemSO in defaultListSO.items)
-        {
-            inventory.AddItem(new Item(itemSO, 1));
-        }
 
         HealthSystem = new HealthSystem(baseHealth, baseHealthRestoreRate);
         StaminaSystem = new StaminaSystem(baseStamina, baseStaminaRestoreRate);
@@ -421,6 +415,8 @@ public class Player : MonoBehaviour, IDamageable
             else
             {
                 inventory.AddItem(itemWorld.GetItem());
+                DataManager.Instance.CurrentPlayerInventoryItems.Add(itemWorld.GetItem());
+                Debug.Log($"{itemWorld.GetItem()} added to current inventory");
             }
             OnResourcesCollected?.Invoke(this, EventArgs.Empty);
         }
@@ -536,5 +532,10 @@ public class Player : MonoBehaviour, IDamageable
     public InventoryUI GetInventoryUI()
     {
         return inventoryUI;
+    }
+
+    internal void RemoveKey()
+    {
+        inventory.RemoveKey();
     }
 }

@@ -47,6 +47,8 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
 
     private void ActiveItemUI_OnPotionUsed(object sender, EventArgs e) {
         inventory.RemoveItem(selectedItem);
+        DataManager.Instance.CurrentPlayerInventoryItems.Remove(selectedItem);
+
         if (selectedItem.quantity == 0)
         {
             selectedItem = null;
@@ -88,7 +90,8 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
             if (selectedItem != null) {
                 activeItemUI.DropItem(selectedItem);
                 inventory.RemoveItem(selectedItem);
-                if(selectedItem.quantity == 0) {
+                DataManager.Instance.CurrentPlayerInventoryItems.Remove(selectedItem);
+                if (selectedItem.quantity == 0) {
                     selectedItem = null;
                 }
                 RefreshInventoryItems();
@@ -125,7 +128,7 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
 
     public void SetInventory(Inventory inventory) {
         this.inventory = inventory;
-        foreach(Item item in inventory.GetItemList()) {
+        foreach(Item item in inventory.ItemList) {
             if(item.itemSO is PassiveItemSO passive)
             {
                 activeItemUI.EquipPassiveItem(passive);
@@ -140,7 +143,7 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
     }
 
     private void RefreshInventoryItems(int pageNumber) {
-        int totalItems = inventory.GetItemListCount();
+        int totalItems = inventory.ItemList.Count;
         maxPage = Mathf.Max(0, (totalItems - 1) / NumItemPerPage);
 
         // Clean previous slots
@@ -157,7 +160,7 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
 
         int x = 0;
         int y = 0;
-        List<Item> itemList = inventory.GetItemList();
+        List<Item> itemList = inventory.ItemList;
 
         for (int i = startIndex; i < endIndex; i++) {
             Item item = itemList[i];

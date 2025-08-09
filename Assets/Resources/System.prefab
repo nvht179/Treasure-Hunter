@@ -228,6 +228,10 @@ PrefabInstance:
       value: DataManager
       objectReference: {fileID: 0}
     - target: {fileID: 3505621919782741832, guid: efc92100f8095b64eae3b0d4adbe8ecc, type: 3}
+      propertyPath: defaultListSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 433c40ba8f32fba4285dd54632cb716f, type: 2}
+    - target: {fileID: 3505621919782741832, guid: efc92100f8095b64eae3b0d4adbe8ecc, type: 3}
       propertyPath: enableAutoSave
       value: 0
       objectReference: {fileID: 0}

@@ -3,12 +3,14 @@ using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEditor;
 
 public class DataManager : PersistentManager<DataManager>
 {
     [Header("Configuration")]
     [SerializeField] private DataManagerConfigSO config;
     [SerializeField] private LevelPageConfigSO levelPageConfig;
+    [SerializeField] private ItemListSO defaultListSO;
     private bool useJsonSaveFormat = true; // fallback if no config
     private bool enableAutoSave = false; // fallback if no config
     private float autoSaveInterval = 30f; // fallback if no config
@@ -33,6 +35,7 @@ public class DataManager : PersistentManager<DataManager>
     // Auto-save timer
     private float autoSaveTimer;
     private bool hasUnsavedChanges;
+    public List<Item> CurrentPlayerInventoryItems;
 
     #region Unity base methods
 
@@ -115,9 +118,10 @@ public class DataManager : PersistentManager<DataManager>
     
     private void InitializeLevelData()
     {
-        List<(Scene id, string name, bool isBoss, bool unlocked, int collectibles)> levelDefinitions;
-        
-        levelDefinitions = new();
+        List<(Scene id, string name, bool isBoss, bool unlocked, int collectibles)> levelDefinitions = new()
+        {
+            (Scene.TutorialScene, "Tutorial Scene", false, true, 0)
+        };
             
         foreach (var page in levelPageConfig.levelPages)
         {
@@ -147,10 +151,10 @@ public class DataManager : PersistentManager<DataManager>
         }
 
         // Auto-unlock first level if configured
-        if (levelPageConfig.autoUnlockFirstLevel && levelDefinitions.Count > 0)
+        if (levelPageConfig.autoUnlockFirstLevel && levelDefinitions.Count > 1)
         {
-            var firstLevel = levelDefinitions[0];
-            levelDefinitions[0] = (firstLevel.id, firstLevel.name, firstLevel.isBoss, true, firstLevel.collectibles);
+            var firstLevel = levelDefinitions[1];
+            levelDefinitions[1] = (firstLevel.id, firstLevel.name, firstLevel.isBoss, true, firstLevel.collectibles);
         }
         
         foreach (var (id, name, isBoss, unlocked, collectibles) in levelDefinitions)
@@ -398,10 +402,17 @@ public class DataManager : PersistentManager<DataManager>
         if (levelData != null)
         {
             currentSaveData.gameProgress.CompleteLevel(levelId, score, timeInSeconds, diamondsCollected);
-            
-            // Unlock next level using efficient position-based approach
-            UnlockNextLevel(levelId, pageIndex, levelIndex, isBossLevel);
-            
+
+            if (levelId != Scene.TutorialScene)
+            {
+                Debug.Log("Not tutorial scene, unlock next level");
+                UnlockNextLevel(levelId, pageIndex, levelIndex, isBossLevel);
+            }
+            else
+            {
+                Debug.Log("Tutorial scene completed, no next level to unlock");
+            }
+
             hasUnsavedChanges = true;
             OnLevelCompleted?.Invoke(levelData);
             OnGameProgressChanged?.Invoke(currentSaveData.gameProgress);
@@ -445,10 +456,24 @@ public class DataManager : PersistentManager<DataManager>
     
     public void StartLevel(Scene levelId)
     {
-        // Determine level position efficiently
         var (pageIndex, levelIndex, isBossLevel) = GetLevelPosition(levelId);
         
-        // Record the level start
+        // Initialize current inventory as a fresh copy from persistent inventory
+        var persistentInventoryItems = currentSaveData.gameProgress.GetInventoryItems();
+        if (persistentInventoryItems == null || currentSaveData.gameProgress.isFirstTimePlaying)
+        {
+            Debug.Log("DataManager: first time playing, loading default items");
+            persistentInventoryItems = new List<Item>();
+            foreach (var itemSO in defaultListSO.items)
+            {
+                persistentInventoryItems.Add(new Item(itemSO, 1));
+            }
+            currentSaveData.gameProgress.SetInventoryItems(persistentInventoryItems);
+            hasUnsavedChanges = true;
+            currentSaveData.gameProgress.isFirstTimePlaying = false;
+        }
+
+
         RecordLevelStart(levelId, pageIndex, levelIndex, isBossLevel);
         
         Debug.Log($"DataManager: Started level {levelId}");
@@ -571,11 +596,28 @@ public class DataManager : PersistentManager<DataManager>
         
         return Scene.None; // No next level
     }
-    
+
+    public void UpdatePersistentInventory()
+    {
+        currentSaveData.gameProgress.SetInventoryItems(CurrentPlayerInventoryItems);
+        hasUnsavedChanges = true;
+        Debug.Log($"Won: update persistent inventory {CurrentPlayerInventoryItems.Count}");
+    }
+    public List<Item> GetPersistentInventoryCopy()
+    {
+        List<Item> items = new();
+        var persistentInventory = currentSaveData.gameProgress.GetInventoryItems();
+        foreach (var item in persistentInventory)
+        {
+            items.Add(new Item(item.itemSO, item.quantity));
+        }
+        return items;
+    }
+
     #endregion
-    
+
     #region Page-based Level Management
-    
+
     public bool IsPageUnlocked(int pageIndex)
     {
         if (levelPageConfig == null || pageIndex >= levelPageConfig.levelPages.Count)
@@ -755,6 +797,6 @@ public class DataManager : PersistentManager<DataManager>
         
         return stats;
     }
-    
+
     #endregion
 }

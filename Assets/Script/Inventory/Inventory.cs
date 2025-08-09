@@ -7,7 +7,13 @@ public class Inventory {
 
     private List<Item> itemList;
 
-    public Inventory() {
+    public List<Item> ItemList {
+        get { return itemList; }
+        set { itemList = value; }
+    }
+
+    public Inventory()
+    {
         itemList = new List<Item>();
     }
 
@@ -52,14 +58,6 @@ public class Inventory {
         }
     }
 
-    public List<Item> GetItemList() {
-        return itemList;
-    }
-
-    public int GetItemListCount() {
-        return itemList.Count;
-    }
-
     public bool HasKey() {
         foreach (Item item in itemList) {
             if (item.itemSO.itemType is ItemType.GoldenKey) {
@@ -67,5 +65,10 @@ public class Inventory {
             }
         }
         return false;
+    }
+
+    public void RemoveKey()
+    {
+        itemList.Remove(itemList.Find(item => item.itemSO.itemType == ItemType.GoldenKey));
     }
 }

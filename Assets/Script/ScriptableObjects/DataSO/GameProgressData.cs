@@ -26,6 +26,12 @@ public class GameProgressData
     public DateTime lastPlayedDate;
     public DateTime firstPlayedDate;
     
+    [Header("Persistent Inventory")]
+    public List<Item> persistentInventory;
+
+    [Header("Other")]
+    public bool isFirstTimePlaying = true;
+
     // Properties for easy access
     public float OverallCompletionPercentage => totalLevels > 0 ? (float)levelsCompleted / totalLevels * 100f : 0f;
     public float CollectiblesCompletionPercentage => totalCollectibles > 0 ? (float)totalCollectiblesFound / totalCollectibles * 100f : 0f;
@@ -45,6 +51,7 @@ public class GameProgressData
         totalWins = 0;
         lastPlayedDate = DateTime.MinValue;
         firstPlayedDate = DateTime.MinValue;
+        persistentInventory = new List<Item>();
     }
     
     // Level management methods
@@ -143,5 +150,29 @@ public class GameProgressData
     public List<LevelData> GetUnlockedLevels()
     {
         return levelDataList.FindAll(level => level.isUnlocked && !level.isCompleted);
+    }
+    
+    // Inventory management methods
+    public List<Item> GetInventoryItems()
+    {
+        persistentInventory ??= new List<Item>();
+        return persistentInventory;
+    }
+    
+    public void SetInventoryItems(List<Item> items)
+    {
+        persistentInventory ??= new List<Item>();
+        
+        persistentInventory.Clear();
+        if (items != null)
+        {
+            persistentInventory.AddRange(items);
+        }
+    }
+    
+    public void ClearInventory()
+    {
+        if (persistentInventory != null)
+            persistentInventory.Clear();
     }
 }

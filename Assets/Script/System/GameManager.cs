@@ -95,7 +95,7 @@ public class GameManager : PersistentManager<GameManager>
             return;
         }
 
-        Debug.Log("GameManager: Player found in GAME scene, setting up game state.");
+        Debug.Log($"GameManager: Player found in {loadedScene} scene, setting up game state.");
 
         diamondsCollected = 0;
         numberOfEnemiesKilled = 0;
@@ -103,12 +103,15 @@ public class GameManager : PersistentManager<GameManager>
 
         player.HealthSystem.OnDeath += HandlePlayerDead;
         player.OnDiamondCollected += (_, __) => diamondsCollected++;
-        
+
         // Initialize game session
         currentScore = 0;
         levelLastPlayTimeStamp = Time.time;
         
         DataManager.Instance.StartLevel(loadedScene);
+        var playerInventory = player.GetInventory().ItemList = DataManager.Instance.GetPersistentInventoryCopy();
+        DataManager.Instance.CurrentPlayerInventoryItems = playerInventory;
+
         SetState(State.GamePlaying);
         GameInput.Instance.EnableActionMap(GameInput.ActionMap.Player);
         SoundManager.Instance.AttachPlayerSound(player);
@@ -136,6 +139,7 @@ public class GameManager : PersistentManager<GameManager>
         SetState(State.LevelWon);
         currentScore = CalculateLevelScore();
         DataManager.Instance.CompleteCurrentLevel(currentScore, levelPlayedTime, diamondsCollected);
+        DataManager.Instance.UpdatePersistentInventory();
     }
 
     private int CalculateLevelScore()
