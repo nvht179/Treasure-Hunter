@@ -60,7 +60,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 97bb087faa96d19499da8b93eb8de0d4, type: 3}
   - {fileID: 8300000, guid: d642b80336ce6774589ca20c18ea063e, type: 3}
   doorOpenClose: {fileID: 8300000, guid: 9e32d8c7a47d49b478af76b93a82fa3f, type: 3}
-  itemUse: []
+  itemUse:
+  - {fileID: 8300000, guid: 297e8e7bbb1d62141b5d7858fdbd0fb3, type: 3}
+  itemEquip:
+  - {fileID: 8300000, guid: ace270d18dea7f14ea567e3ac447fae2, type: 3}
   itemDrop:
   - {fileID: 8300000, guid: beb61ba4ff7cdb045bee310f2b6ab345, type: 3}
   itemBuy: {fileID: 8300000, guid: a19033ccad7c4b040b5f22a84036eec6, type: 3}
@@ -72,7 +75,7 @@ MonoBehaviour:
   buttonClick: {fileID: 8300000, guid: f16f4f2453b54f048a1b2601b9804a6b, type: 3}
   won: {fileID: 8300000, guid: 9372a6cd79d35a14783ba3f6c2ae2e1f, type: 3}
   lost: {fileID: 8300000, guid: 03f233bd80d1a6547b68e25bbd546267, type: 3}
-  crabbyAttack: {fileID: 8300000, guid: 5737f6608a9ebc94d810fe88b88b8cb7, type: 3}
+  crabbyAttack: {fileID: 8300000, guid: e8f1997aed23acf4da4e1725f82db801, type: 3}
   pinkStarAttack: {fileID: 8300000, guid: 7244cabf3cf667245af32b22faa8a20f, type: 3}
   cannonBallShoot: {fileID: 8300000, guid: 17112740e69c5014d9e5011016049ac3, type: 3}
   woodSpikeShoot: {fileID: 8300000, guid: 80776e5a2c40dd545806d6273d2ff292, type: 3}
