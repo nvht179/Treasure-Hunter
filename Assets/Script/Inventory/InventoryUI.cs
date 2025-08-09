@@ -47,7 +47,6 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
 
     private void ActiveItemUI_OnPotionUsed(object sender, EventArgs e) {
         inventory.RemoveItem(selectedItem);
-        DataManager.Instance.CurrentPlayerInventoryItems.Remove(selectedItem);
 
         if (selectedItem.quantity == 0)
         {
@@ -90,7 +89,6 @@ public class InventoryUI : MonoBehaviour, ISelectItem {
             if (selectedItem != null) {
                 activeItemUI.DropItem(selectedItem);
                 inventory.RemoveItem(selectedItem);
-                DataManager.Instance.CurrentPlayerInventoryItems.Remove(selectedItem);
                 if (selectedItem.quantity == 0) {
                     selectedItem = null;
                 }
