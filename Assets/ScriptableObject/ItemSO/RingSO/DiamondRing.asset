@@ -23,5 +23,5 @@ MonoBehaviour:
   scaleInUI: 20
   stackable: 0
   maxStack: 1
-  buyPrice: 50
+  buyPrice: 150
   bonusGoldMultiplier: 0.5

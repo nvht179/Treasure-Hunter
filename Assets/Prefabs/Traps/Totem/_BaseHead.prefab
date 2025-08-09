@@ -268,6 +268,9 @@ MonoBehaviour:
   fireRate: 1
   fireDirection: 0
   maxHealthPoint: 20
+  minMoneyOnDead: 0
+  maxMoneyOnDead: 0
+  totemHeadSO: {fileID: 0}
 --- !u!1 &8152018835638691798
 GameObject:
   m_ObjectHideFlags: 0

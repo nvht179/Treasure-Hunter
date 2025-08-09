@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Crabby
   prefab: {fileID: 6014555149247026926, guid: 1ed442e8497ec7d4d9107ad2e83485e9, type: 3}
-  maxHealth: 30
+  maxHealth: 50
   scoreOnDead: 10

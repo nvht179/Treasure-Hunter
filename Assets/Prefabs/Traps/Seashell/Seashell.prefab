@@ -107,7 +107,7 @@ MonoBehaviour:
   fireRate: 3
   fireDirection: 0
   seaShellSO: {fileID: 11400000, guid: 02560c8598b17004cb37953548e7853a, type: 2}
-  maxHealth: 50
+  maxHealth: 75
   minMoneyOnDead: 10
   maxMoneyOnDead: 12
 --- !u!61 &144960388748944299

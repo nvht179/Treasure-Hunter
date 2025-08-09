@@ -23,6 +23,6 @@ MonoBehaviour:
   scaleInUI: 20
   stackable: 0
   maxStack: 1
-  buyPrice: 20
+  buyPrice: 25
   damageAmount: 3
   criticalChance: 0.03

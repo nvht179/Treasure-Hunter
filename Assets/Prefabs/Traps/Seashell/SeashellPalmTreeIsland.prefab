@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2655788672942394322
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 296326817983538555, guid: 01f7a5fa223cee94ebc2261053a2c850, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 296326817983538555, guid: 01f7a5fa223cee94ebc2261053a2c850, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 296326817983538555, guid: 01f7a5fa223cee94ebc2261053a2c850, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 296326817983538555, guid: 01f7a5fa223cee94ebc2261053a2c850, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 296326817983538555, guid: 01f7a5fa223cee94ebc2261053a2c850, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 296326817983538555, guid: 01f7a5fa223cee94ebc2261053a2c850, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 296326817983538555, guid: 01f7a5fa223cee94ebc2261053a2c850, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 296326817983538555, guid: 01f7a5fa223cee94ebc2261053a2c850, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 296326817983538555, guid: 01f7a5fa223cee94ebc2261053a2c850, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 296326817983538555, guid: 01f7a5fa223cee94ebc2261053a2c850, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1356977055632422545, guid: 01f7a5fa223cee94ebc2261053a2c850, type: 3}
+      propertyPath: m_Name
+      value: SeashellPalmTreeIsland
+      objectReference: {fileID: 0}
+    - target: {fileID: 8515894695067094705, guid: 01f7a5fa223cee94ebc2261053a2c850, type: 3}
+      propertyPath: maxHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8515894695067094705, guid: 01f7a5fa223cee94ebc2261053a2c850, type: 3}
+      propertyPath: flyingObjectSO
+      value: 
+      objectReference: {fileID: 11400000, guid: ef5fda04811644e4baf758d8527ab6a8, type: 2}
+    - target: {fileID: 8515894695067094705, guid: 01f7a5fa223cee94ebc2261053a2c850, type: 3}
+      propertyPath: maxMoneyOnDead
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 8515894695067094705, guid: 01f7a5fa223cee94ebc2261053a2c850, type: 3}
+      propertyPath: minMoneyOnDead
+      value: 15
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 01f7a5fa223cee94ebc2261053a2c850, type: 3}

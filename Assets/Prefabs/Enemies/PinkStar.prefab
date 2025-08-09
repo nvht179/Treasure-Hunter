@@ -1012,12 +1012,12 @@ MonoBehaviour:
   enemySO: {fileID: 11400000, guid: d2ca00d3d7ecb9e488d9abde22195848, type: 2}
   moveSpeed: 3
   chargeSpeed: 15
-  attackDamage: 10
+  attackDamage: 20
   chargeTime: 0.5
   rechargeTime: 2
   knockbackForce: 50
-  minMoneyOnDead: 5
-  maxMoneyOnDead: 10
+  minMoneyOnDead: 7
+  maxMoneyOnDead: 13
   visionDistance: 10
   pivot: {fileID: 5433814789420289379}
   groundLayer:

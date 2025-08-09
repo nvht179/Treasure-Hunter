@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: SilverBoots
   m_EditorClassIdentifier: 
   itemName: Uncommon Boots
-  description: 'Passive: Provides 0.5 stamina restore per second and move 7% faster'
+  description: 'Passive: Provides 0,5 stamina restore per second and move 7% faster'
   droppable: 1
-  consumable: 0
+  consumable: 1
   itemType: 3
   icon: {fileID: -1378149643, guid: 123d6a7c5b2c46a4b9d4e5d70150022f, type: 3}
   prefab: {fileID: 7224193130467122985, guid: 8ace0e25260998d4b80a7d4972501967, type: 3}
@@ -23,6 +23,6 @@ MonoBehaviour:
   scaleInUI: 20
   stackable: 0
   maxStack: 1
-  buyPrice: 35
+  buyPrice: 65
   staminaRegenerationAmount: 0.5
   moveSpeedAmount: 0.07

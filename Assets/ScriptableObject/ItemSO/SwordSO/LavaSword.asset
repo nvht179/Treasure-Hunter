@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a90ada63389036b4a981388cd1030901, type: 3}
   m_Name: LavaSword
   m_EditorClassIdentifier: 
-  itemName: Ruby Sword
+  itemName: Lava Sword
   description: 'Passive: Provides 20 damage, and 25% critical chance'
   droppable: 1
   consumable: 1

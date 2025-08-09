@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43b3e9dca82661f49bcb33ebe995eafc, type: 3}
   m_Name: DiamondBoots
   m_EditorClassIdentifier: 
-  itemName: Ruby Boots
-  description: 'Passive: Provides 1.2 stamina restore per second and move 15% faster'
+  itemName: Diamond Boots
+  description: 'Passive: Provides 1,2 stamina restore per second and move 15% faster'
   droppable: 1
-  consumable: 0
+  consumable: 1
   itemType: 3
-  icon: {fileID: 1223976191, guid: 123d6a7c5b2c46a4b9d4e5d70150022f, type: 3}
-  prefab: {fileID: 2142697761538974267, guid: 043070495ceca2b4f972b3e60fa12d0e, type: 3}
+  icon: {fileID: -1264600241, guid: 123d6a7c5b2c46a4b9d4e5d70150022f, type: 3}
+  prefab: {fileID: 2596611334191694964, guid: 88b6b5daa5bd32446be1f7bc0e330a10, type: 3}
   collectEffectPrefab: {fileID: 7934267159419852871, guid: c29719f94173dde4d8e680bcf2db5323, type: 3}
   scaleInUI: 20
   stackable: 0
   maxStack: 1
-  buyPrice: 65
+  buyPrice: 150
   staminaRegenerationAmount: 1.2
   moveSpeedAmount: 0.15
