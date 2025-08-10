@@ -1,16 +1,12 @@
 # 2D Game Project: Treasure Hunter
-## Student Information
-
-| Student ID | Full Name         |
-| :----------- | :---------------- |
-| **22125046** | **Lê Thanh Lâm** |
-| **22125095** | **Đào Xuân Thành** |
-| **22125102** | **Nguyễn Chính Thông** |
-| **22125103** | **Nguyễn Võ Hoàng Thông** |
 
 ## Introduction to the Game
 
 The game is a **2D platformer** with Metroidvania-inspired structure and a focus on movement, timing, and exploration. Levels are built to span both vertically and horizontally routes, the player has to beat the enemies, bypass the obstacle to reach the finishing door.
+
+![Captain Clown Nose vs Enemy](Screenshots/boss-enemy-spawn.png)
+
+Demo Video: [Youtube](https://www.youtube.com/watch?v=Nmbp2jTOUfY)
 
 ## Applications and Features
 
@@ -37,6 +33,16 @@ The game is a **2D platformer** with Metroidvania-inspired structure and a focus
 * Persistent progression: the game uses a simple level unlock system seen in simple mobile games.
 vSimple, functional settings: essential customization without clutter.
 
+## Screenshots
+
+![](Screenshots/main-menu.png)
+![](Screenshots/air-attack.png)
+![](Screenshots/shop-interact.png)
+![](Screenshots/shop-ui.png)
+![](Screenshots/tutorial.png)
+![](Screenshots/door.png)
+![](Screenshots/settings.png)
+
 ## Unity Version
 
 Engine: **Unity 2022.3.62f1**
@@ -46,3 +52,12 @@ Engine: **Unity 2022.3.62f1**
 * Art asset: [Pixel Frog’s Treasure Hunters](https://pixelfrog-assets.itch.io/treasure-hunters)
 * Music: [pixabay.com](https://pixabay.com/music/)
 * Sound Effect: [Minifantasy Dungeon](https://leohpaz.itch.io/minifantasy-dungeon-sfx-pack)
+
+## Contributors Information
+
+| Student ID | Full Name         |
+| :----------- | :---------------- |
+| **22125046** | **Lê Thanh Lâm** |
+| **22125095** | **Đào Xuân Thành** |
+| **22125102** | **Nguyễn Chính Thông** |
+| **22125103** | **Nguyễn Võ Hoàng Thông** |
