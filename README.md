@@ -1,12 +1,13 @@
 # 2D Game Project: Treasure Hunter
 
-## Introduction to the Game
+## Introduction
 
 The game is a **2D platformer** with Metroidvania-inspired structure and a focus on movement, timing, and exploration. Levels are built to span both vertically and horizontally routes, the player has to beat the enemies, bypass the obstacle to reach the finishing door.
 
 ![Captain Clown Nose vs Enemy](Screenshots/boss-enemy-spawn.png)
 
-Demo Video: [Youtube](https://www.youtube.com/watch?v=Nmbp2jTOUfY)
+- Demo Video: [Youtube](https://www.youtube.com/watch?v=Nmbp2jTOUfY)
+- Web Version: [itch.io](https://lamlethanh777.itch.io/treasure-hunter)
 
 ## Applications and Features
 
